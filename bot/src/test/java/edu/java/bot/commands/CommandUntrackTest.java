@@ -11,21 +11,24 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-class CommandStartTest {
+class CommandUntrackTest {
     @Mock
     UserService userService;
 
     @InjectMocks
-    CommandStart commandStart;
+    CommandUntrack commandUntrack;
+
+    private final String unknownUser = "Пользователь не существует. Зарегистрируйтесь с помощью команды /start.";
+    private final String untrackMessage = "Предоставьте ссылку на ресурс.";
 
     @BeforeEach
     void setUp() {
@@ -34,12 +37,12 @@ class CommandStartTest {
 
     @Test
     void command() {
-        assertEquals("/start", commandStart.command());
+        assertEquals("/untrack", commandUntrack.command());
     }
 
     @Test
     void description() {
-        assertEquals("Позволяет зарегистрироваться в нашей системе.", commandStart.description());
+        assertEquals("Позволяет убрать ссылку из списка отслеживаемых.", commandUntrack.description());
     }
 
     @Test
@@ -47,10 +50,12 @@ class CommandStartTest {
         long chatId = 123456L;
         Update update = getUpdate(chatId);
         Optional<User> optionalMockUser = mock(Optional.class);
-        when(optionalMockUser.isEmpty()).thenReturn(false);
+        User mockUser = mock(User.class);
+        when(optionalMockUser.isPresent()).thenReturn(true);
+        when(optionalMockUser.get()).thenReturn(mockUser);
         when(userService.findUserById(chatId)).thenReturn(optionalMockUser);
 
-        assertEquals("Вы уже зарегистрированы в боте!", commandStart.handle(update));
+        assertEquals(untrackMessage, commandUntrack.handle(update));
 
         //TODO дописать verify на кол-во вызовов
     }
@@ -62,11 +67,10 @@ class CommandStartTest {
 
         when(userService.findUserById(anyLong())).thenReturn(Optional.empty());
 
-        String result = commandStart.handle(update);
-        assertEquals("Регистрация прошла успешно!", result);
+        String result = commandUntrack.handle(update);
+        assertEquals(unknownUser, result);
 
         verify(userService, times(1)).findUserById(chatId);
-        verify(userService, times(1)).saveUser(any(User.class));
     }
 
     @NotNull

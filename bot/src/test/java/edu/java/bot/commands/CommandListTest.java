@@ -9,7 +9,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -30,43 +29,39 @@ class CommandListTest {
 
     @Test
     void command() {
-        assertEquals(commandList.command(), "/list");
+        assertEquals("/list", commandList.command());
     }
 
     @Test
     void description() {
-        assertEquals(commandList.description(), "Позволяет получить список отслеживаемых ссылок.");
+        assertEquals("Позволяет получить список отслеживаемых ссылок.", commandList.description());
     }
 
     @Test
-    void getTrackingLinksNotRegistred() {
-        assertEquals(commandList.getTrackingLinks(-1L), unknownUser);
+    void getTrackingLinksNotRegistered() {
+        assertEquals(unknownUser, commandList.getTrackingLinks(-1L));
     }
 
     @Test
     void getTrackingLinksEmptyList() {
         User mockUser = mock(User.class);
-
-        List<URI> sites = new ArrayList<>();
-
-        when(mockUser.getSites()).thenReturn(sites);
-        when(mockUser.getId()).thenReturn(10L);
         userService.saveUser(mockUser);
-        assertEquals(commandList.getTrackingLinks(10L), emptyList);
-
+        assertEquals(emptyList, commandList.getTrackingLinks(mockUser.getId()));
     }
 
     @Test
-    void getTrackingLinks() throws URISyntaxException {
+    void getTrackingLinksNormal() throws URISyntaxException {
         User mockUser = mock(User.class);
-        List<URI> sites = new ArrayList<>();
-        sites.add(new URI("https://github.com"));
 
-        when(mockUser.getSites()).thenReturn(sites);
+        List<URI> sitesList = new ArrayList<>();
+        sitesList.add(new URI("https://github.com"));
+
+        when(mockUser.getSites()).thenReturn(sitesList);
+
         when(mockUser.getId()).thenReturn(10L);
         userService.saveUser(mockUser);
-        assertEquals(commandList.getTrackingLinks(10L), "1) https://github.com\n");
 
-
+        assertEquals("1) https://github.com\n", commandList.getTrackingLinks(mockUser.getId()));
     }
+
 }
