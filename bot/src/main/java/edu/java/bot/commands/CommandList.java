@@ -10,6 +10,7 @@ public class CommandList implements Command {
 
     private final String unknownUser = "Пользователь не существует. Зарегистрируйтесь с помощью команды /start";
     private final String emptyList = "Вы не отслеживаете ни одной ссылки";
+
     public CommandList(UserService userService) {
         this.userService = userService;
     }
@@ -42,7 +43,7 @@ public class CommandList implements Command {
                 return emptyList;
             }
             int i = 1;
-            for (URI site: listOfSites) {
+            for (URI site : listOfSites) {
                 str.append(i++).append(") ").append(site.toString()).append("\n");
             }
             return str.toString();
@@ -50,6 +51,5 @@ public class CommandList implements Command {
         return unknownUser;
 
     }
-
 
 }
