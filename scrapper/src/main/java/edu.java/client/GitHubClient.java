@@ -1,10 +1,15 @@
 package edu.java.client;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
+import reactor.core.publisher.Mono;
 
-
-@Service
+@Component
 public class GitHubClient {
 
 
@@ -16,17 +21,24 @@ HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter).bu
 RepositoryService service = factory.createClient(RepositoryService.class);
      */
 
+    private final String gitApi = "https://api.github.com/";
+    private final WebClient webClient;
 
-        private final WebClient webClient;
-
-        private final String gitApi = "https://api.github.com/";
-
-        public GitHubClient(WebClient.Builder webClientBuilder) {
-            this.webClient = webClientBuilder.baseUrl(gitApi).build();
-        }
-
-        public Details someRestCall(String name) {
-            return this.webClient.get().uri("/{name}/details", name).retrieve().bodyToMono(Details.class);
-        }
-
+    public GitHubClient() {
+        this.webClient = WebClient.builder()
+            .baseUrl(gitApi)
+            .build();
     }
+
+    public String getUser(String name) {
+        return webClient.get()
+            .uri(name)
+            .exchange()
+            .block()
+            .bodyToMono(String.class)
+            .block();
+    }
+
+
+
+}

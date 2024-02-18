@@ -1,4 +1,4 @@
-package edu.java;
+package edu.java.service;
 
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -9,7 +9,7 @@ public class GitHubService {
         this.webClientBuilder = webClientBuilder;
     }
 
-    public List<Commit> getCommits(String repository) {
+  /*  public List<Commit> getCommits(String repository) {
         WebClient webClient = webClientBuilder.build();
         return webClient.get()
             .uri("/repos/{owner}/{repo}/commits", "octocat", repository)
@@ -17,5 +17,5 @@ public class GitHubService {
             .bodyToFlux(Commit.class)
             .collectList()
             .block();
-    }
+    }*/
 }

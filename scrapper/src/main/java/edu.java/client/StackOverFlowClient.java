@@ -5,15 +5,23 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class StackOverFlowClient {
 
 
+    private final String stackOverFlowApi = "https://api.stackexchange.com/2.2" ; //TODO найти нормальый апи
     private final WebClient webClient;
 
-    private final String gitApi = "https://api.github.com/";
-
-    public StackOverFlowClient(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl(gitApi).build();
+    public StackOverFlowClient() {
+        this.webClient = WebClient.builder()
+            .baseUrl(stackOverFlowApi)
+            .build();
     }
 
-    public Details someRestCall(String name) {
-        return this.webClient.get().uri("/{name}/details", name).retrieve().bodyToMono(Details.class);
+    public String getUser(String name) {
+        return webClient.get()
+            .uri(name)
+            .exchange()
+            .block()
+            .bodyToMono(String.class)
+            .block();
     }
+
+
 }
