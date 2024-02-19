@@ -7,12 +7,14 @@ import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@org.springframework.stereotype.Controller
+@RestController
 
 public class Controller {
 
@@ -33,7 +35,7 @@ public class Controller {
             .block();
     }
 
-    @GetMapping("{name}")
+   /* @GetMapping("{name}")
     public List<ModelRepository> getRepositories(@PathVariable("name") String name) {
         //  https://api.github.com/users/stukenvitalii/repos
         List<ModelRepository> list = new ArrayList<>();
@@ -51,6 +53,26 @@ public class Controller {
 
          return list;
 
+    }*/
+
+    // https://api.github.com/users/stukenvitalii/repos
+
+
+
+
+
+
+      @GetMapping("{name}")
+    public Mono<List<ModelRepository>> getRepositories(@PathVariable("name") String name) {
+        return webClientBuilder.build()
+            .get()
+            .uri("https://api.github.com/users/" + name + "/repos")
+            .accept(MediaType.APPLICATION_JSON)
+            .retrieve()
+            .bodyToMono(ModelRepository[].class)
+            .map(repositories -> Arrays.asList(repositories));
     }
+
+
 
 }
