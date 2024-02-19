@@ -1,17 +1,17 @@
-package edu.java.model;
+package edu.java.model.GitHub;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ModelRepository {
+public class ModelGitHubRepository {
 
 
     private Long id ;
     private String name;
 
-    public ModelRepository(Long id , String name){
+    public ModelGitHubRepository(Long id , String name){
         this.id = id ;
         this.name = name;
     }

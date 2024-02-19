@@ -11,18 +11,17 @@ public class ClientConfiguration{
   //  public StackOverFlowClient stackOverFlowClient;
     private final String gitApi = "https://api.github.com/";
 
-    private final String stackOverFlowApi = "https://api.stackexchange.com/2.2" ;
+    private final String stackOverFlowApi = "https://api.stackexchange.com/2.3" ;
 
-
-    /*@Bean
-    public WebClient.Builder gitHubClientBuilder() {
-        return WebClient.builder()
-            .baseUrl(gitApi )
-            .defaultHeader("Authorization", "Bearer YOUR_ACCESS_TOKEN");
-    }*/
 
     @Bean
-    public WebClient.Builder getGitWebClientBuilder(){
+    public WebClient.Builder getStackOverFlowWebClientBuilder() {
+        return WebClient.builder()
+            .baseUrl(stackOverFlowApi);
+    }
+
+    @Bean
+    public WebClient.Builder getGitHubWebClientBuilder(){
         return WebClient.builder().baseUrl(gitApi);
     }
 }
