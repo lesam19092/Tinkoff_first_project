@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.reactive.function.client.WebClientException;
+import reactor.core.publisher.Mono;
 
 @RestController
 public class StackOverFlowContoller {
@@ -18,18 +19,27 @@ public class StackOverFlowContoller {
     private WebClient.Builder webClientBuilder;
 
     @GetMapping("/question/{id}")
-    public ModelStackOverFlowQuestion getQuestion(
-        @PathVariable("id") Long id
+    public Mono<ModelStackOverFlowQuestion> getQuestion(
+        @PathVariable("id") String id
     ) {
-        //  https://api.github.com/repos/stukenvitalii/bot_temp/
-        https://api.stackexchange.com/2.3/questions/4070716?order=desc&sort=activity&site=stackoverflow
-        return webClientBuilder.build()
+
+        return  webClientBuilder.
+            build()
+            .get()
+            .uri("/questions/{id}?order=desc&sort=activity&site=stackoverflow&key={apiKey}", id, apiKey)
+            .retrieve()
+            .bodyToMono(ModelStackOverFlowQuestion.class);
+
+    }
+
+    //  https://api.github.com/repos/stukenvitalii/bot_temp/
+    https://api.stackexchange.com/2.3/questions/4070716?order=desc&sort=activity&site=stackoverflow
+       /* return webClientBuilder.build()
             .get()
             .uri("https://api.stackexchange.com/2.3/questions/"+id+"?order=desc&sort=activity&site=stackoverflow") //TODO РАЗБИТЬ КРАСИВО
             .retrieve()
             .bodyToMono(ModelStackOverFlowQuestion.class)
-            .block();
-    }
+            .block();*/
 
     /*@GetMapping("/question/{id}")
     public ResponseEntity<ModelStackOverFlowQuestion> getQuestion(
