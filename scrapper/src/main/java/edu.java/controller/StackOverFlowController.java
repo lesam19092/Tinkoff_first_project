@@ -1,4 +1,4 @@
-package edu.java.contoller;
+package edu.java.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.java.dto.StackOverFlowQuestion;

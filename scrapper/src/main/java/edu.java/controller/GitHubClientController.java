@@ -21,7 +21,6 @@ public class GitHubClientController {
         return webClientBuilder.build()
             .get()
             .uri("https://api.github.com/repos/{name}/{reposName}", name, reposName)
-            .headers(h -> h.setBearerAuth(System.getenv("GITHUB_API_TOKEN_SECOND")))//TODO РАЗБИТЬ КРАСИВО
             .retrieve()
             .bodyToMono(GitHubRepository.class)
             .block();
