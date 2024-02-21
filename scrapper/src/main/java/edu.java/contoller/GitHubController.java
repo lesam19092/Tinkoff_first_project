@@ -18,8 +18,8 @@ public class GitHubController {
     @Autowired
     private WebClient.Builder webClientBuilder;
 
-    @GetMapping("{name}/{reposName}")
-    public ModelGitHubRepository getRepositoryInfo(
+  //  @GetMapping("{name}/{reposName}")
+ /*   public ModelGitHubRepository getRepositoryInfo(
         @PathVariable("name") String name,
         @PathVariable("reposName") String reposName
     ) {
@@ -27,6 +27,19 @@ public class GitHubController {
         return webClientBuilder.build()
             .get()
             .uri("https://api.github.com/repos/" + name + "/" + reposName) //TODO РАЗБИТЬ КРАСИВО
+            .retrieve()
+            .bodyToMono(ModelGitHubRepository.class)
+            .block();
+    }*/
+    @GetMapping("/repos/{name}/{reposName}")
+    public ModelGitHubRepository getRepositoryInfo(
+        @PathVariable("name") String name,
+        @PathVariable("reposName") String reposName
+    ) {
+        return webClientBuilder.build()
+            .get()
+            .uri("https://api.github.com/repos/{name}/{reposName}",name,reposName)
+            //.headers(h -> h.setBearerAuth(System.getenv("GITHUB_API_TOKEN_SECOND")))//TODO РАЗБИТЬ КРАСИВО
             .retrieve()
             .bodyToMono(ModelGitHubRepository.class)
             .block();

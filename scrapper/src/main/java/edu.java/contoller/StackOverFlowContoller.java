@@ -33,7 +33,7 @@ public class StackOverFlowContoller {
     }
 
     //  https://api.github.com/repos/stukenvitalii/bot_temp/
-    https://api.stackexchange.com/2.3/questions/4070716?order=desc&sort=activity&site=stackoverflow
+    //https://api.stackexchange.com/2.3/questions/4070716?order=desc&sort=activity&site=stackoverflow
        /* return webClientBuilder.build()
             .get()
             .uri("https://api.stackexchange.com/2.3/questions/"+id+"?order=desc&sort=activity&site=stackoverflow") //TODO РАЗБИТЬ КРАСИВО
