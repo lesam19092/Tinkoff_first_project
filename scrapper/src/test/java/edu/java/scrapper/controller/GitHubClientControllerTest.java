@@ -40,7 +40,7 @@ public class GitHubClientControllerTest {
     @Test
     public void testStatusCodePositive() {
         wireMockExtension.stubFor(WireMock.get(
-                "/repos/stukenvitalii/TinkoffBot"
+                "/repos/lesam19092/Tinkoff_first_project"
             )
             .willReturn(aResponse()
                 .withHeader("Content-Type", MediaType.APPLICATION_JSON_VALUE)
