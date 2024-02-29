@@ -1,4 +1,6 @@
 app:
+
+
   scheduler:
     enable: true
     interval: 5s
@@ -10,6 +12,10 @@ spring:
 
 server:
   port: 1010
+
+springdoc:
+  swagger-ui:
+    path: swagger-ui
 
 logging:
   config: classpath:log4j2-plain.xml

@@ -1,6 +1,6 @@
+package edu.java.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.java.controller.TgChatApi;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -12,7 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PathVariable;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-02-29T10:09:42.512141887Z[GMT]")
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen",
+                            date = "2024-02-29T10:09:42.512141887Z[GMT]")
 @RestController
 public class TgChatApiController implements TgChatApi {
 
@@ -28,13 +29,17 @@ public class TgChatApiController implements TgChatApi {
         this.request = request;
     }
 
-    public ResponseEntity<Void> tgChatIdDelete(@Parameter(in = ParameterIn.PATH, description = "", required=true, schema=@Schema()) @PathVariable("id") Long id
+    public ResponseEntity<Void> tgChatIdDelete(
+        @Parameter(in = ParameterIn.PATH, description = "", required = true, schema = @Schema()) @PathVariable("id")
+        Long id
     ) {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
     }
 
-    public ResponseEntity<Void> tgChatIdPost(@Parameter(in = ParameterIn.PATH, description = "", required=true, schema=@Schema()) @PathVariable("id") Long id
+    public ResponseEntity<Void> tgChatIdPost(
+        @Parameter(in = ParameterIn.PATH, description = "", required = true, schema = @Schema()) @PathVariable("id")
+        Long id
     ) {
         String accept = request.getHeader("Accept");
         return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
