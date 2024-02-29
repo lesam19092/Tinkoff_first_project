@@ -1,10 +1,12 @@
 package edu.java.client;
 
 import edu.java.dto.GitHubRepository;
+import org.springframework.context.annotation.Bean;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 public class GitHubClient {
+
     private final WebClient webClient;
 
     public GitHubClient(WebClient webClient) {
