@@ -136,6 +136,15 @@
 
         <pluginManagement>
             <plugins>
+
+                <plugin>
+                    <groupId>org.openapitools</groupId>
+                    <artifactId>openapi-generator-maven-plugin</artifactId>
+                    <version>6.4.0</version>
+                </plugin>
+
+
+
                 <!-- Spring Boot -->
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
