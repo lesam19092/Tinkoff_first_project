@@ -7,15 +7,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.validation.annotation.Validated;
 
-@Validated
-@ConfigurationProperties(prefix = "app", ignoreUnknownFields = false)
-public record ApplicationConfig(@NotNull
-                                @Bean
-                                Scheduler scheduler, @NotEmpty String gitHubBaseUrl,
-                                @NotEmpty String stackOverFlowBaseUrl) {
+@Validated @ConfigurationProperties(prefix = "app", ignoreUnknownFields = false) public record ApplicationConfig(
+    @NotNull @Bean Scheduler schedule) {
     public record Scheduler(boolean enable,
 
-                            @NotNull Duration interval,
-                            @NotNull Duration forceCheckDelay) {
+                            @NotNull Duration interval, @NotNull Duration forceCheckDelay) {
     }
 }
