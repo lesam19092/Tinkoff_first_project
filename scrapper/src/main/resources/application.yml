@@ -1,15 +1,15 @@
 app:
   scheduler:
     enable: true
-    interval: 10s
-    force-check-delay: 10s
+    interval: 5s
+    force-check-delay: 5s
 
 spring:
   application:
     name: scrapper
 
 server:
-  port: 8080
+  port: 1010
 
 logging:
   config: classpath:log4j2-plain.xml
