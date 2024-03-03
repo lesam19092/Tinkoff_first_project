@@ -1,13 +1,14 @@
-package edu.java.model.Request;
+package edu.java.bot.model.Request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.net.URI;
 import java.util.Objects;
+import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
 
+@Setter
 @Validated
-
 public class RemoveLinkRequest {
     @JsonProperty("link")
     private URI link = null;
@@ -17,14 +18,14 @@ public class RemoveLinkRequest {
         return this;
     }
 
+    /**
+     * Get link
+     *
+     * @return link
+     **/
     @Schema(description = "")
-
     public URI getLink() {
         return link;
-    }
-
-    public void setLink(URI link) {
-        this.link = link;
     }
 
     @Override
@@ -54,6 +55,10 @@ public class RemoveLinkRequest {
         return sb.toString();
     }
 
+    /**
+     * Convert the given object to string with each line indented by 4 spaces
+     * (except the first line).
+     */
     private String toIndentedString(Object o) {
         if (o == null) {
             return "null";

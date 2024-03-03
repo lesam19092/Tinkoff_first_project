@@ -1,20 +1,23 @@
-package edu.java.bot.controllers.Request;
+package edu.java.bot.model.Request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
 
-@Validated
+@Setter @Getter @Validated
 
 public class LinkUpdateRequest {
     @JsonProperty("id")
     private Long id = null;
 
     @JsonProperty("url")
-    private String url = null;
+    private URI url = null;
 
     @JsonProperty("description")
     private String description = null;
@@ -23,43 +26,26 @@ public class LinkUpdateRequest {
     @Valid
     private List<Long> tgChatIds = null;
 
+    public LinkUpdateRequest(Long id, URI url, String description, List<Long> tgChatIds) {
+        this.id = id;
+        this.url = url;
+        this.description = description;
+        this.tgChatIds = tgChatIds;
+    }
+
     public LinkUpdateRequest id(Long id) {
         this.id = id;
         return this;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public LinkUpdateRequest url(String url) {
+    public LinkUpdateRequest url(URI url) {
         this.url = url;
         return this;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
     }
 
     public LinkUpdateRequest description(String description) {
         this.description = description;
         return this;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public LinkUpdateRequest tgChatIds(List<Long> tgChatIds) {
@@ -73,14 +59,6 @@ public class LinkUpdateRequest {
         }
         this.tgChatIds.add(tgChatIdsItem);
         return this;
-    }
-
-    public List<Long> getTgChatIds() {
-        return tgChatIds;
-    }
-
-    public void setTgChatIds(List<Long> tgChatIds) {
-        this.tgChatIds = tgChatIds;
     }
 
     @Override

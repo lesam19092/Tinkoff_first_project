@@ -1,21 +1,21 @@
-package edu.java.model.Response;
+package edu.java.bot.model.Response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.net.URI;
 import java.util.Objects;
-import javax.annotation.Generated;
+import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
 
 
+@Setter
 @Validated
-@Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-02-29T17:43:31.402605197Z[GMT]")
-public class LinkResponse   {
+public class LinkResponse {
     @JsonProperty("id")
     private Long id = null;
 
     @JsonProperty("url")
-    private URI url = null; //TOOD изменить на URL
+    private URI url = null;
 
     public LinkResponse id(Long id) {
         this.id = id;
@@ -24,6 +24,7 @@ public class LinkResponse   {
 
     /**
      * Get id
+     *
      * @return id
      **/
     @Schema(description = "")
@@ -32,26 +33,21 @@ public class LinkResponse   {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public LinkResponse url(URI url) {
         this.url = url;
         return this;
     }
 
-
+    /**
+     * Get url
+     *
+     * @return url
+     **/
     @Schema(description = "")
 
     public URI getUrl() {
         return url;
     }
-
-    public void setUrl(URI url) {
-        this.url = url;
-    }
-
 
     @Override
     public boolean equals(Object o) {
@@ -82,7 +78,10 @@ public class LinkResponse   {
         return sb.toString();
     }
 
-
+    /**
+     * Convert the given object to string with each line indented by 4 spaces
+     * (except the first line).
+     */
     private String toIndentedString(Object o) {
         if (o == null) {
             return "null";

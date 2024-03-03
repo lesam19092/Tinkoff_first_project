@@ -1,10 +1,10 @@
 package edu.java.model.Response;
 
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
-import jakarta.validation.Valid;
+import java.util.Objects;
 import org.springframework.validation.annotation.Validated;
 
 @Validated
@@ -108,11 +108,11 @@ public class ApiErrorResponse {
             return false;
         }
         ApiErrorResponse apiErrorResponse = (ApiErrorResponse) o;
-        return Objects.equals(this.description, apiErrorResponse.description) &&
-            Objects.equals(this.code, apiErrorResponse.code) &&
-            Objects.equals(this.exceptionName, apiErrorResponse.exceptionName) &&
-            Objects.equals(this.exceptionMessage, apiErrorResponse.exceptionMessage) &&
-            Objects.equals(this.stacktrace, apiErrorResponse.stacktrace);
+        return Objects.equals(this.description, apiErrorResponse.description)
+            && Objects.equals(this.code, apiErrorResponse.code)
+            && Objects.equals(this.exceptionName, apiErrorResponse.exceptionName)
+            && Objects.equals(this.exceptionMessage, apiErrorResponse.exceptionMessage)
+            && Objects.equals(this.stacktrace, apiErrorResponse.stacktrace);
     }
 
     @Override

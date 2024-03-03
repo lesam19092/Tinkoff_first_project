@@ -1,30 +1,34 @@
-package edu.java.model.Request;
+package edu.java.bot.model.Request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.net.URI;
 import java.util.Objects;
+import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
 
-@Validated
+/**
+ * AddLinkRequest
+ */
+@Setter @Validated
 
-public class RemoveLinkRequest {
+public class AddLinkRequest {
     @JsonProperty("link")
     private URI link = null;
 
-    public RemoveLinkRequest link(URI link) {
+    public AddLinkRequest link(URI link) {
         this.link = link;
         return this;
     }
 
+    /**
+     * Get link
+     *
+     * @return link
+     **/
     @Schema(description = "")
-
     public URI getLink() {
         return link;
-    }
-
-    public void setLink(URI link) {
-        this.link = link;
     }
 
     @Override
@@ -35,8 +39,8 @@ public class RemoveLinkRequest {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        RemoveLinkRequest removeLinkRequest = (RemoveLinkRequest) o;
-        return Objects.equals(this.link, removeLinkRequest.link);
+        AddLinkRequest addLinkRequest = (AddLinkRequest) o;
+        return Objects.equals(this.link, addLinkRequest.link);
     }
 
     @Override
@@ -47,13 +51,17 @@ public class RemoveLinkRequest {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("class RemoveLinkRequest {\n");
+        sb.append("class AddLinkRequest {\n");
 
         sb.append("    link: ").append(toIndentedString(link)).append("\n");
         sb.append("}");
         return sb.toString();
     }
 
+    /**
+     * Convert the given object to string with each line indented by 4 spaces
+     * (except the first line).
+     */
     private String toIndentedString(Object o) {
         if (o == null) {
             return "null";

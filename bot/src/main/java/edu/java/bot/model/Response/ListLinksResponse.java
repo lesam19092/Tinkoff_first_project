@@ -1,4 +1,4 @@
-package edu.java.model.Response;
+package edu.java.bot.model.Response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
@@ -12,30 +12,30 @@ import org.springframework.validation.annotation.Validated;
 public class ListLinksResponse {
     @JsonProperty("links")
     @Valid
-    private List<LinkResponse> links = null;
+    private List<edu.java.bot.model.Response.LinkResponse> links = null;
 
     @JsonProperty("size")
     private Integer size = null;
 
-    public ListLinksResponse links(List<LinkResponse> links) {
+    public ListLinksResponse links(List<edu.java.bot.model.Response.LinkResponse> links) {
         this.links = links;
         return this;
     }
 
-    public ListLinksResponse addLinksItem(LinkResponse linksItem) {
+    public ListLinksResponse addLinksItem(edu.java.bot.model.Response.LinkResponse linksItem) {
         if (this.links == null) {
-            this.links = new ArrayList<LinkResponse>();
+            this.links = new ArrayList<edu.java.bot.model.Response.LinkResponse>();
         }
         this.links.add(linksItem);
         return this;
     }
 
     @Valid
-    public List<LinkResponse> getLinks() {
+    public List<edu.java.bot.model.Response.LinkResponse> getLinks() {
         return links;
     }
 
-    public void setLinks(List<LinkResponse> links) {
+    public void setLinks(List<edu.java.bot.model.Response.LinkResponse> links) {
         this.links = links;
     }
 
@@ -53,7 +53,7 @@ public class ListLinksResponse {
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -81,7 +81,7 @@ public class ListLinksResponse {
         return sb.toString();
     }
 
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }

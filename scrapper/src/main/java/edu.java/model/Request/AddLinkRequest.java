@@ -1,35 +1,39 @@
 package edu.java.model.Request;
 
-import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
+import java.net.URI;
+import java.util.Objects;
+import javax.annotation.Generated;
 import org.springframework.validation.annotation.Validated;
 
-
 @Validated
+@Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-02-29T17:43:31.402605197Z[GMT]")
 
 
 public class AddLinkRequest   {
     @JsonProperty("link")
-    private String link = null;
+    private URI link = null;
 
-    public AddLinkRequest link(String link) {
+    public AddLinkRequest link(URI link) {
         this.link = link;
         return this;
     }
 
 
+    @Schema(description = "")
 
-    public String getLink() {
+    public URI getLink() {
         return link;
     }
 
-    public void setLink(String link) {
+    public void setLink(URI link) {
         this.link = link;
     }
 
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -55,7 +59,7 @@ public class AddLinkRequest   {
         return sb.toString();
     }
 
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }
