@@ -1,22 +1,24 @@
 package edu.java.model;
 
 import edu.java.model.Request.LinkUpdateRequest;
+import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URL;
 import java.util.List;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
-public class ScrapperClient {
+public class ScapperClient {
     private final String url = "http://localhost:8090";
 
     private final WebClient webClient;
 
-    public ScrapperClient(WebClient webClient) {
+    public ScapperClient(WebClient webClient) {
         this.webClient = webClient;
     }
 
-    public String updateLink(URI url, List<Long> tgChatIds) {
-        LinkUpdateRequest linkUpdateRequest = new LinkUpdateRequest(1L, url, "Обновление ссылки", tgChatIds);
+    public String updateLink(String url, List<Long> tgChatIds) throws MalformedURLException {
+        LinkUpdateRequest linkUpdateRequest = new LinkUpdateRequest(1L, new URL(url) , "Обновление ссылки", tgChatIds);
 
         return webClient
             .post()
