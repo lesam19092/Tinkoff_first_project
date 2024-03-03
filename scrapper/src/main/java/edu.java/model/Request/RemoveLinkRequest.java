@@ -6,8 +6,12 @@ import java.net.URI;
 import java.util.Objects;
 import org.springframework.validation.annotation.Validated;
 
+/**
+ * RemoveLinkRequest
+ */
 @Validated
-
+@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen",
+                            date = "2024-02-29T17:43:31.402605197Z[GMT]")
 public class RemoveLinkRequest {
     @JsonProperty("link")
     private URI link = null;
@@ -17,6 +21,11 @@ public class RemoveLinkRequest {
         return this;
     }
 
+    /**
+     * Get link
+     *
+     * @return link
+     **/
     @Schema(description = "")
 
     public URI getLink() {
@@ -54,6 +63,10 @@ public class RemoveLinkRequest {
         return sb.toString();
     }
 
+    /**
+     * Convert the given object to string with each line indented by 4 spaces
+     * (except the first line).
+     */
     private String toIndentedString(Object o) {
         if (o == null) {
             return "null";

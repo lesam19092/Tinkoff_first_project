@@ -3,7 +3,6 @@ package edu.java.model.Request;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
 import java.net.URI;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -16,19 +15,19 @@ import org.springframework.validation.annotation.Validated;
 @Validated
 public class LinkUpdateRequest {
     @JsonProperty("id")
-    private Long id = null;
+    private Long id;
 
     @JsonProperty("url")
-    private URL url = null;
+    private URI url;
 
     @JsonProperty("description")
-    private String description = null;
+    private String description;
 
     @JsonProperty("tgChatIds")
     @Valid
-    private List<Long> tgChatIds = null;
+    private List<Long> tgChatIds;
 
-    public LinkUpdateRequest(Long id, URL url, String description, List<Long> tgChatIds) {
+    public LinkUpdateRequest(Long id, URI url, String description, List<Long> tgChatIds) {
         this.id = id;
         this.url = url;
         this.description = description;
@@ -40,7 +39,7 @@ public class LinkUpdateRequest {
         return this;
     }
 
-    public LinkUpdateRequest url(URL url) {
+    public LinkUpdateRequest url(URI url) {
         this.url = url;
         return this;
     }

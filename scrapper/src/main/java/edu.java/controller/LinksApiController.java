@@ -26,16 +26,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class LinksApiController implements LinksApi {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LinksApiController.class);
+    private final String acceptString = "Accept";
+    private final String applicationJsonString = "application/json";
+    private final String errorString = "Couldn't serialize response for content type application/json";
 
     private final ObjectMapper objectMapper;
-
-    private final String content = "{\n  \"id\" : 0,\n  \"url\" : \"http://example.com/aeiou\"\n}";
-
-    private final String acceptHeader = "Accept";
-
-    private final String aplicationJson = "application/json";
-
-    private final String error = "Couldn't serialize response for content type application/json";
 
     private final HttpServletRequest request;
 
@@ -53,15 +48,15 @@ public class LinksApiController implements LinksApi {
         @RequestBody
         RemoveLinkRequest body
     ) {
-        String accept = request.getHeader(acceptHeader);
-        if (accept != null && accept.contains(aplicationJson)) {
+        String accept = request.getHeader(acceptString);
+        if (accept != null && accept.contains(applicationJsonString)) {
             try {
                 return new ResponseEntity<LinkResponse>(objectMapper.readValue(
-                    content,
+                    "{\n  \"id\" : 1,\n  \"url\" : \"http://example.com/aeiou\"\n}",
                     LinkResponse.class
                 ), HttpStatus.OK);
             } catch (IOException e) {
-                LOGGER.error(error, e);
+                LOGGER.error(errorString, e);
                 return new ResponseEntity<LinkResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
@@ -73,19 +68,19 @@ public class LinksApiController implements LinksApi {
         @Parameter(in = ParameterIn.HEADER, description = "", required = true, schema = @Schema())
         @RequestHeader(value = "Tg-Chat-Id", required = true) Long tgChatId
     ) {
-        String accept = request.getHeader(acceptHeader);
-        if (accept != null && accept.contains(aplicationJson)) {
+        String accept = request.getHeader(acceptString);
+
+        if (accept != null && accept.contains(applicationJsonString)) {
             try {
                 return new ResponseEntity<ListLinksResponse>(objectMapper.readValue(
                     "{\n  \"size\" : 6,\n  \"links\" : [ {\n    \"id\" : 0,\n    \"url\" : \"http://example.com/aeiou\"\n  }, {\n    \"id\" : 0,\n    \"url\" : \"http://example.com/aeiou\"\n  } ]\n}",
                     ListLinksResponse.class
                 ), HttpStatus.OK);
             } catch (IOException e) {
-                LOGGER.error(error, e);
+                LOGGER.error(errorString, e);
                 return new ResponseEntity<ListLinksResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
-
         return new ResponseEntity<ListLinksResponse>(HttpStatus.NOT_IMPLEMENTED);
     }
 
@@ -95,19 +90,19 @@ public class LinksApiController implements LinksApi {
         @Parameter(in = ParameterIn.DEFAULT, description = "", required = true, schema = @Schema()) @Valid @RequestBody
         AddLinkRequest body
     ) {
-        String accept = request.getHeader(acceptHeader);
-        if (accept != null && accept.contains(aplicationJson)) {
+        String accept = request.getHeader(acceptString);
+
+        if (accept != null && accept.contains(applicationJsonString)) {
             try {
                 return new ResponseEntity<LinkResponse>(objectMapper.readValue(
-                    content,
+                    "{\n  \"id\" : 0,\n  \"url\" : \"http://example.com/aeiou\"\n}",
                     LinkResponse.class
                 ), HttpStatus.OK);
             } catch (IOException e) {
-                LOGGER.error(error, e);
+                LOGGER.error(errorString, e);
                 return new ResponseEntity<LinkResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
-
         return new ResponseEntity<LinkResponse>(HttpStatus.NOT_IMPLEMENTED);
     }
 

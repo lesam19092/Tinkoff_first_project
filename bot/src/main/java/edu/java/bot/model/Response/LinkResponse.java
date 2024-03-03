@@ -7,9 +7,11 @@ import java.util.Objects;
 import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
 
-
-@Setter
+/**
+ * LinkResponse
+ */
 @Validated
+@Setter
 public class LinkResponse {
     @JsonProperty("id")
     private Long id = null;

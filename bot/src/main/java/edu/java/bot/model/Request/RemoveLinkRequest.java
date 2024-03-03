@@ -7,8 +7,10 @@ import java.util.Objects;
 import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
 
-@Setter
-@Validated
+/**
+ * RemoveLinkRequest
+ */
+@Setter @Validated
 public class RemoveLinkRequest {
     @JsonProperty("link")
     private URI link = null;

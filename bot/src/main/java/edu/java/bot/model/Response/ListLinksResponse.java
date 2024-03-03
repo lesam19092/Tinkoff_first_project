@@ -12,30 +12,30 @@ import org.springframework.validation.annotation.Validated;
 public class ListLinksResponse {
     @JsonProperty("links")
     @Valid
-    private List<edu.java.bot.model.Response.LinkResponse> links = null;
+    private List<LinkResponse> links = null;
 
     @JsonProperty("size")
     private Integer size = null;
 
-    public ListLinksResponse links(List<edu.java.bot.model.Response.LinkResponse> links) {
+    public ListLinksResponse links(List<LinkResponse> links) {
         this.links = links;
         return this;
     }
 
-    public ListLinksResponse addLinksItem(edu.java.bot.model.Response.LinkResponse linksItem) {
+    public ListLinksResponse addLinksItem(LinkResponse linksItem) {
         if (this.links == null) {
-            this.links = new ArrayList<edu.java.bot.model.Response.LinkResponse>();
+            this.links = new ArrayList<LinkResponse>();
         }
         this.links.add(linksItem);
         return this;
     }
 
     @Valid
-    public List<edu.java.bot.model.Response.LinkResponse> getLinks() {
+    public List<LinkResponse> getLinks() {
         return links;
     }
 
-    public void setLinks(List<edu.java.bot.model.Response.LinkResponse> links) {
+    public void setLinks(List<LinkResponse> links) {
         this.links = links;
     }
 

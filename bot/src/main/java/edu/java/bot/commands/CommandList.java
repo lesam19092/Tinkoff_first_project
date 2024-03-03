@@ -27,6 +27,8 @@ public class CommandList implements Command {
 
     @Override
     public String handle(Update update) {
+//        ScrapperClient scrapperClient = new ScrapperClient(WebClient.builder().build());
+//        System.out.println(scrapperClient.getLinksById(10L));
         long chatId = update.message().chat().id();
         return getTrackingLinks(chatId);
     }
@@ -43,7 +45,7 @@ public class CommandList implements Command {
                 return emptyList;
             }
             int i = 1;
-            for (URI site : listOfSites) {
+            for (URI site: listOfSites) {
                 str.append(i++).append(") ").append(site.toString()).append("\n");
             }
             return str.toString();
@@ -51,5 +53,6 @@ public class CommandList implements Command {
         return unknownUser;
 
     }
+
 
 }

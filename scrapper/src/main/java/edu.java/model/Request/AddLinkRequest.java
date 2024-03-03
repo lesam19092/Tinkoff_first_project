@@ -7,10 +7,11 @@ import java.util.Objects;
 import javax.annotation.Generated;
 import org.springframework.validation.annotation.Validated;
 
+/**
+ * AddLinkRequest
+ */
 @Validated
 @Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen", date = "2024-02-29T17:43:31.402605197Z[GMT]")
-
-
 public class AddLinkRequest   {
     @JsonProperty("link")
     private URI link = null;
@@ -20,7 +21,10 @@ public class AddLinkRequest   {
         return this;
     }
 
-
+    /**
+     * Get link
+     * @return link
+     **/
     @Schema(description = "")
 
     public URI getLink() {
@@ -59,6 +63,10 @@ public class AddLinkRequest   {
         return sb.toString();
     }
 
+    /**
+     * Convert the given object to string with each line indented by 4 spaces
+     * (except the first line).
+     */
     private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
