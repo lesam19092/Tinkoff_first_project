@@ -1,6 +1,4 @@
 app:
-
-
   scheduler:
     enable: true
     interval: 5s
