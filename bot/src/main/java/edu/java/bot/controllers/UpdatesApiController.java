@@ -1,4 +1,4 @@
-package edu.java.bot.controller;
+package edu.java.bot.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.java.bot.model.Request.LinkUpdateRequest;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class UpdatesApiController implements edu.java.bot.controller.UpdatesApi {
+public class UpdatesApiController implements edu.java.bot.controllers.UpdatesApi {
     private final ObjectMapper objectMapper;
 
     private final HttpServletRequest request;
