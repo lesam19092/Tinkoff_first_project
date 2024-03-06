@@ -1,4 +1,4 @@
-package edu.java.bot.model.Request;
+package edu.java.bot.model.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -8,15 +8,14 @@ import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
 
 /**
- * AddLinkRequest
+ * RemoveLinkRequest
  */
 @Setter @Validated
-
-public class AddLinkRequest {
+public class RemoveLinkRequest {
     @JsonProperty("link")
     private URI link = null;
 
-    public AddLinkRequest link(URI link) {
+    public RemoveLinkRequest link(URI link) {
         this.link = link;
         return this;
     }
@@ -39,8 +38,8 @@ public class AddLinkRequest {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        AddLinkRequest addLinkRequest = (AddLinkRequest) o;
-        return Objects.equals(this.link, addLinkRequest.link);
+        RemoveLinkRequest removeLinkRequest = (RemoveLinkRequest) o;
+        return Objects.equals(this.link, removeLinkRequest.link);
     }
 
     @Override
@@ -51,7 +50,7 @@ public class AddLinkRequest {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("class AddLinkRequest {\n");
+        sb.append("class RemoveLinkRequest {\n");
 
         sb.append("    link: ").append(toIndentedString(link)).append("\n");
         sb.append("}");

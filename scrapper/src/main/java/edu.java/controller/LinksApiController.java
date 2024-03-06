@@ -1,17 +1,16 @@
 package edu.java.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.java.model.Request.AddLinkRequest;
-import edu.java.model.Request.RemoveLinkRequest;
-import edu.java.model.Response.LinkResponse;
-import edu.java.model.Response.ListLinksResponse;
+import edu.java.model.request.AddLinkRequest;
+import edu.java.model.request.RemoveLinkRequest;
+import edu.java.model.response.LinkResponse;
+import edu.java.model.response.ListLinksResponse;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import java.io.IOException;
-import javax.annotation.Generated;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
-@Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen",
-           date = "2024-02-29T10:09:42.512141887Z[GMT]")
+
 @RestController
 public class LinksApiController implements LinksApi {
 
@@ -42,31 +40,20 @@ public class LinksApiController implements LinksApi {
     }
 
     public ResponseEntity<LinkResponse> linksDelete(
-        @Parameter(in = ParameterIn.HEADER, description = "", required = true, schema = @Schema())
         @RequestHeader(value = "Tg-Chat-Id", required = true) Long tgChatId,
-        @Parameter(in = ParameterIn.DEFAULT, description = "", required = true, schema = @Schema())
         @Valid
         @RequestBody
         RemoveLinkRequest body
     ) {
         String accept = request.getHeader(acceptString);
         if (accept != null && accept.contains(applicationJsonString)) {
-            try {
-                return new ResponseEntity<LinkResponse>(objectMapper.readValue(
-                    "{\n  \"id\" : 1,\n  \"url\" : \"http://example.com/aeiou\"\n}",
-                    LinkResponse.class
-                ), HttpStatus.OK);
-            } catch (IOException e) {
-                LOGGER.error(errorString, e);
-                return new ResponseEntity<LinkResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
+            return new ResponseEntity<LinkResponse>(new LinkResponse(), HttpStatus.OK);
         }
 
         return new ResponseEntity<LinkResponse>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<ListLinksResponse> linksGet(
-        @Parameter(in = ParameterIn.HEADER, description = "", required = true, schema = @Schema())
         @RequestHeader(value = "Tg-Chat-Id", required = true) Long tgChatId
     ) {
         String accept = request.getHeader(acceptString);
@@ -86,9 +73,7 @@ public class LinksApiController implements LinksApi {
     }
 
     public ResponseEntity<LinkResponse> linksPost(
-        @Parameter(in = ParameterIn.HEADER, description = "", required = true, schema = @Schema())
         @RequestHeader(value = "Tg-Chat-Id", required = true) Long tgChatId,
-        @Parameter(in = ParameterIn.DEFAULT, description = "", required = true, schema = @Schema()) @Valid @RequestBody
         AddLinkRequest body
     ) {
         String accept = request.getHeader(acceptString);

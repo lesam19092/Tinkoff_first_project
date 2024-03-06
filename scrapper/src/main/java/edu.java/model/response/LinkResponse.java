@@ -1,4 +1,4 @@
-package edu.java.bot.model.Response;
+package edu.java.model.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -33,6 +33,10 @@ public class LinkResponse {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public LinkResponse url(URI url) {

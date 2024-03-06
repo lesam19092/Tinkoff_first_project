@@ -1,10 +1,10 @@
 package edu.java.controller;
 
-import edu.java.model.Request.AddLinkRequest;
-import edu.java.model.Request.RemoveLinkRequest;
-import edu.java.model.Response.ApiErrorResponse;
-import edu.java.model.Response.LinkResponse;
-import edu.java.model.Response.ListLinksResponse;
+import edu.java.model.request.AddLinkRequest;
+import edu.java.model.request.RemoveLinkRequest;
+import edu.java.model.response.ApiErrorResponse;
+import edu.java.model.response.LinkResponse;
+import edu.java.model.response.ListLinksResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen",
-                            date = "2024-02-29T10:09:42.512141887Z[GMT]")
 @Validated
 public interface LinksApi {
 

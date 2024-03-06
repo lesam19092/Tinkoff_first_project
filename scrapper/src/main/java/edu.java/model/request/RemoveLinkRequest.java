@@ -1,16 +1,15 @@
-package edu.java.bot.model.Request;
+package edu.java.model.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.net.URI;
 import java.util.Objects;
-import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
 
 /**
  * RemoveLinkRequest
  */
-@Setter @Validated
+@Validated
 public class RemoveLinkRequest {
     @JsonProperty("link")
     private URI link = null;
@@ -26,8 +25,13 @@ public class RemoveLinkRequest {
      * @return link
      **/
     @Schema(description = "")
+
     public URI getLink() {
         return link;
+    }
+
+    public void setLink(URI link) {
+        this.link = link;
     }
 
     @Override

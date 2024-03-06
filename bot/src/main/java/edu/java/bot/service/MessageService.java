@@ -1,8 +1,8 @@
 package edu.java.bot.service;
 
 import com.pengrad.telegrambot.model.Update;
-import edu.java.bot.model.Request.AddLinkRequest;
-import edu.java.bot.model.ScrapperClient;
+import edu.java.bot.model.request.AddLinkRequest;
+import edu.java.bot.client.ScrapperClient;
 import edu.java.bot.model.SessionState;
 import edu.java.bot.model.exception.ApiException;
 import edu.java.bot.processor.CommandHandler;
@@ -29,6 +29,8 @@ public class MessageService {
     private final CommandHandler commandHandler;
     private final UserService userRepository;
     private final UrlProcessor urlProcessor;
+
+    private final ScrapperClient scrapperClient = new ScrapperClient(WebClient.builder().build());
 
     public MessageService(
         CommandHandler commandHandler,
@@ -125,6 +127,7 @@ public class MessageService {
 
         trackSites.remove(uri);
         updateTrackSitesAndCommit(user, trackSites);
+       // System.out.println(scrapperClient.deleteChatById(user.getId()));
 //        System.out.println(new ScrapperClient(WebClient.builder().build()).deleteLinkById(user.getId(),
 //            new RemoveLinkRequest().link(uri.toString())));
         return true;

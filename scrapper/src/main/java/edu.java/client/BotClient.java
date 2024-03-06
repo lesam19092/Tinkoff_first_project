@@ -1,6 +1,6 @@
-package edu.java.model;
+package edu.java.client;
 
-import edu.java.model.Request.LinkUpdateRequest;
+import edu.java.model.request.LinkUpdateRequest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;

@@ -18,14 +18,12 @@ public class TgChatApiController implements TgChatApi {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TgChatApiController.class);
 
-    private final ObjectMapper objectMapper;
 
     private final HttpServletRequest request;
     private final String acceptString = "Accept";
 
     @Autowired
-    public TgChatApiController(ObjectMapper objectMapper, HttpServletRequest request) {
-        this.objectMapper = objectMapper;
+    public TgChatApiController( HttpServletRequest request) {
         this.request = request;
     }
 

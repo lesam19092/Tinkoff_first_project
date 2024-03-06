@@ -1,19 +1,20 @@
-package edu.java.exception;
+package edu.java.bot.model.exception;
 
-import edu.java.model.Response.ApiErrorResponse;
+import edu.java.bot.model.response.ApiErrorResponse;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@org.springframework.web.bind.annotation.RestControllerAdvice
-public class RestControllerAdvice {
-    @ExceptionHandler(IllegalStateException.class)
+@RestControllerAdvice
+public class RestController {
+    @ExceptionHandler(ApiException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ApiErrorResponse handle(IllegalStateException ex) {
-        return new ApiErrorResponse(
-            ex.getMessage(),
+    public ApiErrorResponse handle(ApiException ex) {
+
+        return new ApiErrorResponse(ex.getMessage(),
             HttpStatus.BAD_REQUEST.toString(),
             ex.getClass().toGenericString(),
             ex.getMessage(),

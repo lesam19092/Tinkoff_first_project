@@ -1,22 +1,22 @@
-package edu.java.model.Request;
+package edu.java.bot.model.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.net.URI;
 import java.util.Objects;
+import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
 
 /**
- * RemoveLinkRequest
+ * AddLinkRequest
  */
-@Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.v3.generators.java.SpringCodegen",
-                            date = "2024-02-29T17:43:31.402605197Z[GMT]")
-public class RemoveLinkRequest {
+@Setter @Validated
+
+public class AddLinkRequest {
     @JsonProperty("link")
     private URI link = null;
 
-    public RemoveLinkRequest link(URI link) {
+    public AddLinkRequest link(URI link) {
         this.link = link;
         return this;
     }
@@ -27,13 +27,8 @@ public class RemoveLinkRequest {
      * @return link
      **/
     @Schema(description = "")
-
     public URI getLink() {
         return link;
-    }
-
-    public void setLink(URI link) {
-        this.link = link;
     }
 
     @Override
@@ -44,8 +39,8 @@ public class RemoveLinkRequest {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        RemoveLinkRequest removeLinkRequest = (RemoveLinkRequest) o;
-        return Objects.equals(this.link, removeLinkRequest.link);
+        AddLinkRequest addLinkRequest = (AddLinkRequest) o;
+        return Objects.equals(this.link, addLinkRequest.link);
     }
 
     @Override
@@ -56,7 +51,7 @@ public class RemoveLinkRequest {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("class RemoveLinkRequest {\n");
+        sb.append("class AddLinkRequest {\n");
 
         sb.append("    link: ").append(toIndentedString(link)).append("\n");
         sb.append("}");
