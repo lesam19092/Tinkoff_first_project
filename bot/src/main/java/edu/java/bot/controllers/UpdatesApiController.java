@@ -1,12 +1,8 @@
 package edu.java.bot.controllers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.java.bot.model.request.LinkUpdateRequest;
-import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.enums.ParameterIn;
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,13 +13,12 @@ public class UpdatesApiController implements UpdatesApi {
 
     private final HttpServletRequest request;
 
-    @org.springframework.beans.factory.annotation.Autowired
+    @Autowired
     public UpdatesApiController(HttpServletRequest request) {
         this.request = request;
     }
 
     public ResponseEntity<Void> updatesPost(
-        @Parameter(in = ParameterIn.DEFAULT, description = "", required = true, schema = @Schema()) @Valid
         @RequestBody LinkUpdateRequest body
     ) {
         String accept = request.getHeader("Accept");

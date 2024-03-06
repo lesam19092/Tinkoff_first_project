@@ -1,6 +1,5 @@
 package edu.java.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -18,12 +17,11 @@ public class TgChatApiController implements TgChatApi {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TgChatApiController.class);
 
-
     private final HttpServletRequest request;
     private final String acceptString = "Accept";
 
     @Autowired
-    public TgChatApiController( HttpServletRequest request) {
+    public TgChatApiController(HttpServletRequest request) {
         this.request = request;
     }
 
