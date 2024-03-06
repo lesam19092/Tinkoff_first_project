@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableScheduling
 @EnableConfigurationProperties(ApplicationConfig.class)
 public class ScrapperApplication {
+    //some fix
     public static void main(String[] args) {
         SpringApplication.run(ScrapperApplication.class, args);
     }

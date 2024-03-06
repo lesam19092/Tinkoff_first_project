@@ -4,7 +4,7 @@ CREATE TABLE chat
     chat_id bigint NOT NULL,
 
 );
-/**/
+
 CREATE TABLE link
 (
     id              bigint generated always as identity,
