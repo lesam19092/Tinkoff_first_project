@@ -25,6 +25,8 @@ public class ExampleIntegrationTest extends IntegrationTest {
         System.out.println("dsadsada");
         Database database = IntegrationTest.runMigrations(POSTGRES);
 
+        System.out.println(database.getDisplayName());
+
         assertThat(database).isNotNull();
         // Add assertions as needed
     }
