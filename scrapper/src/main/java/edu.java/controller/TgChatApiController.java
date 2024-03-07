@@ -3,10 +3,8 @@ package edu.java.controller;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,13 +15,8 @@ public class TgChatApiController implements TgChatApi {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TgChatApiController.class);
 
-    private final HttpServletRequest request;
     private final String acceptString = "Accept";
 
-    @Autowired
-    public TgChatApiController(HttpServletRequest request) {
-        this.request = request;
-    }
 
     public ResponseEntity<Void> tgChatIdDelete(
         @Parameter(in = ParameterIn.PATH,
@@ -32,7 +25,6 @@ public class TgChatApiController implements TgChatApi {
                    schema = @Schema())
         @PathVariable("id") Long id
     ) {
-        String accept = request.getHeader(acceptString);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
@@ -44,7 +36,6 @@ public class TgChatApiController implements TgChatApi {
 //            throw new IllegalStateException("Id is 123");
 //        }
         // общение с бд
-        String accept = request.getHeader(acceptString);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 

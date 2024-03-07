@@ -5,7 +5,6 @@ import edu.java.model.request.AddLinkRequest;
 import edu.java.model.request.RemoveLinkRequest;
 import edu.java.model.response.LinkResponse;
 import edu.java.model.response.ListLinksResponse;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import java.io.IOException;
 import org.slf4j.Logger;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
 public class LinksApiController implements LinksApi {
 
@@ -26,14 +24,12 @@ public class LinksApiController implements LinksApi {
     private final String applicationJsonString = "application/json";
     private final String errorString = "Couldn't serialize response for content type application/json";
 
+
     private final ObjectMapper objectMapper;
 
-    private final HttpServletRequest request;
-
     @Autowired
-    public LinksApiController(ObjectMapper objectMapper, HttpServletRequest request) {
+    public LinksApiController(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
-        this.request = request;
     }
 
     public ResponseEntity<LinkResponse> linksDelete(
@@ -42,7 +38,7 @@ public class LinksApiController implements LinksApi {
         @RequestBody
         RemoveLinkRequest body
     ) {
-        String accept = request.getHeader(acceptString);
+        String accept = acceptString;
         if (accept != null && accept.contains(applicationJsonString)) {
             return new ResponseEntity<LinkResponse>(new LinkResponse(), HttpStatus.OK);
         }
@@ -53,7 +49,7 @@ public class LinksApiController implements LinksApi {
     public ResponseEntity<ListLinksResponse> linksGet(
         @RequestHeader(value = "Tg-Chat-Id", required = true) Long tgChatId
     ) {
-        String accept = request.getHeader(acceptString);
+        String accept = acceptString;
 
         if (accept != null && accept.contains(applicationJsonString)) {
             try {
@@ -73,7 +69,7 @@ public class LinksApiController implements LinksApi {
         @RequestHeader(value = "Tg-Chat-Id", required = true) Long tgChatId,
         AddLinkRequest body
     ) {
-        String accept = request.getHeader(acceptString);
+        String accept =  acceptString;
 
         if (accept != null && accept.contains(applicationJsonString)) {
             try {

@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
-public class MessageService {
+public class MessageService implements MessageServiceInterface {
     public static final String DO_REGISTRATION_MESSAGE = "Необходимо зарегистрироваться.";
     public static final String INVALID_URI_MESSAGE = "Неверно указан URI.";
     public static final String INVALID_COMMAND_MESSAGE = "Команда введена некорректно.";
@@ -109,8 +109,10 @@ public class MessageService {
         List<URI> trackSites = new ArrayList<>(user.getSites());
 
         try {
-            new ScrapperClient(WebClient.builder().build()).addLinkById(user.getId(),
-                new AddLinkRequest().link(uri)); //TODO extract ScrapperClient
+            new ScrapperClient(WebClient.builder().build()).addLinkById(
+                user.getId(),
+                new AddLinkRequest().link(uri)
+            ); //TODO extract ScrapperClient
             trackSites.add(uri);
             updateTrackSitesAndCommit(user, trackSites);
             return true;
@@ -127,7 +129,7 @@ public class MessageService {
 
         trackSites.remove(uri);
         updateTrackSitesAndCommit(user, trackSites);
-       // System.out.println(scrapperClient.deleteChatById(user.getId()));
+        // System.out.println(scrapperClient.deleteChatById(user.getId()));
 //        System.out.println(new ScrapperClient(WebClient.builder().build()).deleteLinkById(user.getId(),
 //            new RemoveLinkRequest().link(uri.toString())));
         return true;
