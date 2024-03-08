@@ -18,5 +18,6 @@ public class ExampleIntegrationTest extends IntegrationTest {
 
         assertThat(database).isNotNull();
         // Add assertions as needed
+
     }
 }
