@@ -1,19 +1,24 @@
 package edu.java.bot.service;
 
 import com.pengrad.telegrambot.model.Update;
+import edu.java.bot.client.ScrapperClient;
 import edu.java.bot.model.SessionState;
+import edu.java.bot.model.exception.ApiException;
+import edu.java.bot.model.request.AddLinkRequest;
 import edu.java.bot.processor.CommandHandler;
 import edu.java.bot.repository.UserService;
 import edu.java.bot.url_processor.UrlProcessor;
 import edu.java.bot.users.User;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
-public class MessageService {
+public class MessageService implements MessageServiceInterface {
     public static final String DO_REGISTRATION_MESSAGE = "Необходимо зарегистрироваться.";
     public static final String INVALID_URI_MESSAGE = "Неверно указан URI.";
     public static final String INVALID_COMMAND_MESSAGE = "Команда введена некорректно.";
@@ -24,6 +29,8 @@ public class MessageService {
     private final CommandHandler commandHandler;
     private final UserService userRepository;
     private final UrlProcessor urlProcessor;
+
+    private final ScrapperClient scrapperClient = new ScrapperClient(WebClient.builder().build());
 
     public MessageService(
         CommandHandler commandHandler,
@@ -66,10 +73,12 @@ public class MessageService {
             }
         } catch (URISyntaxException e) {
             return e.getReason();
+        } catch (MalformedURLException ex) {
+            return ex.getMessage();
         }
     }
 
-    private String processStateUserMessage(User user, URI uri) {
+    private String processStateUserMessage(User user, URI uri) throws MalformedURLException {
         if (user.getState().equals(SessionState.WAIT_URI_FOR_TRACKING)) {
             return prepareWaitTrackingMessage(user, uri);
         }
@@ -80,7 +89,7 @@ public class MessageService {
         return INVALID_COMMAND_MESSAGE;
     }
 
-    private String prepareWaitTrackingMessage(User user, URI uri) {
+    private String prepareWaitTrackingMessage(User user, URI uri) throws MalformedURLException {
         if (urlProcessor.isValidUrl(uri)) {
             return (updateUserTrackingSites(user, uri)) ? SUCCESS_TRACK_SITE_MESSAGE
                 : DUPLICATE_TRACKING_MESSAGE;
@@ -96,15 +105,20 @@ public class MessageService {
         return INVALID_FOR_TRACK_SITE_MESSAGE;
     }
 
-    private boolean updateUserTrackingSites(User user, URI uri) {
+    private boolean updateUserTrackingSites(User user, URI uri) throws MalformedURLException {
         List<URI> trackSites = new ArrayList<>(user.getSites());
-        if (trackSites.contains(uri)) {
+
+        try {
+            new ScrapperClient(WebClient.builder().build()).addLinkById(
+                user.getId(),
+                new AddLinkRequest().link(uri)
+            ); //TODO extract ScrapperClient
+            trackSites.add(uri);
+            updateTrackSitesAndCommit(user, trackSites);
+            return true;
+        } catch (ApiException ex) {
             return false;
         }
-
-        trackSites.add(uri);
-        updateTrackSitesAndCommit(user, trackSites);
-        return true;
     }
 
     private boolean deleteTrackingSites(User user, URI uri) {
@@ -115,6 +129,9 @@ public class MessageService {
 
         trackSites.remove(uri);
         updateTrackSitesAndCommit(user, trackSites);
+        // System.out.println(scrapperClient.deleteChatById(user.getId()));
+//        System.out.println(new ScrapperClient(WebClient.builder().build()).deleteLinkById(user.getId(),
+//            new RemoveLinkRequest().link(uri.toString())));
         return true;
     }
 

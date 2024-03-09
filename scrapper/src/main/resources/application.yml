@@ -1,8 +1,8 @@
 app:
   scheduler:
     enable: true
-    interval: 5s
-    force-check-delay: 5s
+    interval: 10s
+    force-check-delay: 10s
 
 spring:
   application:
@@ -10,6 +10,10 @@ spring:
 
 server:
   port: 1010
+
+springdoc:
+  swagger-ui:
+    path: swagger-ui
 
 logging:
   config: classpath:log4j2-plain.xml
