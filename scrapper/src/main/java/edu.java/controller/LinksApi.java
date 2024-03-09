@@ -44,6 +44,7 @@ public interface LinksApi {
         RemoveLinkRequest body
     );
 
+
     @Operation(summary = "Получить все отслеживаемые ссылки", description = "", tags = {})
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200",
