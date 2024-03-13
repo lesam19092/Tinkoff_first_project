@@ -10,15 +10,12 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
 public class ExampleIntegrationTest extends IntegrationTest {
+
     @Test
     public void testLiquibaseMigration() throws SQLException, FileNotFoundException, LiquibaseException {
-        IntegrationTest.runMigrations(POSTGRES);
-
-        Database database = getDatabase(getConnection(
-            POSTGRES.getJdbcUrl(),
-            POSTGRES.getUsername(),
-            POSTGRES.getPassword()));
+        Database database = IntegrationTest.runMigrations(POSTGRES);
 
         assertThat(database).isNotNull();
+
     }
 }
