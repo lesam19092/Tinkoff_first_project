@@ -2,8 +2,7 @@ package edu.java.scrapper;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import com.github.tomakehurst.wiremock.client.WireMock;
-import edu.java.client.StackOverFlowClient;
-import java.time.OffsetDateTime;
+import edu.java.stackoverflow.StackOverFlowClient;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -11,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.test.StepVerifier;
 
-public class StackoverFlowClientTest {
+public class StackOverFlowClientTest {
     private static WireMockServer wireMockServer;
 
     @BeforeAll
@@ -29,11 +28,7 @@ public class StackoverFlowClientTest {
     @Test
     @DisplayName("test for check the required response body")
     public void testFetchQuestion() {
-        // Arrange
         long questionId = 123456;
-        String order = "activity";
-        String sort = "desc";
-        OffsetDateTime fixedTime = OffsetDateTime.parse("2022-02-21T12:34:56Z");
 
         wireMockServer.stubFor(WireMock.get(WireMock.urlPathEqualTo("/questions/123456"))
             .willReturn(WireMock.aResponse()
@@ -50,11 +45,11 @@ public class StackoverFlowClientTest {
             ));
 
         // Act
-        WebClient webClient = WebClient.builder().baseUrl("http://localhost:" + wireMockServer.port()).build();
-        StackOverFlowClient stackOverflowClient = new StackOverFlowClient(webClient);
+        String baseUrl ="http://localhost:" + wireMockServer.port();
+        StackOverFlowClient stackOverflowClient = new StackOverFlowClient(baseUrl);
 
         // Assert
-        StepVerifier.create(stackOverflowClient.fetchQuestion(questionId, sort, order))
+        StepVerifier.create(stackOverflowClient.fetchQuestion(questionId))
             // Then
             .expectNextMatches(response -> response.getItems().getFirst().getTitle().equals("title") &&
                 response.getItems().getFirst().getQuestionId() == 1 &&

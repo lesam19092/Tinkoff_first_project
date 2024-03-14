@@ -13,9 +13,11 @@ public class ExampleIntegrationTest extends IntegrationTest {
 
     @Test
     public void testLiquibaseMigration() throws SQLException, FileNotFoundException, LiquibaseException {
+        // Verify that Liquibase migrations have been applied successfully
         Database database = IntegrationTest.runMigrations(POSTGRES);
 
         assertThat(database).isNotNull();
+        // Add assertions as needed
 
     }
 }
