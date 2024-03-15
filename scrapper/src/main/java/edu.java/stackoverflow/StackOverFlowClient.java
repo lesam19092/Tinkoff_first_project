@@ -34,6 +34,7 @@ public class StackOverFlowClient {
             .retrieve()
             .bodyToMono(StackOverFlowResponse.class).block();
 
+        System.out.println(comments);
         StackOverFlowResponse list = new StackOverFlowResponse();
         StackOverFlowQuestion question = response.getItems().getFirst();
         question.setCommentCount(comments);

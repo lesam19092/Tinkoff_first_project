@@ -58,6 +58,7 @@ public class LinkUpdateScheduler {
     }
 
     private void updateLinkForGithub(Link link) throws URISyntaxException {
+        Timestamp now = Timestamp.valueOf(LocalDateTime.now());
         int idName = Integer.parseInt(System.getenv("idName"));
         int idOfReposName = Integer.parseInt(System.getenv("idReposName"));
         List<String> fragments = List.of(link.getUrl().toString().split("/"));
@@ -65,21 +66,37 @@ public class LinkUpdateScheduler {
             gitHubClient.getRepositoryInfo(fragments.get(idName), fragments.get(idOfReposName)).block();
         Timestamp lastPush = rep.getLastPush();
         if (lastPush.after(link.getLastCheckTime())) {
-            link.setLastCheckTime(Timestamp.valueOf(LocalDateTime.now())); //TODO update to DB
-            botClient.updateLink(link.getUrl(), List.of(link.getChatId()));
+            jdbcLinkService.updateLinkLastCheckTimeById(link.getId(), now);
+            botClient.updateLink(link.getUrl(), List.of(link.getChatId()),"обновление данных");
         }
     }
 
-    private void updateLinkForStackOverFlow(Link link) {
+    private void updateLinkForStackOverFlow(Link link) throws URISyntaxException {
+        Timestamp now = Timestamp.valueOf(LocalDateTime.now());
         List<String> fragments = List.of(link.getUrl().toString().split("/"));
-        int idOfQuestion = Integer.parseInt(System.getenv("idOfQuestion"));
+        // int idOfQuestion = Integer.parseInt(System.getenv("idOfQuestion"));
         StackOverFlowQuestion
             question =
-            stackOverFlowClient.fetchQuestion(Long.parseLong(fragments.get(idOfQuestion))).block().getItems()
+            stackOverFlowClient.fetchQuestion(Long.parseLong(fragments.get(4))).getItems()
                 .getFirst();
         Timestamp lastActivity = question.getLastActivityAsTimestamp();
-        if (lastActivity.after(link.getLastCheckTime())) {
-            link.setLastCheckTime(Timestamp.valueOf(LocalDateTime.now())); //TODO update to DB
+        System.out.println(question.getCommentCount());
+        System.out.println(question.getAnswerCount());
+
+        if (lastActivity.after(link.getLastCheckTime())  ) {
+
+            jdbcLinkService.updateLinkLastCheckTimeById(link.getId(), now);
+            botClient.updateLink(link.getUrl(), List.of(link.getChatId()),"обновление данных");
+
+            if (question.getAnswerCount() > jdbcLinkService.getLinkPropertiesById(link.getId()).getCountOfAnswer()) {
+                botClient.updateLink(link.getUrl(), List.of(link.getChatId()),"появился ответ");
+                jdbcLinkService.updateCountOfAnswersById(link.getId(),question.getAnswerCount());
+            }
+
+            if (question.getCommentCount() > jdbcLinkService.getLinkPropertiesById(link.getId()).getCountOfComments()) {
+                botClient.updateLink(link.getUrl(), List.of(link.getChatId()),"появился коммент");
+                jdbcLinkService.updateCountOfCommentsById(link.getId(),question.getCommentCount());
+            }
         }
 
     }
