@@ -1,6 +1,7 @@
 package edu.java.service.jdbc;
 
 import edu.java.model.dto.Link;
+import edu.java.model.dto.LinkSof;
 import edu.java.repository.LinkRepository;
 import edu.java.service.LinkService;
 import java.util.List;
@@ -30,6 +31,11 @@ public class JdbcLinkService implements LinkService {
     @Override
     public int removeLink(Long id) {
         return linkRepository.remove(id);
+    }
+
+    @Override
+    public LinkSof getLinkPropertiesById(Long id) {
+        return linkRepository.getLinkPropertiesById(id);
     }
 
 }
