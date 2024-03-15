@@ -1,6 +1,7 @@
 package edu.java.repository;
 
 import edu.java.model.dto.Link;
+import java.sql.Timestamp;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.simple.JdbcClient;
@@ -56,5 +57,14 @@ public class LinkRepository {
     public List<Link> findUnUpdatedLinks() {
         String sql = "select * from link where EXTRACT(SECOND FROM (now() -last_check_time )) > 30";
         return jdbcClient.sql(sql).query(Link.class).list();
+    }
+    @Transactional
+    public void updateLinkLastCheckTimeById(Long id, Timestamp lastCheckTime) {
+        String sql =
+            "update link set  last_check_time = (:lastCheckTime) where id = :link_id";
+        jdbcClient.sql(sql)
+            .param("link_id", id)
+            .param("lastCheckTime", lastCheckTime)
+            .update();
     }
 }
