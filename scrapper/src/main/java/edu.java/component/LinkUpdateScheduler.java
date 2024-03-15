@@ -4,7 +4,6 @@ import edu.java.client.BotClient;
 import edu.java.github.GitHubClient;
 import edu.java.github.GitHubRepository;
 import edu.java.model.dto.Link;
-import edu.java.model.dto.LinkSof;
 import edu.java.service.jdbc.JdbcLinkService;
 import edu.java.stackoverflow.StackOverFlowClient;
 import edu.java.stackoverflow.StackOverFlowQuestion;
@@ -43,7 +42,7 @@ public class LinkUpdateScheduler {
 
     @Scheduled(fixedDelayString = "#{scheduler.interval}")
     public void update() throws InterruptedException, URISyntaxException {
-       // Thread.sleep(Integer.parseInt(System.getenv("sleep"))); //TODO remove
+        Thread.sleep(Integer.parseInt(System.getenv("sleep"))); //TODO remove
         logger.info("I'm updating!");
         updateOldLinks();
     }
@@ -73,28 +72,15 @@ public class LinkUpdateScheduler {
 
     private void updateLinkForStackOverFlow(Link link) {
         List<String> fragments = List.of(link.getUrl().toString().split("/"));
-        System.out.println(fragments.toString());
-        //int idOfQuestion = Integer.parseInt(System.getenv("idOfQuestion"));
+        int idOfQuestion = Integer.parseInt(System.getenv("idOfQuestion"));
         StackOverFlowQuestion
             question =
-            stackOverFlowClient.fetchQuestion(Long.parseLong(fragments.get(4))).getItems()
+            stackOverFlowClient.fetchQuestion(Long.parseLong(fragments.get(idOfQuestion))).block().getItems()
                 .getFirst();
         Timestamp lastActivity = question.getLastActivityAsTimestamp();
-
-            LinkSof linkSof = jdbcLinkService.getLinkPropertiesById(link.getId());
-
-        System.out.println(linkSof.getLinkId() + " " + linkSof.getCounfOfAnswer());
-
-            System.out.println(linkSof.getCounfOfAnswer());
-            if (question.getCommentCount() > linkSof.getCountOfComments()){
-                System.out.println("dfsfdsfdsfdsf121212121212");
-            }
-            if(question.getAnswerCount() > linkSof.getCounfOfAnswer()){
-                System.out.println("kek");
-            }
-            //botClient.updateLink(link.getUrl(), List.of(link.getChatId()));
-
+        if (lastActivity.after(link.getLastCheckTime())) {
             link.setLastCheckTime(Timestamp.valueOf(LocalDateTime.now())); //TODO update to DB
+        }
 
     }
 

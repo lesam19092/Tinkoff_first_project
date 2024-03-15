@@ -2,7 +2,6 @@ package edu.java.repository;
 
 import edu.java.model.dto.Link;
 import java.util.List;
-import edu.java.model.dto.LinkSof;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
@@ -57,11 +56,5 @@ public class LinkRepository {
     public List<Link> findUnUpdatedLinks() {
         String sql = "select * from link where EXTRACT(SECOND FROM (now() -last_check_time )) > 30";
         return jdbcClient.sql(sql).query(Link.class).list();
-    }
-
-    @Transactional(readOnly = true)
-    public LinkSof getLinkPropertiesById(Long id ){
-        String sql = "select * from links_sof where link_id = ? ";
-        return jdbcClient.sql(sql).param(1,id).query(LinkSof.class).single();
     }
 }
