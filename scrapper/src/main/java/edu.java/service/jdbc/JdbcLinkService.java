@@ -35,7 +35,7 @@ public class JdbcLinkService implements LinkService {
 
     @Override
     public void updateLinkLastCheckTimeById(Long id, Timestamp lastCheckTime) {
-        linkRepository.updateLinkLastCheckTimeById(id ,lastCheckTime);
+        linkRepository.updateLinkLastCheckTimeById(id, lastCheckTime);
     }
 
 }

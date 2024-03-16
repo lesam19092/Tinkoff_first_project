@@ -12,6 +12,7 @@ public interface LinkService {
     int addLink(Link link);
 
     int removeLink(Long id);
+
     void updateLinkLastCheckTimeById(Long id, Timestamp lastCheckTime);
 
 }

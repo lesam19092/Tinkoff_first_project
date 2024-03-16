@@ -58,6 +58,7 @@ public class LinkRepository {
         String sql = "select * from link where EXTRACT(SECOND FROM (now() -last_check_time )) > 30";
         return jdbcClient.sql(sql).query(Link.class).list();
     }
+
     @Transactional
     public void updateLinkLastCheckTimeById(Long id, Timestamp lastCheckTime) {
         String sql =
