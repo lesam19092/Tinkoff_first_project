@@ -28,6 +28,7 @@ public class UpdatesApiController implements UpdatesApi {
         @RequestBody LinkUpdateRequest body
     ) {
         messageService.sendNotification(body.getTgChatIds(), body.getUrl(), body.getDescription());
+        System.out.println(body.getUrl());
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 }

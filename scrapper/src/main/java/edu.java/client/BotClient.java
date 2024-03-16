@@ -8,7 +8,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 public class BotClient {
-    private final String baseUrl = "http://localhost:8090";
+    private final String baseUrl = "http://localhost:8070";
 
     private final WebClient webClient;
 
