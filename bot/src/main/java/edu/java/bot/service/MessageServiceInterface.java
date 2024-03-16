@@ -29,4 +29,6 @@ public interface MessageServiceInterface {
 
     }
 
+    void sendNotification(List<Long> tgIds, URI url, String description);
+
 }

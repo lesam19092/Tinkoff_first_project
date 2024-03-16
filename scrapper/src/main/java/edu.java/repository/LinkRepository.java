@@ -18,15 +18,13 @@ public class LinkRepository {
         try {
             String sql =
                 "insert into link(url, chat_id, last_check_time,created_at) "
-                    + "values(:url,:chatId,:lastCheckTime,:createdAt)";
-
+                    + "values(:url,:chatId,:checkTime,:createdAt)";
             jdbcClient.sql(sql)
                 .param("url", entity.getUrl().toString())
                 .param("chatId", entity.getChatId())
-                .param("lastCheckTime", entity.getLastCheckTime())
+                .param("checkTime", entity.getLastCheckTime())
                 .param("createdAt", entity.getCreatedAt())
                 .update();
-
         } catch (Exception e) {
             return -1;
         }

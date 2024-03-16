@@ -35,7 +35,6 @@ public class MessageController implements UpdatesListener {
                             update.message().chat().id(),
                             messageService.prepareResponseMessage(update)
                         );
-
                         telegramBot.execute(
                             message,
                             new Callback<SendMessage, SendResponse>() {

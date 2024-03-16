@@ -74,10 +74,10 @@ public class LinkUpdateScheduler {
     private void updateLinkForStackOverFlow(Link link) throws URISyntaxException {
         Timestamp now = Timestamp.valueOf(LocalDateTime.now());
         List<String> fragments = List.of(link.getUrl().toString().split("/"));
-        // int idOfQuestion = Integer.parseInt(System.getenv("idOfQuestion"));
+        int idOfQuestion = Integer.parseInt(System.getenv("idQuestionName"));
         StackOverFlowQuestion
             question =
-            stackOverFlowClient.fetchQuestion(Long.parseLong(fragments.get(4))).block().getItems()
+            stackOverFlowClient.fetchQuestion(Long.parseLong(fragments.get(idOfQuestion))).block().getItems()
                 .getFirst();
         Timestamp lastActivity = question.getLastActivityAsTimestamp();
 

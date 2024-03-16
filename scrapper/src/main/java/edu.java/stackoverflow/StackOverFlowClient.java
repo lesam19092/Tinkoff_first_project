@@ -18,7 +18,6 @@ public class StackOverFlowClient {
 
     public Mono<StackOverFlowResponse> fetchQuestion(long questionId) {
         String apiUrl = String.format(URL, questionId);
-
         return webClient
             .get()
             .uri(apiUrl)

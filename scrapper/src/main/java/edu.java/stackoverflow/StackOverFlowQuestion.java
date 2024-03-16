@@ -27,7 +27,7 @@ public class StackOverFlowQuestion {
     public Timestamp getLastActivityAsTimestamp() {
 
         return Timestamp.valueOf(Instant.ofEpochMilli(
-                lastActivity * 1000)
+                lastActivity * Integer.parseInt(System.getenv("SecondToMilliSecond")))
             .atZone(ZoneId.systemDefault())
             .toLocalDateTime());
     }

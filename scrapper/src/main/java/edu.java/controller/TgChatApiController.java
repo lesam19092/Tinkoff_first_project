@@ -42,12 +42,9 @@ public class TgChatApiController implements TgChatApi {
         @Parameter(in = ParameterIn.PATH, description = "", required = true, schema = @Schema()) @PathVariable("id")
         Long id
     ) {
-
         Chat chat = new Chat();
         chat.setChatId(id);
-
         jdbcChatService.addChat(chat);
-
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 

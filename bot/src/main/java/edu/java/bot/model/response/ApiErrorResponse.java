@@ -89,7 +89,6 @@ public class ApiErrorResponse {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class ApiErrorResponse {\n");
-
         sb.append("    description: ").append(toIndentedString(description)).append("\n");
         sb.append("    code: ").append(toIndentedString(code)).append("\n");
         sb.append("    exceptionName: ").append(toIndentedString(exceptionName)).append("\n");

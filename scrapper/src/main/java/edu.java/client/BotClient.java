@@ -18,7 +18,6 @@ public class BotClient {
 
     public String updateLink(URI url, List<Long> tgChatIds) throws URISyntaxException {
         LinkUpdateRequest linkUpdateRequest = new LinkUpdateRequest(1L, url, "Обновление ссылки", tgChatIds);
-
         return webClient
             .post()
             .uri(baseUrl + "/updates")

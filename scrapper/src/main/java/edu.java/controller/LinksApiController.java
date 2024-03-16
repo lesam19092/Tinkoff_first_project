@@ -51,20 +51,16 @@ public class LinksApiController implements LinksApi {
         if (accept != null && accept.contains(applicationJsonString)) {
             return new ResponseEntity<LinkResponse>(new LinkResponse(), HttpStatus.OK);
         }
-
         return new ResponseEntity<LinkResponse>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<ListLinksResponse> linksGet(
         @RequestHeader(value = "Tg-Chat-Id", required = true) Long tgChatId
     ) {
-
         for (Link link : jdbcLinkService.getLinks()) {
             LOGGER.info(link.getUrl().toString());
         }
-
         String accept = acceptString;
-
         if (accept != null && accept.contains(applicationJsonString)) {
             try {
                 return new ResponseEntity<ListLinksResponse>(objectMapper.readValue(
@@ -85,16 +81,13 @@ public class LinksApiController implements LinksApi {
         @Parameter(in = ParameterIn.DEFAULT, description = "", required = true, schema = @Schema()) @Valid @RequestBody
         AddLinkRequest body
     ) {
-
         int time = Integer.parseInt(System.getenv("time"));
         Link link = new Link();
         link.setChatId(tgChatId);
         link.setUrl(URI.create("https://github.com/lesam19092/laba2"));
         link.setCreatedAt(new Timestamp(time));
         link.setLastCheckTime(new Timestamp(time));
-
         jdbcLinkService.addLink(link);
-
         try {
             return new ResponseEntity<LinkResponse>(objectMapper.readValue(
                 "{\n  \"id\" : 0,\n  \"url\" : \"http://example.com/aeiou\"\n}",
@@ -105,5 +98,4 @@ public class LinksApiController implements LinksApi {
             return new ResponseEntity<LinkResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }

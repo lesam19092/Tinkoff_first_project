@@ -74,7 +74,6 @@ public class ListLinksResponse {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class ListLinksResponse {\n");
-
         sb.append("    links: ").append(toIndentedString(links)).append("\n");
         sb.append("    size: ").append(toIndentedString(size)).append("\n");
         sb.append("}");
