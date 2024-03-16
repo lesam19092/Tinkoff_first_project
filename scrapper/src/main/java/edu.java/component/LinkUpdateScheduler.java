@@ -64,7 +64,6 @@ public class LinkUpdateScheduler {
         List<String> fragments = List.of(link.getUrl().toString().split("/"));
         GitHubRepository rep =
             gitHubClient.getRepositoryInfo(fragments.get(idName), fragments.get(idOfReposName)).block();
-        System.out.println(fragments.get(idName) + " " + fragments.get(idOfReposName));
         Timestamp lastPush = rep.getLastPush();
         if (lastPush.after(link.getLastCheckTime())) {
             jdbcLinkService.updateLinkLastCheckTimeById(link.getId(), now);
@@ -76,17 +75,12 @@ public class LinkUpdateScheduler {
         Timestamp now = Timestamp.valueOf(LocalDateTime.now());
         List<String> fragments = List.of(link.getUrl().toString().split("/"));
         int idOfQuestion = Integer.parseInt(System.getenv("idQuestionName"));
-        System.out.println(idOfQuestion);
-        System.out.println(fragments.get(idOfQuestion));
         StackOverFlowQuestion
             question =
             stackOverFlowClient.fetchQuestion(Long.parseLong(fragments.get(idOfQuestion))).block().getItems()
                 .getFirst();
         Timestamp lastActivity = question.getLastActivityAsTimestamp();
-        System.out.println(link.getLastCheckTime());
-        System.out.println(lastActivity);
         if (lastActivity.after(link.getLastCheckTime())) {
-            System.out.println(question.getQuestionId());
             jdbcLinkService.updateLinkLastCheckTimeById(link.getId(), now);
             botClient.updateLink(link.getUrl(), List.of(link.getChatId()));
         }
