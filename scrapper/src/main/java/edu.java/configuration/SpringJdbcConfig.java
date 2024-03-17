@@ -17,7 +17,6 @@ public class SpringJdbcConfig {
         ds.setUrl("jdbc:postgresql://localhost:5432/scrapper");
         ds.setUsername(postgres);
         ds.setPassword(postgres);
-
         return ds;
     }
 }

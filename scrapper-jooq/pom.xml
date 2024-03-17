@@ -9,7 +9,6 @@
         <version>${revision}</version>
     </parent>
 
-    <groupId>org.example</groupId>
     <artifactId>scrapper-jooq</artifactId>
 
     <properties>
