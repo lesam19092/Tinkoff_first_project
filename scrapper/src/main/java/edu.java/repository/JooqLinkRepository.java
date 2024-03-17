@@ -78,7 +78,6 @@ public class JooqLinkRepository {
             .returning(LINKS_SOF)
             .fetchOne();
     }
-
     private OffsetDateTime offsetDateTimeFromTimestamp(Timestamp timestamp) {
         return OffsetDateTime.ofInstant(timestamp.toInstant(), ZoneId.of("UTC"));
     }
