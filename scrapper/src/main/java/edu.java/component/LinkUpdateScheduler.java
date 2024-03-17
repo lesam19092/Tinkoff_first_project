@@ -67,7 +67,7 @@ public class LinkUpdateScheduler {
         Timestamp lastPush = rep.getLastPush();
         if (lastPush.after(link.getLastCheckTime())) {
             jdbcLinkService.updateLinkLastCheckTimeById(link.getId(), now);
-            botClient.updateLink(link.getUrl(), List.of(link.getChatId()),"обновление данных");
+            botClient.updateLink(link.getUrl(), List.of(link.getChatId()), "обновление данных");
         }
     }
 
@@ -83,20 +83,24 @@ public class LinkUpdateScheduler {
         System.out.println(question.getCommentCount());
         System.out.println(question.getAnswerCount());
 
-        if (lastActivity.after(link.getLastCheckTime())  ) {
-
+        if (lastActivity.after(link.getLastCheckTime())) {
+            String description = "обновление данных : ";
             jdbcLinkService.updateLinkLastCheckTimeById(link.getId(), now);
-            botClient.updateLink(link.getUrl(), List.of(link.getChatId()),"обновление данных");
 
             if (question.getAnswerCount() > jdbcLinkService.getLinkPropertiesById(link.getId()).getCountOfAnswer()) {
-                botClient.updateLink(link.getUrl(), List.of(link.getChatId()),"появился ответ");
-                jdbcLinkService.updateCountOfAnswersById(link.getId(),question.getAnswerCount());
+                description += "\n"
+                    + "появился новый ответ";
+                jdbcLinkService.updateCountOfAnswersById(link.getId(), question.getAnswerCount());
             }
 
             if (question.getCommentCount() > jdbcLinkService.getLinkPropertiesById(link.getId()).getCountOfComments()) {
-                botClient.updateLink(link.getUrl(), List.of(link.getChatId()),"появился коммент");
-                jdbcLinkService.updateCountOfCommentsById(link.getId(),question.getCommentCount());
+                description += "\n"
+                    + "появился новый комментарий";
+                jdbcLinkService.updateCountOfCommentsById(link.getId(), question.getCommentCount());
             }
+
+            botClient.updateLink(link.getUrl(), List.of(link.getChatId()), description);
+
         }
 
     }

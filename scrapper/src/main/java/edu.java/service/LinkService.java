@@ -2,7 +2,6 @@ package edu.java.service;
 
 import edu.java.model.dto.Link;
 import edu.java.model.dto.LinkSof;
-import org.springframework.transaction.annotation.Transactional;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -18,7 +17,9 @@ public interface LinkService {
     void updateLinkLastCheckTimeById(Long id, Timestamp lastCheckTime);
 
     LinkSof getLinkPropertiesById(Long id);
-     void updateCountOfCommentsById(Long id, Long count);
-     void updateCountOfAnswersById(Long id, Long count);
+
+    void updateCountOfCommentsById(Long id, Long count);
+
+    void updateCountOfAnswersById(Long id, Long count);
 
 }

@@ -1,9 +1,9 @@
 package edu.java.repository;
 
 import edu.java.model.dto.Link;
+import edu.java.model.dto.LinkSof;
 import java.sql.Timestamp;
 import java.util.List;
-import edu.java.model.dto.LinkSof;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
@@ -85,13 +85,12 @@ public class LinkRepository {
             .param(2, id)
             .update();
 
-        //TODO поменять название столбцовавыавыавыаываыв
     }
 
     @Transactional
     public void updateCountOfAnswersById(Long id, Long count) {
         String sql =
-            "update links_sof set \"counfOfAnswers\" = ? where link_id = ?";
+            "update links_sof set \"countOfAnswers\" = ? where link_id = ?";
         jdbcClient.sql(sql)
             .param(1, count)
             .param(2, id)
