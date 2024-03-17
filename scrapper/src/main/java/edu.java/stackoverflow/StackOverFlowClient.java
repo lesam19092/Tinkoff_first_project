@@ -6,7 +6,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.client.WebClient;
 
 public class StackOverFlowClient {
-
     private WebClient webClient;
     private final WebClient.Builder webClientBuilder = WebClient.builder();
     private static final String URL = "/questions/%d?site=stackoverflow";
