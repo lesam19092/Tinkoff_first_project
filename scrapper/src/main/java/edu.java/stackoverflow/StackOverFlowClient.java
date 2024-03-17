@@ -10,7 +10,7 @@ public class StackOverFlowClient {
     private WebClient webClient;
     private final WebClient.Builder webClientBuilder = WebClient.builder();
     private static final String URL = "/questions/%d?site=stackoverflow";
-    private static final String questionComments = "/questions/%d/comments?site=stackoverflow";
+    private static final String URLSOF = "/questions/%d/comments?site=stackoverflow";
 
     public StackOverFlowClient(String baseurl) {
         webClient = webClientBuilder.baseUrl(baseurl)
@@ -19,7 +19,7 @@ public class StackOverFlowClient {
 
     public StackOverFlowResponse fetchQuestion(long questionId) {
         String apiUrl = String.format(URL, questionId);
-        String commentsUrl = String.format(questionComments, questionId);
+        String commentsUrl = String.format(URLSOF, questionId);
 
         Long comments = (long) webClient
             .get()
@@ -33,7 +33,6 @@ public class StackOverFlowClient {
             .retrieve()
             .bodyToMono(StackOverFlowResponse.class).block();
 
-        System.out.println(comments);
         StackOverFlowResponse list = new StackOverFlowResponse();
         StackOverFlowQuestion question = response.getItems().getFirst();
         question.setCommentCount(comments);

@@ -29,16 +29,9 @@ public class StackOverFlowQuestion {
 
     private Long commentCount;
 
-
-
-
-
-
-
     public Timestamp getLastActivityAsTimestamp() {
-
         return Timestamp.valueOf(Instant.ofEpochMilli(
-                lastActivity *1000)
+                lastActivity * Integer.parseInt(System.getenv("SecondToMilliSecond")))
             .atZone(ZoneId.systemDefault())
             .toLocalDateTime());
     }
