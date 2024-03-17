@@ -33,7 +33,6 @@ public class JooqCodegen {
             .withFluentSetters(false)
             .withDaos(false)
             .withPojos(true);
-
         Target target = new Target()
             .withPackageName("edu.java.domain.jooq")
             .withDirectory("scrapper/src/main/java");
