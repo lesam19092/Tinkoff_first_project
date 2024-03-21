@@ -1,6 +1,5 @@
 package edu.java.repository;
 
-import edu.java.component.LinkUpdateScheduler;
 import edu.java.model.dto.Link;
 import java.sql.Timestamp;
 import java.util.List;
@@ -46,8 +45,11 @@ public class LinkRepository {
         return jdbcClient.sql(sql).query(Link.class).list();
     }
 
-    public List<Link> findUnUpdatedLinks() {
-        String sql = "select * from link where EXTRACT(SECOND FROM (now() -last_check_time )) > 30";
+    public List<Link> findUnUpdatedLinks(int linkDelay) {
+        String sql = String.format(
+            "SELECT *FROM link WHERE current_timestamp - last_check_time >  interval '%d seconds'",
+            linkDelay
+        );
         return jdbcClient.sql(sql).query(Link.class).list();
     }
 

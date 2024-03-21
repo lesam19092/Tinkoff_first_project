@@ -19,8 +19,8 @@ public class JdbcLinkService implements LinkService {
         return linkRepository.findAll();
     }
 
-    public List<Link> getOldLinks() {
-        return linkRepository.findUnUpdatedLinks();
+    public List<Link> getOldLinks(int delay) {
+        return linkRepository.findUnUpdatedLinks(delay);
     }
 
     @Override

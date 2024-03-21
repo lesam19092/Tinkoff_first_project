@@ -14,6 +14,7 @@ import jakarta.validation.Valid;
 import java.io.IOException;
 import java.net.URI;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,12 +82,13 @@ public class LinksApiController implements LinksApi {
         @Parameter(in = ParameterIn.DEFAULT, description = "", required = true, schema = @Schema()) @Valid @RequestBody
         AddLinkRequest body
     ) {
+        Timestamp now = Timestamp.valueOf(LocalDateTime.now());
         int time = Integer.parseInt(System.getenv("time"));
         Link link = new Link();
         link.setChatId(tgChatId);
         link.setUrl(URI.create("https://github.com/lesam19092/laba2"));
-        link.setCreatedAt(new Timestamp(time));
-        link.setLastCheckTime(new Timestamp(time));
+        link.setCreatedAt(now);
+        link.setLastCheckTime(now);
         jdbcLinkService.addLink(link);
         try {
             return new ResponseEntity<LinkResponse>(objectMapper.readValue(

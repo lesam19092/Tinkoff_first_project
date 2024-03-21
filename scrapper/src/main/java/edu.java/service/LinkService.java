@@ -7,7 +7,7 @@ import java.util.List;
 public interface LinkService {
     List<Link> getLinks();
 
-    List<Link> getOldLinks();
+    List<Link> getOldLinks(int delay);
 
     void addLink(Link link);
 
