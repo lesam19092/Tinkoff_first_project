@@ -44,7 +44,7 @@ public class LinkUpdateScheduler {
     public void update() throws InterruptedException, URISyntaxException {
         Thread.sleep(Integer.parseInt(System.getenv("sleep"))); //TODO remove
         logger.info("I'm updating!");
-        updateOldLinks();
+        //  updateOldLinks();
     }
 
     private void updateOldLinks() throws URISyntaxException {

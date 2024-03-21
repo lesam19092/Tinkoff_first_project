@@ -9,9 +9,9 @@ public interface LinkService {
 
     List<Link> getOldLinks();
 
-    int addLink(Link link);
+    void addLink(Link link);
 
-    int removeLink(Long id);
+    void removeLink(Long id);
 
     void updateLinkLastCheckTimeById(Long id, Timestamp lastCheckTime);
 
