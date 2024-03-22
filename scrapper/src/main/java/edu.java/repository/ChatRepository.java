@@ -3,6 +3,7 @@ package edu.java.repository;
 import edu.java.model.dto.Chat;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.jboss.logging.Logger;
 import org.springframework.jdbc.core.simple.JdbcClient;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class ChatRepository {
     private final JdbcClient jdbcClient;
+    private final Logger logger = Logger.getLogger(ChatRepository.class.getName());
 
     @Transactional
     public void add(Chat chatEntity) {
@@ -26,11 +28,12 @@ public class ChatRepository {
         String sql = "delete from chat where chat_id = ?";
         int count = jdbcClient.sql(sql).param(1, chatId).update();
         if (count == 0) {
+            logger.info("troubles with removing");
             throw new RuntimeException("chat not found");
         }
+        logger.info("entity was deleted");
     }
 
-    @Transactional(readOnly = true)
     public List<Chat> findAll() {
         String sql = "select * from chat";
         return jdbcClient.sql(sql).query(Chat.class).list();

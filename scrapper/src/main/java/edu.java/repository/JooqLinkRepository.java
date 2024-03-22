@@ -43,9 +43,13 @@ public class JooqLinkRepository {
             .execute();
     }
 
-    public List<Link> findUnUpdatedLinks() {
-        return dslContext.resultQuery("select * from LINK where EXTRACT(SECOND FROM (now() -last_check_time )) > 30")
-            .fetchInto(Link.class); //TODO refactor?
+    public List<Link> findUnUpdatedLinks(int linkDelay) {
+        String sql = String.format(
+            "SELECT *FROM link WHERE current_timestamp - last_check_time >  interval '%d seconds'",
+            linkDelay
+        );
+        return dslContext.resultQuery(sql)
+            .fetchInto(Link.class);
     }
 
     public void updateLinkLastCheckTimeById(Long id, Timestamp timestamp) {

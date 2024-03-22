@@ -25,13 +25,13 @@ public class JdbcLinkService implements LinkService {
     }
 
     @Override
-    public int addLink(Link link) {
-        return linkRepository.add(link);
+    public void addLink(Link link) {
+        linkRepository.add(link);
     }
 
     @Override
-    public int removeLink(Long id) {
-        return linkRepository.remove(id);
+    public void removeLink(Long id) {
+        linkRepository.remove(id);
     }
 
     @Override

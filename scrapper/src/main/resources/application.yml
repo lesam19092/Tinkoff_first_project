@@ -5,6 +5,7 @@ app:
     enable: true
     interval: 5s
     force-check-delay: 5s
+  link-delay: 10
 
 spring:
   liquibase:

@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -23,6 +24,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 @EnableScheduling
 @ConditionalOnProperty(value = "app.scheduler.enable", havingValue = "true", matchIfMissing = true)
 public class LinkUpdateScheduler {
+
+    @Value("${app.linkDelay}")
+    private int linkDelay;
 
     private final JdbcLinkService jdbcLinkService;
 
