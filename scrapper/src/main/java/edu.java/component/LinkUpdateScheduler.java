@@ -4,6 +4,7 @@ import edu.java.client.BotClient;
 import edu.java.github.GitHubClient;
 import edu.java.github.GitHubRepository;
 import edu.java.model.dto.Link;
+import edu.java.service.LinkService;
 import edu.java.service.jdbc.JdbcLinkService;
 import edu.java.stackoverflow.StackOverFlowClient;
 import edu.java.stackoverflow.StackOverFlowQuestion;
@@ -26,6 +27,8 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 public class LinkUpdateScheduler {
 
+    private LinkService linkService;
+
     @Value("${app.linkDelay}")
     private int linkDelay;
 
@@ -39,17 +42,17 @@ public class LinkUpdateScheduler {
 
     private final BotClient botClient = new BotClient(WebClient.builder().build());
 
-    public LinkUpdateScheduler(JdbcLinkService jdbcLinkService) {
+    public LinkUpdateScheduler(LinkService linkService, JdbcLinkService jdbcLinkService) {
+        this.linkService = linkService;
         this.jdbcLinkService = jdbcLinkService;
     }
 
     private final Logger logger = Logger.getLogger(LinkUpdateScheduler.class.getName());
 
     @Scheduled(fixedDelayString = "#{scheduler.interval}")
-    public void update() throws InterruptedException, URISyntaxException {
-        Thread.sleep(Integer.parseInt(System.getenv("sleep"))); //TODO remove
+    public void update() throws URISyntaxException {
         logger.info("I'm updating!");
-        updateOldLinks(linkDelay);
+       updateOldLinks(linkDelay);
     }
 
     private void updateOldLinks(int linkDelay) throws URISyntaxException {
