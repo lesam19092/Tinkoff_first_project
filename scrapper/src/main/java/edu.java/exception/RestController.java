@@ -18,12 +18,12 @@ public class RestController {
             HttpStatus.BAD_REQUEST.toString(),
             ex.getClass().toGenericString(),
             ex.getMessage(),
-            getStackTraceAsStringArray(ex));
+            getStackTraceAsStringArray(ex)
+        );
     }
 
     public List<String> getStackTraceAsStringArray(Exception ex) {
         List<String> stackTraceString = new ArrayList<>();
-
         for (StackTraceElement element : ex.getStackTrace()) {
             stackTraceString.add(element.toString() + "\n");
         }

@@ -1,6 +1,8 @@
 package edu.java.bot.service;
 
+import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.model.Update;
+import com.pengrad.telegrambot.request.SendMessage;
 import edu.java.bot.client.ScrapperClient;
 import edu.java.bot.model.SessionState;
 import edu.java.bot.model.exception.ApiException;
@@ -29,14 +31,17 @@ public class MessageService implements MessageServiceInterface {
     private final CommandHandler commandHandler;
     private final UserService userRepository;
     private final UrlProcessor urlProcessor;
-
-    private final ScrapperClient scrapperClient = new ScrapperClient(WebClient.builder().build());
+    private final TelegramBot telegramBot;
 
     public MessageService(
+
+        TelegramBot telegramBot,
         CommandHandler commandHandler,
         UserService userRepository,
         UrlProcessor urlProcessor
     ) {
+
+        this.telegramBot = telegramBot;
         this.commandHandler = commandHandler;
         this.userRepository = userRepository;
         this.urlProcessor = urlProcessor;
@@ -57,6 +62,7 @@ public class MessageService implements MessageServiceInterface {
         }
 
         var user = userOptional.get();
+
         try {
             if (!user.getState().equals(SessionState.BASE_STATE)) {
                 URI uri = new URI(text);
@@ -129,9 +135,6 @@ public class MessageService implements MessageServiceInterface {
 
         trackSites.remove(uri);
         updateTrackSitesAndCommit(user, trackSites);
-        // System.out.println(scrapperClient.deleteChatById(user.getId()));
-//        System.out.println(new ScrapperClient(WebClient.builder().build()).deleteLinkById(user.getId(),
-//            new RemoveLinkRequest().link(uri.toString())));
         return true;
     }
 
@@ -139,6 +142,24 @@ public class MessageService implements MessageServiceInterface {
         user.setSites(trackSites);
         user.setState(SessionState.BASE_STATE);
         userRepository.saveUser(user);
+    }
+
+    public void sendNotification(List<Long> tgIds, URI url, String description) {
+
+        for (Long id : tgIds) {
+            try {
+                User user = userRepository.findUserById(id).get();
+                user.setState(SessionState.WAITING_FOR_NOTIFICATION);
+                userRepository.saveUser(user);
+                telegramBot.execute(new SendMessage(
+                    id,
+                    "New update from link " + url.toString() + " message: " + description
+                ));
+            } catch (Exception ex) {
+                return;
+            }
+
+        }
     }
 
 }
