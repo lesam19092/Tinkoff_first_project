@@ -44,7 +44,6 @@ public class Updater implements LinkUpdater {
             new BotClient(WebClient.builder().build()).updateLink(link.getUrl(), List.of(link.getChatId()));
         }
     }
-
     @Override
     public void updateLinkForStackOverFlow(Link link) throws URISyntaxException {
         Timestamp now = Timestamp.valueOf(LocalDateTime.now());
