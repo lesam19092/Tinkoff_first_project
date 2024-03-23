@@ -27,24 +27,16 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 public class LinkUpdateScheduler {
 
-    private LinkService linkService;
-
     @Value("${app.linkDelay}")
     private int linkDelay;
 
     private final JdbcLinkService jdbcLinkService;
 
-    @Autowired
-    private GitHubClient gitHubClient;
+    private LinkUpdater linkUpdater;
 
-    @Autowired
-    private StackOverFlowClient stackOverFlowClient;
-
-    private final BotClient botClient = new BotClient(WebClient.builder().build());
-
-    public LinkUpdateScheduler(LinkService linkService, JdbcLinkService jdbcLinkService) {
-        this.linkService = linkService;
+    public LinkUpdateScheduler(LinkUpdater linkUpdater, JdbcLinkService jdbcLinkService) {
         this.jdbcLinkService = jdbcLinkService;
+        this.linkUpdater = linkUpdater;
     }
 
     private final Logger logger = Logger.getLogger(LinkUpdateScheduler.class.getName());
@@ -52,47 +44,17 @@ public class LinkUpdateScheduler {
     @Scheduled(fixedDelayString = "#{scheduler.interval}")
     public void update() throws URISyntaxException {
         logger.info("I'm updating!");
-       updateOldLinks(linkDelay);
+        updateOldLinks(linkDelay);
     }
 
     private void updateOldLinks(int linkDelay) throws URISyntaxException {
         for (Link link : jdbcLinkService.getOldLinks(linkDelay)) {
             if (link.getUrl().getHost().equals("github.com")) {
-                updateLinkForGithub(link);
+                linkUpdater.updateLinkForGithub(link);
             } else if (link.getUrl().getHost().equals("stackoverflow.com")) {
-                updateLinkForStackOverFlow(link);
+                linkUpdater.updateLinkForStackOverFlow(link);
             }
         }
-    }
-
-    private void updateLinkForGithub(Link link) throws URISyntaxException {
-        Timestamp now = Timestamp.valueOf(LocalDateTime.now());
-        int idName = Integer.parseInt(System.getenv("idName"));
-        int idOfReposName = Integer.parseInt(System.getenv("idReposName"));
-        List<String> fragments = List.of(link.getUrl().toString().split("/"));
-        GitHubRepository rep =
-            gitHubClient.getRepositoryInfo(fragments.get(idName), fragments.get(idOfReposName)).block();
-        Timestamp lastPush = rep.getLastPush();
-        if (lastPush.after(link.getLastCheckTime())) {
-            jdbcLinkService.updateLinkLastCheckTimeById(link.getId(), now);
-            botClient.updateLink(link.getUrl(), List.of(link.getChatId()));
-        }
-    }
-
-    private void updateLinkForStackOverFlow(Link link) throws URISyntaxException {
-        Timestamp now = Timestamp.valueOf(LocalDateTime.now());
-        List<String> fragments = List.of(link.getUrl().toString().split("/"));
-        int idOfQuestion = Integer.parseInt(System.getenv("idQuestionName"));
-        StackOverFlowQuestion
-            question =
-            stackOverFlowClient.fetchQuestion(Long.parseLong(fragments.get(idOfQuestion))).block().getItems()
-                .getFirst();
-        Timestamp lastActivity = question.getLastActivityAsTimestamp();
-        if (lastActivity.after(link.getLastCheckTime())) {
-            jdbcLinkService.updateLinkLastCheckTimeById(link.getId(), now);
-            botClient.updateLink(link.getUrl(), List.of(link.getChatId()));
-        }
-
     }
 
 }
