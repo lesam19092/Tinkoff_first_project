@@ -22,7 +22,6 @@ public class LinkUpdateScheduler {
     private final JdbcLinkService jdbcLinkService;
     @Autowired
     private LinkUpdater linkUpdater;
-
     public LinkUpdateScheduler(JdbcLinkService jdbcLinkService) {
         this.jdbcLinkService = jdbcLinkService;
     }
