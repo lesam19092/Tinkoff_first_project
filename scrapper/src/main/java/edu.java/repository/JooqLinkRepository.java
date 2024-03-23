@@ -15,7 +15,6 @@ import static edu.java.jooq.Tables.LINKS_SOF;
 
 @Repository
 public class JooqLinkRepository {
-
     @Autowired
     private final DSLContext dslContext;
 
@@ -43,11 +42,11 @@ public class JooqLinkRepository {
             .execute();
     }
 
-    public List<Link> findUnUpdatedLinks(int linkDelay) {
+    public List<Link> getOldLinks(int linkDelay) {
         String sql = String.format(
             "SELECT *FROM link WHERE current_timestamp - last_check_time >  interval '%d seconds'",
             linkDelay
-        );
+        ); //TODO refactor
         return dslContext.resultQuery(sql)
             .fetchInto(Link.class);
     }

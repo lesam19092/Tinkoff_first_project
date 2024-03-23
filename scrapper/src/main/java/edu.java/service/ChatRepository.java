@@ -3,10 +3,10 @@ package edu.java.service;
 import edu.java.model.dto.Chat;
 import java.util.List;
 
-public interface ChatService {
+public interface ChatRepository {
     List<Chat> getChats();
 
-    void addChat(Chat chat);
+    void add(Chat chat);
 
-    void removeChat(Long id);
+    void remove(Long id);
 }

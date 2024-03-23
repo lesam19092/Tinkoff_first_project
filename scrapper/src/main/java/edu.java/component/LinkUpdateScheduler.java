@@ -1,16 +1,8 @@
 package edu.java.component;
 
-import edu.java.client.BotClient;
-import edu.java.github.GitHubClient;
-import edu.java.github.GitHubRepository;
 import edu.java.model.dto.Link;
 import edu.java.service.jdbc.JdbcLinkService;
-import edu.java.stackoverflow.StackOverFlowClient;
-import edu.java.stackoverflow.StackOverFlowQuestion;
 import java.net.URISyntaxException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.List;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +10,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.client.WebClient;
 
 @Component
 @EnableScheduling
@@ -29,14 +20,8 @@ public class LinkUpdateScheduler {
     private int linkDelay;
 
     private final JdbcLinkService jdbcLinkService;
-
     @Autowired
-    private GitHubClient gitHubClient;
-
-    @Autowired
-    private StackOverFlowClient stackOverFlowClient;
-
-    private final BotClient botClient = new BotClient(WebClient.builder().build());
+    private LinkUpdater linkUpdater;
 
     public LinkUpdateScheduler(JdbcLinkService jdbcLinkService) {
         this.jdbcLinkService = jdbcLinkService;
@@ -45,66 +30,18 @@ public class LinkUpdateScheduler {
     private final Logger logger = Logger.getLogger(LinkUpdateScheduler.class.getName());
 
     @Scheduled(fixedDelayString = "#{scheduler.interval}")
-    public void update() throws InterruptedException, URISyntaxException {
-        Thread.sleep(Integer.parseInt(System.getenv("sleep"))); //TODO remove
+    public void update() throws URISyntaxException {
         logger.info("I'm updating!");
-        updateOldLinks();
+        updateOldLinks(linkDelay);
     }
 
-    private void updateOldLinks() throws URISyntaxException {
-        for (Link link : jdbcLinkService.getOldLinks()) {
+    private void updateOldLinks(int linkDelay) throws URISyntaxException {
+        for (Link link : jdbcLinkService.getOldLinks(linkDelay)) {
             if (link.getUrl().getHost().equals("github.com")) {
-                updateLinkForGithub(link);
+                linkUpdater.updateLinkForGithub(link);
             } else if (link.getUrl().getHost().equals("stackoverflow.com")) {
-                updateLinkForStackOverFlow(link);
+                linkUpdater.updateLinkForStackOverFlow(link);
             }
         }
     }
-
-    private void updateLinkForGithub(Link link) throws URISyntaxException {
-        Timestamp now = Timestamp.valueOf(LocalDateTime.now());
-        int idName = Integer.parseInt(System.getenv("idName"));
-        int idOfReposName = Integer.parseInt(System.getenv("idReposName"));
-        List<String> fragments = List.of(link.getUrl().toString().split("/"));
-        GitHubRepository rep =
-            gitHubClient.getRepositoryInfo(fragments.get(idName), fragments.get(idOfReposName)).block();
-        Timestamp lastPush = rep.getLastPush();
-        if (lastPush.after(link.getLastCheckTime())) {
-            jdbcLinkService.updateLinkLastCheckTimeById(link.getId(), now);
-            botClient.updateLink(link.getUrl(), List.of(link.getChatId()), "обновление данных");
-        }
-    }
-
-    private void updateLinkForStackOverFlow(Link link) throws URISyntaxException {
-        Timestamp now = Timestamp.valueOf(LocalDateTime.now());
-        List<String> fragments = List.of(link.getUrl().toString().split("/"));
-        int idOfQuestion = Integer.parseInt(System.getenv("idQuestionName"));
-        StackOverFlowQuestion
-            question =
-            stackOverFlowClient.fetchQuestion(Long.parseLong(fragments.get(idOfQuestion))).getItems()
-                .getFirst();
-        Timestamp lastActivity = question.getLastActivityAsTimestamp();
-
-        if (lastActivity.after(link.getLastCheckTime())) {
-            String description = "обновление данных : ";
-            jdbcLinkService.updateLinkLastCheckTimeById(link.getId(), now);
-
-            if (question.getAnswerCount() > jdbcLinkService.getLinkPropertiesById(link.getId()).getCountOfAnswer()) {
-                description += "\n"
-                    + "появился новый ответ";
-                jdbcLinkService.updateCountOfAnswersById(link.getId(), question.getAnswerCount());
-            }
-
-            if (question.getCommentCount() > jdbcLinkService.getLinkPropertiesById(link.getId()).getCountOfComments()) {
-                description += "\n"
-                    + "появился новый комментарий";
-                jdbcLinkService.updateCountOfCommentsById(link.getId(), question.getCommentCount());
-            }
-
-            botClient.updateLink(link.getUrl(), List.of(link.getChatId()), description);
-
-        }
-
-    }
-
 }

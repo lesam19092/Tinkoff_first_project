@@ -2,6 +2,7 @@ package edu.java.repository;
 
 import edu.java.model.dto.Link;
 import edu.java.model.dto.LinkSof;
+import edu.java.service.LinkRepository;
 import java.sql.Timestamp;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -12,10 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @RequiredArgsConstructor
-public class LinkRepository {
+public class LinkRepositoryImpl implements LinkRepository {
     private final JdbcClient jdbcClient;
 
-    private final Logger logger = Logger.getLogger(LinkRepository.class.getName());
+    private final Logger logger = Logger.getLogger(LinkRepositoryImpl.class.getName());
 
     @Transactional
     public void add(Link entity) {
@@ -46,6 +47,14 @@ public class LinkRepository {
         return jdbcClient.sql(sql).query(Link.class).list();
     }
 
+    public List<Link> getOldLinks(int linkDelay) {
+        String sql = String.format(
+            "SELECT *FROM link WHERE current_timestamp - last_check_time >  interval '%d seconds'",
+            linkDelay
+        );
+        return jdbcClient.sql(sql).query(Link.class).list();
+    }
+
     public List<Link> findUnUpdatedLinks() {
         String sql = "select * from link where EXTRACT(SECOND FROM (now() -last_check_time )) > 30";
         return jdbcClient.sql(sql).query(Link.class).list();
@@ -61,7 +70,6 @@ public class LinkRepository {
             .update();
     }
 
-    @Transactional(readOnly = true)
     public LinkSof getLinkPropertiesById(Long id) {
         String sql = "select * from links_sof where link_id = ? ";
         return jdbcClient.sql(sql).param(1, id).query(LinkSof.class).single();

@@ -1,11 +1,12 @@
 app:
+  linkDelay: 30
   gitUrl: "https://api.github.com"
   stackUrl: "https://api.stackexchange.com/2.3"
   scheduler:
     enable: true
     interval: 5s
     force-check-delay: 5s
-  link-delay: 10
+
 
 spring:
   liquibase:
