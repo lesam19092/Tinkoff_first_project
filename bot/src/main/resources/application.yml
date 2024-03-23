@@ -8,7 +8,7 @@ spring:
     time-zone: UTC
 
 server:
-  port: 8090
+  port: 8070
 
 springdoc:
   swagger-ui:

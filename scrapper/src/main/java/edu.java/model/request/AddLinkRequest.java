@@ -10,7 +10,7 @@ import org.springframework.validation.annotation.Validated;
  * AddLinkRequest
  */
 @Validated
-public class AddLinkRequest   {
+public class AddLinkRequest {
     @JsonProperty("link")
     private URI link = null;
 
@@ -19,10 +19,6 @@ public class AddLinkRequest   {
         return this;
     }
 
-    /**
-     * Get link
-     * @return link
-     **/
     @Schema(description = "")
 
     public URI getLink() {
@@ -32,7 +28,6 @@ public class AddLinkRequest   {
     public void setLink(URI link) {
         this.link = link;
     }
-
 
     @Override
     public boolean equals(Object o) {
@@ -61,10 +56,6 @@ public class AddLinkRequest   {
         return sb.toString();
     }
 
-    /**
-     * Convert the given object to string with each line indented by 4 spaces
-     * (except the first line).
-     */
     private String toIndentedString(Object o) {
         if (o == null) {
             return "null";

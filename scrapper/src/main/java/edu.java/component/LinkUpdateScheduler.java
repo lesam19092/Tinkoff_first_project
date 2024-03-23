@@ -1,6 +1,11 @@
 package edu.java.component;
 
+import edu.java.model.dto.Link;
+import edu.java.service.jdbc.JdbcLinkService;
+import java.net.URISyntaxException;
 import org.jboss.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -10,13 +15,33 @@ import org.springframework.stereotype.Component;
 @EnableScheduling
 @ConditionalOnProperty(value = "app.scheduler.enable", havingValue = "true", matchIfMissing = true)
 public class LinkUpdateScheduler {
+
+    @Value("${app.linkDelay}")
+    private int linkDelay;
+
+    private final JdbcLinkService jdbcLinkService;
+    @Autowired
+    private LinkUpdater linkUpdater;
+
+    public LinkUpdateScheduler(JdbcLinkService jdbcLinkService) {
+        this.jdbcLinkService = jdbcLinkService;
+    }
+
     private final Logger logger = Logger.getLogger(LinkUpdateScheduler.class.getName());
 
     @Scheduled(fixedDelayString = "#{scheduler.interval}")
-    public void update() {
+    public void update() throws URISyntaxException {
         logger.info("I'm updating!");
-        //        System.out.println(new ScrapperClient(WebClient.builder().build()).updateLink("https://github.com", List.of(1L,2L)));
-
+        updateOldLinks(linkDelay);
     }
 
+    private void updateOldLinks(int linkDelay) throws URISyntaxException {
+        for (Link link : jdbcLinkService.getOldLinks(linkDelay)) {
+            if (link.getUrl().getHost().equals("github.com")) {
+                linkUpdater.updateLinkForGithub(link);
+            } else if (link.getUrl().getHost().equals("stackoverflow.com")) {
+                linkUpdater.updateLinkForStackOverFlow(link);
+            }
+        }
+    }
 }

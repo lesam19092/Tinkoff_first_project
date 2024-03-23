@@ -24,11 +24,7 @@ public class LinkResponse {
         return this;
     }
 
-    /**
-     * Get id
-     *
-     * @return id
-     **/
+
     @Schema(description = "")
 
     public Long getId() {
@@ -40,11 +36,7 @@ public class LinkResponse {
         return this;
     }
 
-    /**
-     * Get url
-     *
-     * @return url
-     **/
+
     @Schema(description = "")
 
     public URI getUrl() {
@@ -73,17 +65,13 @@ public class LinkResponse {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class LinkResponse {\n");
-
         sb.append("    id: ").append(toIndentedString(id)).append("\n");
         sb.append("    url: ").append(toIndentedString(url)).append("\n");
         sb.append("}");
         return sb.toString();
     }
 
-    /**
-     * Convert the given object to string with each line indented by 4 spaces
-     * (except the first line).
-     */
+
     private String toIndentedString(Object o) {
         if (o == null) {
             return "null";

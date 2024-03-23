@@ -85,7 +85,6 @@ public class LinkUpdateRequest {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class LinkUpdate {\n");
-
         sb.append("    id: ").append(toIndentedString(id)).append("\n");
         sb.append("    url: ").append(toIndentedString(url)).append("\n");
         sb.append("    description: ").append(toIndentedString(description)).append("\n");

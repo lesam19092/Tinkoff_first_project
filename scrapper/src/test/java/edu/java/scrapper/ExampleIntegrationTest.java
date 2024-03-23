@@ -11,6 +11,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @SpringBootTest
 public class ExampleIntegrationTest extends IntegrationTest {
 
+
     @Test
     public void testLiquibaseMigration() throws SQLException, FileNotFoundException, LiquibaseException {
         Database database = IntegrationTest.runMigrations(POSTGRES);
