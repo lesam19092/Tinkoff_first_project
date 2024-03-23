@@ -4,6 +4,7 @@ import edu.java.model.dto.Link;
 import edu.java.service.jdbc.JdbcLinkService;
 import java.net.URISyntaxException;
 import org.jboss.logging.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.EnableScheduling;
