@@ -1,6 +1,7 @@
 package edu.java.repository;
 
 import edu.java.model.dto.Chat;
+import edu.java.service.ChatRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.jboss.logging.Logger;
@@ -10,9 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @RequiredArgsConstructor
-public class ChatRepository {
+public class ChatRepositoryImpl implements ChatRepository {
     private final JdbcClient jdbcClient;
-    private final Logger logger = Logger.getLogger(ChatRepository.class.getName());
+    private final Logger logger = Logger.getLogger(ChatRepositoryImpl.class.getName());
 
     @Transactional
     public void add(Chat chatEntity) {
@@ -34,7 +35,7 @@ public class ChatRepository {
         logger.info("entity was deleted");
     }
 
-    public List<Chat> findAll() {
+    public List<Chat> getChats() {
         String sql = "select * from chat";
         return jdbcClient.sql(sql).query(Chat.class).list();
     }

@@ -4,14 +4,14 @@ import edu.java.model.dto.Link;
 import java.sql.Timestamp;
 import java.util.List;
 
-public interface LinkService {
-    List<Link> getLinks();
+public interface LinkRepository {
+    List<Link> findAll();
 
     List<Link> getOldLinks(int delay);
 
-    void addLink(Link link);
+    void add(Link link);
 
-    void removeLink(Long id);
+    void remove(Long id);
 
     void updateLinkLastCheckTimeById(Long id, Timestamp lastCheckTime);
 

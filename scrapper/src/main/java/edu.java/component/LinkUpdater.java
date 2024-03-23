@@ -7,5 +7,4 @@ public interface LinkUpdater {
     void updateLinkForGithub(Link link) throws URISyntaxException;
 
     void updateLinkForStackOverFlow(Link link) throws URISyntaxException;
-
 }
