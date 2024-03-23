@@ -7,13 +7,13 @@ import edu.java.model.dto.Link;
 import edu.java.service.jdbc.JdbcLinkService;
 import edu.java.stackoverflow.StackOverFlowClient;
 import edu.java.stackoverflow.StackOverFlowQuestion;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.springframework.web.reactive.function.client.WebClient;
 import java.net.URISyntaxException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
 
 @Component
 public class Updater implements LinkUpdater {
