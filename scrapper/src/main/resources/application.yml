@@ -6,7 +6,7 @@ app:
     enable: true
     interval: 5s
     force-check-delay: 5s
-  database-access-type: jooq
+  database-access-type: jdbc
 
 spring:
   liquibase:
