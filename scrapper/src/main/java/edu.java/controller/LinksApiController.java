@@ -6,7 +6,7 @@ import edu.java.model.request.AddLinkRequest;
 import edu.java.model.request.RemoveLinkRequest;
 import edu.java.model.response.LinkResponse;
 import edu.java.model.response.ListLinksResponse;
-import edu.java.service.jdbc.JdbcLinkService;
+import edu.java.repository.jdbc.JdbcLinkService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
