@@ -9,6 +9,10 @@ app:
   database-access-type: jpa
 
 spring:
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.PostgreSQLDialect
   liquibase:
     enabled: false
   application:
