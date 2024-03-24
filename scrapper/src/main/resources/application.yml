@@ -11,8 +11,7 @@ app:
 spring:
   jpa:
     properties:
-      hibernate:
-        dialect: org.PostgreSQLDialect
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
   liquibase:
     enabled: false
   application:

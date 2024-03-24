@@ -18,6 +18,7 @@ public class JooqChatService implements ChatRepository {
     public void add(Chat chat) {
         chatRepository.add(chat);
     }
+
     @Override
     public void remove(Long id) {
         chatRepository.remove(id);
