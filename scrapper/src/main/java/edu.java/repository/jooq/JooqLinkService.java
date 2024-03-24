@@ -1,4 +1,4 @@
-package edu.java.repository;
+package edu.java.repository.jooq;
 
 import edu.java.jooq.tables.records.LinkRecord;
 import edu.java.jooq.tables.records.LinksSofRecord;
@@ -14,11 +14,11 @@ import static edu.java.jooq.Tables.LINK;
 import static edu.java.jooq.Tables.LINKS_SOF;
 
 @Repository
-public class JooqLinkRepository {
+public class JooqLinkService {
     @Autowired
     private final DSLContext dslContext;
 
-    public JooqLinkRepository(DSLContext dslContext) {
+    public JooqLinkService(DSLContext dslContext) {
         this.dslContext = dslContext;
     }
 
