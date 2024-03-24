@@ -1,12 +1,10 @@
 package edu.java.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.java.model.dto.Chat;
-import edu.java.repository.jdbc.JdbcChatService;
+import edu.java.repository.ChatRepository;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TgChatApiController implements TgChatApi {
 
-    private final JdbcChatService jdbcChatService;
+    private final ChatRepository chatRepository;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TgChatApiController.class);
 
     @Autowired
-    public TgChatApiController(JdbcChatService jdbcChatService, ObjectMapper objectMapper, HttpServletRequest request) {
-        this.jdbcChatService = jdbcChatService;
+    public TgChatApiController(ChatRepository chatRepository) {
+        this.chatRepository = chatRepository;
     }
 
     public ResponseEntity<Void> tgChatIdDelete(
@@ -34,7 +32,7 @@ public class TgChatApiController implements TgChatApi {
                    schema = @Schema())
         @PathVariable("id") Long id
     ) {
-        jdbcChatService.removeChat(id);
+        chatRepository.remove(id);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
@@ -46,7 +44,7 @@ public class TgChatApiController implements TgChatApi {
         Chat chat = new Chat();
         chat.setChatId(id);
 
-        jdbcChatService.addChat(chat);
+        chatRepository.add(chat);
 
         return new ResponseEntity<Void>(HttpStatus.OK);
     }

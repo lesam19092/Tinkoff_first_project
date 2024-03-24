@@ -1,8 +1,8 @@
-package edu.java.repository.jdbc.impl;
+package edu.java.service.jdbc.impl;
 
 import edu.java.model.dto.Link;
 import edu.java.model.dto.LinkSof;
-import edu.java.service.LinkRepository;
+import edu.java.repository.LinkRepository;
 import java.sql.Timestamp;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @RequiredArgsConstructor
 public class LinkRepositoryImpl implements LinkRepository {
+
     private final JdbcClient jdbcClient;
 
     private final Logger logger = Logger.getLogger(LinkRepositoryImpl.class.getName());

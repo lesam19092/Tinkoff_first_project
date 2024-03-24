@@ -18,7 +18,10 @@ public record ApplicationConfig(
     String gitUrl,
     @NotEmpty
     String stackUrl,
-    int linkDelay) {
+    int linkDelay,
+
+    @NotNull
+    AccessType databaseAccessType) {
     public record Scheduler(boolean enable,
                             @NotNull Duration interval,
                             @NotNull Duration forceCheckDelay) {

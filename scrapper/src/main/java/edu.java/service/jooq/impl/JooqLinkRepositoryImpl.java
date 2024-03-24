@@ -1,8 +1,8 @@
-package edu.java.repository.jooq;
+package edu.java.service.jooq.impl;
 
-import edu.java.jooq.tables.records.LinkRecord;
-import edu.java.jooq.tables.records.LinksSofRecord;
 import edu.java.model.dto.Link;
+import edu.java.model.dto.LinkSof;
+import edu.java.repository.LinkRepository;
 import java.sql.Timestamp;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
@@ -14,11 +14,11 @@ import static edu.java.jooq.Tables.LINK;
 import static edu.java.jooq.Tables.LINKS_SOF;
 
 @Repository
-public class JooqLinkService {
+public class JooqLinkRepositoryImpl implements LinkRepository {
     @Autowired
     private final DSLContext dslContext;
 
-    public JooqLinkService(DSLContext dslContext) {
+    public JooqLinkRepositoryImpl(DSLContext dslContext) {
         this.dslContext = dslContext;
     }
 
@@ -32,8 +32,8 @@ public class JooqLinkService {
             .fetchOne();
     }
 
-    public List<LinkRecord> findAll() {
-        return dslContext.selectFrom(LINK).fetch();
+    public List<Link> findAll() {
+        return dslContext.selectFrom(LINK).fetchInto(Link.class);
     }
 
     public void remove(Long id) {
@@ -44,7 +44,7 @@ public class JooqLinkService {
 
     public List<Link> getOldLinks(int linkDelay) {
         String sql = String.format(
-            "SELECT *FROM link WHERE current_timestamp - last_check_time >  interval '%d seconds'",
+            "SELECT * FROM link WHERE current_timestamp - last_check_time >  interval '%d seconds'",
             linkDelay
         ); //TODO refactor
         return dslContext.resultQuery(sql)
@@ -59,11 +59,10 @@ public class JooqLinkService {
             .fetchOne();
     }
 
-    public LinksSofRecord getLinkPropertiesById(Long id) {
+    public LinkSof getLinkPropertiesById(Long id) {
         return dslContext.selectFrom(LINKS_SOF)
             .where(LINKS_SOF.LINK_ID.eq(id))
-            .fetchOne();
-
+            .fetchOneInto(LinkSof.class);
     }
 
     public void updateCountOfCommentsById(Long id, Long count) {

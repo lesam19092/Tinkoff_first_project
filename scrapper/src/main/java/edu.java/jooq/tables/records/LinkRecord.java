@@ -56,8 +56,6 @@ public class LinkRecord extends UpdatableRecordImpl<LinkRecord>
     /**
      * Getter for <code>LINK.URL</code>.
      */
-    @jakarta.validation.constraints.NotNull
-    @NotNull
     public String getUrl() {
         return (String) get(1);
     }

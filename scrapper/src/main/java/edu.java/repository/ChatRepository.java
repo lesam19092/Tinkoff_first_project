@@ -1,10 +1,10 @@
-package edu.java.service;
+package edu.java.repository;
 
 import edu.java.model.dto.Chat;
 import java.util.List;
 
 public interface ChatRepository {
-    List<Chat> getChats();
+    List<Chat> findAll();
 
     void add(Chat chat);
 

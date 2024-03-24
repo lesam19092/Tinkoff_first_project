@@ -4,7 +4,7 @@ import edu.java.client.BotClient;
 import edu.java.github.GitHubClient;
 import edu.java.github.GitHubRepository;
 import edu.java.model.dto.Link;
-import edu.java.repository.jdbc.JdbcLinkService;
+import edu.java.repository.LinkRepository;
 import edu.java.stackoverflow.StackOverFlowClient;
 import edu.java.stackoverflow.StackOverFlowQuestion;
 import java.net.URISyntaxException;
@@ -17,17 +17,17 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Component
 public class Updater implements LinkUpdater {
 
-    private final JdbcLinkService jdbcLinkService;
+    private final LinkRepository linkRepository;
     private final GitHubClient gitHubClient;
     private final StackOverFlowClient stackOverFlowClient;
     private final BotClient botClient = new BotClient(WebClient.builder().build());
 
     public Updater(
-        JdbcLinkService jdbcLinkService,
+        LinkRepository linkRepository,
         GitHubClient gitHubClient,
         StackOverFlowClient stackOverFlowClient
     ) {
-        this.jdbcLinkService = jdbcLinkService;
+        this.linkRepository = linkRepository;
         this.gitHubClient = gitHubClient;
         this.stackOverFlowClient = stackOverFlowClient;
     }
@@ -41,7 +41,7 @@ public class Updater implements LinkUpdater {
             .block();
         Timestamp lastPush = rep.getLastPush();
         if (lastPush.after(link.getLastCheckTime())) {
-            jdbcLinkService.updateLinkLastCheckTimeById(link.getId(), now);
+            linkRepository.updateLinkLastCheckTimeById(link.getId(), now);
             botClient.updateLink(link.getUrl(), List.of(link.getChatId()), "обновление данных");
         }
     }
@@ -63,17 +63,17 @@ public class Updater implements LinkUpdater {
         Timestamp lastActivity = question.getLastActivityAsTimestamp();
         if (lastActivity.after(link.getLastCheckTime())) {
             String description = "обновление данных : ";
-            jdbcLinkService.updateLinkLastCheckTimeById(link.getId(), now);
-            if (question.getAnswerCount() > jdbcLinkService.getLinkPropertiesById(link.getId()).getCountOfAnswer()) {
+            linkRepository.updateLinkLastCheckTimeById(link.getId(), now);
+            if (question.getAnswerCount() > linkRepository.getLinkPropertiesById(link.getId()).getCountOfAnswer()) {
                 description += "\n"
                     + "появился новый ответ";
-                jdbcLinkService.updateCountOfAnswersById(link.getId(), question.getAnswerCount());
+                linkRepository.updateCountOfAnswersById(link.getId(), question.getAnswerCount());
             }
 
-            if (question.getCommentCount() > jdbcLinkService.getLinkPropertiesById(link.getId()).getCountOfComments()) {
+            if (question.getCommentCount() > linkRepository.getLinkPropertiesById(link.getId()).getCountOfComments()) {
                 description += "\n"
                     + "появился новый комментарий";
-                jdbcLinkService.updateCountOfCommentsById(link.getId(), question.getCommentCount());
+                linkRepository.updateCountOfCommentsById(link.getId(), question.getCommentCount());
             }
             botClient.updateLink(link.getUrl(), List.of(link.getChatId()), description);
 

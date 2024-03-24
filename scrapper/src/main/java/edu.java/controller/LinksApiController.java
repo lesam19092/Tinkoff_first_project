@@ -6,7 +6,7 @@ import edu.java.model.request.AddLinkRequest;
 import edu.java.model.request.RemoveLinkRequest;
 import edu.java.model.response.LinkResponse;
 import edu.java.model.response.ListLinksResponse;
-import edu.java.repository.jdbc.JdbcLinkService;
+import edu.java.repository.LinkRepository;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class LinksApiController implements LinksApi {
 
-    private final JdbcLinkService jdbcLinkService;
+    private final LinkRepository linkRepository;
     private static final Logger LOGGER = LoggerFactory.getLogger(LinksApiController.class);
     private final String acceptString = "Accept";
     private final String applicationJsonString = "application/json";
@@ -35,8 +35,8 @@ public class LinksApiController implements LinksApi {
     private final ObjectMapper objectMapper;
 
     @Autowired
-    public LinksApiController(JdbcLinkService jdbcLinkService, ObjectMapper objectMapper) {
-        this.jdbcLinkService = jdbcLinkService;
+    public LinksApiController(LinkRepository linkRepository, ObjectMapper objectMapper) {
+        this.linkRepository = linkRepository;
         this.objectMapper = objectMapper;
     }
 
@@ -46,7 +46,7 @@ public class LinksApiController implements LinksApi {
         @RequestBody
         RemoveLinkRequest body
     ) {
-        jdbcLinkService.removeLink(tgChatId);
+     //   jdbcLinkService.removeLink(tgChatId);
         String accept = acceptString;
         if (accept != null && accept.contains(applicationJsonString)) {
             return new ResponseEntity<LinkResponse>(new LinkResponse(), HttpStatus.OK);
@@ -59,7 +59,7 @@ public class LinksApiController implements LinksApi {
         @RequestHeader(value = "Tg-Chat-Id", required = true) Long tgChatId
     ) {
 
-        for (Link link : jdbcLinkService.getLinks()) {
+        for (Link link : linkRepository.findAll()) {
             LOGGER.info(link.getUrl().toString());
         }
 
@@ -93,7 +93,7 @@ public class LinksApiController implements LinksApi {
         link.setCreatedAt(new Timestamp(time));
         link.setLastCheckTime(new Timestamp(time));
 
-        jdbcLinkService.addLink(link);
+        linkRepository.add(link);
 
         try {
             return new ResponseEntity<LinkResponse>(objectMapper.readValue(

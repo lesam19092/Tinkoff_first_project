@@ -1,20 +1,18 @@
-package edu.java.repository.jdbc;
+package edu.java.service.jdbc;
 
 import edu.java.model.dto.Link;
 import edu.java.model.dto.LinkSof;
-import edu.java.service.LinkRepository;
+import edu.java.repository.LinkRepository;
 import java.sql.Timestamp;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
-@Service
 @RequiredArgsConstructor
-public class JdbcLinkService {
+public class JdbcLinkService implements LinkRepository {
 
     private final LinkRepository linkRepository;
 
-    public List<Link> getLinks() {
+    public List<Link> findAll() {
         return linkRepository.findAll();
     }
 
@@ -22,11 +20,11 @@ public class JdbcLinkService {
         return linkRepository.getOldLinks(delay);
     }
 
-    public void addLink(Link link) {
+    public void add(Link link) {
         linkRepository.add(link);
     }
 
-    public void removeLink(Long id) {
+    public void remove(Long id) {
         linkRepository.remove(id);
     }
 

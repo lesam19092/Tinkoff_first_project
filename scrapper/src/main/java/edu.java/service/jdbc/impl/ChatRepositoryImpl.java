@@ -1,7 +1,7 @@
-package edu.java.repository.jdbc.impl;
+package edu.java.service.jdbc.impl;
 
 import edu.java.model.dto.Chat;
-import edu.java.service.ChatRepository;
+import edu.java.repository.ChatRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.jboss.logging.Logger;
@@ -35,7 +35,7 @@ public class ChatRepositoryImpl implements ChatRepository {
         logger.info("entity was deleted");
     }
 
-    public List<Chat> getChats() {
+    public List<Chat> findAll() {
         String sql = "select * from chat";
         return jdbcClient.sql(sql).query(Chat.class).list();
     }
