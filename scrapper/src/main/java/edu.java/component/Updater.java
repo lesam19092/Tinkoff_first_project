@@ -10,6 +10,7 @@ import edu.java.stackoverflow.StackOverFlowQuestion;
 import java.net.URISyntaxException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -62,19 +63,20 @@ public class Updater implements LinkUpdater {
         Timestamp now = Timestamp.valueOf(LocalDateTime.now());
         Timestamp lastActivity = question.getLastActivityAsTimestamp();
         if (lastActivity.after(link.getLastCheckTime())) {
-            String description = "обновление данных : ";
+
+            List<DescriptionType> lisOfDescriptions = new ArrayList<>();
+            lisOfDescriptions.add(DescriptionType.UPDATING_DATA);
             jdbcLinkService.updateLinkLastCheckTimeById(link.getId(), now);
             if (question.getAnswerCount() > jdbcLinkService.getLinkPropertiesById(link.getId()).getCountOfAnswer()) {
-                description += "\n"
-                    + "появился новый ответ";
+                lisOfDescriptions.add(DescriptionType.NEW_COMMENT);
                 jdbcLinkService.updateCountOfAnswersById(link.getId(), question.getAnswerCount());
             }
-
             if (question.getCommentCount() > jdbcLinkService.getLinkPropertiesById(link.getId()).getCountOfComments()) {
-                description += "\n"
-                    + "появился новый комментарий";
+                lisOfDescriptions.add(DescriptionType.NEW_ANSWER);
                 jdbcLinkService.updateCountOfCommentsById(link.getId(), question.getCommentCount());
             }
+
+            String description = DescriptionType.getDescription(lisOfDescriptions);
             botClient.updateLink(link.getUrl(), List.of(link.getChatId()), description);
 
         }
