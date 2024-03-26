@@ -8,10 +8,16 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.List;
 import org.jooq.DSLContext;
+import org.jooq.Field;
+import org.jooq.TableField;
+import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import static edu.java.jooq.Tables.LINK;
 import static edu.java.jooq.Tables.LINKS_SOF;
+import static org.jooq.impl.DSL.currentTimestamp;
+
+
 
 @Repository
 public class JooqLinkRepository {
@@ -47,8 +53,13 @@ public class JooqLinkRepository {
             "SELECT *FROM link WHERE current_timestamp - last_check_time >  interval '%d seconds'",
             linkDelay
         ); //TODO refactor
-        return dslContext.resultQuery(sql)
+
+
+
+        return dslContext.selectFrom(LINK)
+            .where(currentTimestamp().sub(LINK.LAST_CHECK_TIME).gt(new Timestamp(30)))
             .fetchInto(Link.class);
+
     }
 
     public void updateLinkLastCheckTimeById(Long id, Timestamp timestamp) {

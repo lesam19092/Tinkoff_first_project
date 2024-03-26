@@ -1,8 +1,10 @@
 package edu.java.component;
 
 import edu.java.model.dto.Link;
+import edu.java.repository.JooqLinkRepository;
 import edu.java.service.jdbc.JdbcLinkService;
 import java.net.URISyntaxException;
+import java.util.List;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +25,9 @@ public class LinkUpdateScheduler {
     @Autowired
     private LinkUpdater linkUpdater;
 
+    @Autowired
+    private JooqLinkRepository jooqLinkRepository;
+
     public LinkUpdateScheduler(JdbcLinkService jdbcLinkService) {
         this.jdbcLinkService = jdbcLinkService;
     }
@@ -31,6 +36,8 @@ public class LinkUpdateScheduler {
 
     @Scheduled(fixedDelayString = "#{scheduler.interval}")
     public void update() throws URISyntaxException {
+        List<Link> list = jooqLinkRepository.getOldLinks(linkDelay);
+        System.out.println(list.toString());
         logger.info("I'm updating!");
         updateOldLinks(linkDelay);
     }
