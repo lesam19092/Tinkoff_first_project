@@ -1,7 +1,6 @@
 package edu.java.component;
 
 import edu.java.model.dto.Link;
-import edu.java.repository.JooqLinkRepository;
 import edu.java.service.jdbc.JdbcLinkService;
 import java.net.URISyntaxException;
 import org.jboss.logging.Logger;
