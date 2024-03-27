@@ -3,21 +3,17 @@ package edu.java.repository;
 import edu.java.jooq.tables.records.LinkRecord;
 import edu.java.jooq.tables.records.LinksSofRecord;
 import edu.java.model.dto.Link;
+import java.net.URI;
 import java.sql.Timestamp;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.List;
 import org.jooq.DSLContext;
-import org.jooq.Field;
-import org.jooq.TableField;
-import org.jooq.impl.DSL;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import static edu.java.jooq.Tables.LINK;
 import static edu.java.jooq.Tables.LINKS_SOF;
-import static org.jooq.impl.DSL.currentTimestamp;
-
-
 
 @Repository
 public class JooqLinkRepository {
@@ -49,16 +45,24 @@ public class JooqLinkRepository {
     }
 
     public List<Link> getOldLinks(int linkDelay) {
-        String sql = String.format(
-            "SELECT *FROM link WHERE current_timestamp - last_check_time >  interval '%d seconds'",
-            linkDelay
-        ); //TODO refactor
 
+        OffsetDateTime timeDelay = OffsetDateTime.now().minusSeconds(linkDelay);
 
+        var list = dslContext.select()
+            .from(LINK)
+            .where(LINK.LAST_CHECK_TIME.lessOrEqual(timeDelay))
+            .fetch();
 
-        return dslContext.selectFrom(LINK)
-            .where(currentTimestamp().sub(LINK.LAST_CHECK_TIME).gt(new Timestamp(30)))
-            .fetchInto(Link.class);
+        return list.map(rec -> {
+            Long id = rec.get(LINK.ID);
+            URI url = URI.create(rec.get(LINK.URL));
+            Long chatID = rec.get(LINK.CHAT_ID);
+            Timestamp lastCheckTime =
+                Timestamp.valueOf(rec.get(LINK.LAST_CHECK_TIME).atZoneSameInstant(ZoneOffset.UTC).toLocalDateTime());
+            Timestamp createdAt =
+                Timestamp.valueOf(rec.get(LINK.CREATED_AT).atZoneSameInstant(ZoneOffset.UTC).toLocalDateTime());
+            return new Link(id, url, chatID, lastCheckTime, createdAt);
+        });
 
     }
 
