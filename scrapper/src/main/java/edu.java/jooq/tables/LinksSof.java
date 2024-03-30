@@ -70,16 +70,16 @@ public class LinksSof extends TableImpl<LinksSofRecord> {
         createField(DSL.name("LINK_ID"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
-     * The column <code>LINKS_SOF.COUNTOFANSWERS</code>.
+     * The column <code>LINKS_SOF.COUNT_OF_ANSWERS</code>.
      */
-    public final TableField<LinksSofRecord, Long> COUNTOFANSWERS =
-        createField(DSL.name("COUNTOFANSWERS"), SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<LinksSofRecord, Long> COUNT_OF_ANSWERS =
+        createField(DSL.name("COUNT_OF_ANSWERS"), SQLDataType.BIGINT.nullable(false), this, "");
 
     /**
-     * The column <code>LINKS_SOF.COUNTOFCOMMENTS</code>.
+     * The column <code>LINKS_SOF.COUNT_OF_COMMENTS</code>.
      */
-    public final TableField<LinksSofRecord, Long> COUNTOFCOMMENTS =
-        createField(DSL.name("COUNTOFCOMMENTS"), SQLDataType.BIGINT.nullable(false), this, "");
+    public final TableField<LinksSofRecord, Long> COUNT_OF_COMMENTS =
+        createField(DSL.name("COUNT_OF_COMMENTS"), SQLDataType.BIGINT.nullable(false), this, "");
 
     private LinksSof(Name alias, Table<LinksSofRecord> aliased) {
         this(alias, aliased, null);

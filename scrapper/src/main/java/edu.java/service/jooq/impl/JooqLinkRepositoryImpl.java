@@ -82,7 +82,7 @@ public class JooqLinkRepositoryImpl implements LinkRepository {
 
     public void updateCountOfCommentsById(Long id, Long count) {
         dslContext.update(LINKS_SOF)
-            .set(LINKS_SOF.COUNTOFCOMMENTS, count)
+            .set(LINKS_SOF.COUNT_OF_COMMENTS, count)
             .where(LINKS_SOF.LINK_ID.eq(id))
             .returning(LINKS_SOF)
             .fetchOne();
@@ -90,7 +90,7 @@ public class JooqLinkRepositoryImpl implements LinkRepository {
 
     public void updateCountOfAnswersById(Long id, Long count) {
         dslContext.update(LINKS_SOF)
-            .set(LINKS_SOF.COUNTOFANSWERS, count)
+            .set(LINKS_SOF.COUNT_OF_ANSWERS, count)
             .where(LINKS_SOF.LINK_ID.eq(id))
             .returning(LINKS_SOF)
             .fetchOne();

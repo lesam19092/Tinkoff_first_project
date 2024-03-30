@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-@Transactional
 public interface JpaLinkRepositoryImpl extends JpaRepository<Link, Long> {
     List<Link> findAll();
 
@@ -18,18 +17,24 @@ public interface JpaLinkRepositoryImpl extends JpaRepository<Link, Long> {
         + " > CAST(:delay * 1000 AS BIGINTEGER ) ")
     List<Link> findOldLinks(@Param("delay") int delay);
 
+    @Transactional
     Link save(Link link);
 
+    @Transactional
     void removeLinkById(Long id);
+
+    @Transactional
 
     @Modifying
     @Query("update Link set  lastCheckTime = :lastCheckTime where id = :linkId")
     void updateLinkLastCheckTimeById(Timestamp lastCheckTime, Long linkId);
 
+    @Transactional
     @Modifying
     @Query("update LinkSof set countOfComments = :count where linkId = :linkId")
     void updateCountOfCommentsById(Long linkId, Long count);
 
+    @Transactional
     @Modifying
     @Query("update LinkSof set countOfAnswer = :count where linkId = :linkId")
     void updateCountOfAnswersById(Long linkId, Long count);

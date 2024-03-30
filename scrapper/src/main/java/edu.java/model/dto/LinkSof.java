@@ -14,15 +14,15 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(schema = "links_sof")
+@Table(name = "links_sof")
 public class LinkSof {
     @Id
     @Column(name = "id")
     private long id;
     @Column(name = "link_id")
     private long linkId;
-    @Column(name = "countOfAnswers")
+    @Column(name = "count_of_answers")
     private long countOfAnswer;
-    @Column(name = "countOfComments")
+    @Column(name = "count_of_comments")
     private long countOfComments;
 }

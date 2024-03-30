@@ -32,7 +32,7 @@ public class LinkUpdateScheduler {
     @Scheduled(fixedDelayString = "#{scheduler.interval}")
     public void update() throws URISyntaxException {
         logger.info("I'm updating!");
-        updateOldLinks(linkDelay);
+         updateOldLinks(linkDelay);
     }
 
     private void updateOldLinks(int linkDelay) throws URISyntaxException {

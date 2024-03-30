@@ -7,4 +7,5 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface JpaSofRepositoryImpl extends JpaRepository<LinkSof, Long> {
     LinkSof getLinkSofByLinkId(Long id);
+
 }

@@ -26,8 +26,8 @@ public class LinksSof implements Serializable {
 
     private Long id;
     private Long linkId;
-    private Long countofanswers;
-    private Long countofcomments;
+    private Long countOfAnswers;
+    private Long countOfComments;
 
     public LinksSof() {
     }
@@ -35,21 +35,21 @@ public class LinksSof implements Serializable {
     public LinksSof(LinksSof value) {
         this.id = value.id;
         this.linkId = value.linkId;
-        this.countofanswers = value.countofanswers;
-        this.countofcomments = value.countofcomments;
+        this.countOfAnswers = value.countOfAnswers;
+        this.countOfComments = value.countOfComments;
     }
 
-    @ConstructorProperties({"id", "linkId", "countofanswers", "countofcomments"})
+    @ConstructorProperties({"id", "linkId", "countOfAnswers", "countOfComments"})
     public LinksSof(
         @NotNull Long id,
         @NotNull Long linkId,
-        @NotNull Long countofanswers,
-        @NotNull Long countofcomments
+        @NotNull Long countOfAnswers,
+        @NotNull Long countOfComments
     ) {
         this.id = id;
         this.linkId = linkId;
-        this.countofanswers = countofanswers;
-        this.countofcomments = countofcomments;
+        this.countOfAnswers = countOfAnswers;
+        this.countOfComments = countOfComments;
     }
 
     /**
@@ -84,35 +84,35 @@ public class LinksSof implements Serializable {
     }
 
     /**
-     * Getter for <code>LINKS_SOF.COUNTOFANSWERS</code>.
+     * Getter for <code>LINKS_SOF.COUNT_OF_ANSWERS</code>.
      */
     @jakarta.validation.constraints.NotNull
     @NotNull
-    public Long getCountofanswers() {
-        return this.countofanswers;
+    public Long getCountOfAnswers() {
+        return this.countOfAnswers;
     }
 
     /**
-     * Setter for <code>LINKS_SOF.COUNTOFANSWERS</code>.
+     * Setter for <code>LINKS_SOF.COUNT_OF_ANSWERS</code>.
      */
-    public void setCountofanswers(@NotNull Long countofanswers) {
-        this.countofanswers = countofanswers;
+    public void setCountOfAnswers(@NotNull Long countOfAnswers) {
+        this.countOfAnswers = countOfAnswers;
     }
 
     /**
-     * Getter for <code>LINKS_SOF.COUNTOFCOMMENTS</code>.
+     * Getter for <code>LINKS_SOF.COUNT_OF_COMMENTS</code>.
      */
     @jakarta.validation.constraints.NotNull
     @NotNull
-    public Long getCountofcomments() {
-        return this.countofcomments;
+    public Long getCountOfComments() {
+        return this.countOfComments;
     }
 
     /**
-     * Setter for <code>LINKS_SOF.COUNTOFCOMMENTS</code>.
+     * Setter for <code>LINKS_SOF.COUNT_OF_COMMENTS</code>.
      */
-    public void setCountofcomments(@NotNull Long countofcomments) {
-        this.countofcomments = countofcomments;
+    public void setCountOfComments(@NotNull Long countOfComments) {
+        this.countOfComments = countOfComments;
     }
 
     @Override
@@ -141,18 +141,18 @@ public class LinksSof implements Serializable {
         } else if (!this.linkId.equals(other.linkId)) {
             return false;
         }
-        if (this.countofanswers == null) {
-            if (other.countofanswers != null) {
+        if (this.countOfAnswers == null) {
+            if (other.countOfAnswers != null) {
                 return false;
             }
-        } else if (!this.countofanswers.equals(other.countofanswers)) {
+        } else if (!this.countOfAnswers.equals(other.countOfAnswers)) {
             return false;
         }
-        if (this.countofcomments == null) {
-            if (other.countofcomments != null) {
+        if (this.countOfComments == null) {
+            if (other.countOfComments != null) {
                 return false;
             }
-        } else if (!this.countofcomments.equals(other.countofcomments)) {
+        } else if (!this.countOfComments.equals(other.countOfComments)) {
             return false;
         }
         return true;
@@ -164,8 +164,8 @@ public class LinksSof implements Serializable {
         int result = 1;
         result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
         result = prime * result + ((this.linkId == null) ? 0 : this.linkId.hashCode());
-        result = prime * result + ((this.countofanswers == null) ? 0 : this.countofanswers.hashCode());
-        result = prime * result + ((this.countofcomments == null) ? 0 : this.countofcomments.hashCode());
+        result = prime * result + ((this.countOfAnswers == null) ? 0 : this.countOfAnswers.hashCode());
+        result = prime * result + ((this.countOfComments == null) ? 0 : this.countOfComments.hashCode());
         return result;
     }
 
@@ -175,8 +175,8 @@ public class LinksSof implements Serializable {
 
         sb.append(id);
         sb.append(", ").append(linkId);
-        sb.append(", ").append(countofanswers);
-        sb.append(", ").append(countofcomments);
+        sb.append(", ").append(countOfAnswers);
+        sb.append(", ").append(countOfComments);
 
         sb.append(")");
         return sb.toString();
