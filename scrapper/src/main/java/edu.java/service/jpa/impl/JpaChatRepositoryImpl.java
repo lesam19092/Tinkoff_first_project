@@ -3,14 +3,10 @@ package edu.java.service.jpa.impl;
 import edu.java.model.dto.Chat;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.transaction.annotation.Transactional;
-
 
 public interface JpaChatRepositoryImpl extends JpaRepository<Chat, Long> {
-    @Transactional
     Chat save(Chat chatEntity);
 
-    @Transactional
     void removeById(Long chatId);
 
     List<Chat> findAll();

@@ -12,19 +12,19 @@ import org.springframework.transaction.annotation.Transactional;
 public interface JpaLinkRepositoryImpl extends JpaRepository<Link, Long> {
     List<Link> findAll();
 
+
+
+    @Transactional
     @Modifying
     @Query("SELECT l FROM Link l WHERE (CURRENT_TIMESTAMP() - l.lastCheckTime)"
         + " > CAST(:delay * 1000 AS BIGINTEGER ) ")
     List<Link> findOldLinks(@Param("delay") int delay);
 
-    @Transactional
     Link save(Link link);
 
-    @Transactional
     void removeLinkById(Long id);
 
     @Transactional
-
     @Modifying
     @Query("update Link set  lastCheckTime = :lastCheckTime where id = :linkId")
     void updateLinkLastCheckTimeById(Timestamp lastCheckTime, Long linkId);
