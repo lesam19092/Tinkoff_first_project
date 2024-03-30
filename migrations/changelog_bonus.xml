@@ -14,12 +14,12 @@
                 <constraints nullable="false" primaryKey="true"/>
             </column>
 
-            <column name="link_id" type="bigint" >
+            <column name="link_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="counfOfAnswers" type="bigint" >
-                <constraints nullable="false" />
+            <column name="countOfAnswers" type="bigint">
+                <constraints nullable="false"/>
             </column>
 
             <column name="countOfComments" type="bigint">
