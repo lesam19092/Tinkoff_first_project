@@ -36,11 +36,9 @@ public class LinkUpdateScheduler {
     }
 
     private void updateOldLinks(int linkDelay) throws URISyntaxException {
-
-        linkRepository.findAll();
-
-
         for (Link link : linkRepository.getOldLinks(linkDelay)) {
+            System.out.println(link.getUrl().toString());
+
             if (link.getUrl().getHost().equals("github.com")) {
                 linkUpdater.updateLinkForGithub(link);
             } else if (link.getUrl().getHost().equals("stackoverflow.com")) {

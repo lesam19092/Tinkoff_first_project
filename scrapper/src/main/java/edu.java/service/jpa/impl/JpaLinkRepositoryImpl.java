@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
@@ -13,8 +14,8 @@ public interface JpaLinkRepositoryImpl extends JpaRepository<Link, Long> {
     List<Link> findAll();
 
     @Modifying
-    @Query("SELECT l FROM Link l WHERE (CURRENT_TIMESTAMP() - l.lastCheckTime) > 30000 ") //TODO REFACTOR
-    List<Link> findOldLinks(int delay);
+    @Query("SELECT l FROM Link l WHERE (CURRENT_TIMESTAMP() - l.lastCheckTime) > CAST(:delay * 1000 AS BIGINTEGER ) ") //TODO REFACTOR
+    List<Link> findOldLinks(@Param("delay") int delay);
 
     Link save(Link link);
 

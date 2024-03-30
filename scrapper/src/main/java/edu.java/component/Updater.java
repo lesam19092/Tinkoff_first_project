@@ -10,6 +10,7 @@ import edu.java.stackoverflow.StackOverFlowQuestion;
 import java.net.URISyntaxException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -61,20 +62,27 @@ public class Updater implements LinkUpdater {
     private void getUpdatesFromSof(Link link, StackOverFlowQuestion question) throws URISyntaxException {
         Timestamp now = Timestamp.valueOf(LocalDateTime.now());
         Timestamp lastActivity = question.getLastActivityAsTimestamp();
+
+        System.out.println(lastActivity);
+        System.out.println(link.getLastCheckTime());
         if (lastActivity.after(link.getLastCheckTime())) {
-            String description = "обновление данных : ";
+
+            List<DescriptionType> lisOfDescriptions = new ArrayList<>();
+            lisOfDescriptions.add(DescriptionType.UPDATING_DATA);
+
+
+
+
             linkRepository.updateLinkLastCheckTimeById(link.getId(), now);
             if (question.getAnswerCount() > linkRepository.getLinkPropertiesById(link.getId()).getCountOfAnswer()) {
-                description += "\n"
-                    + "появился новый ответ";
+                lisOfDescriptions.add(DescriptionType.NEW_COMMENT);
                 linkRepository.updateCountOfAnswersById(link.getId(), question.getAnswerCount());
             }
-
             if (question.getCommentCount() > linkRepository.getLinkPropertiesById(link.getId()).getCountOfComments()) {
-                description += "\n"
-                    + "появился новый комментарий";
+                lisOfDescriptions.add(DescriptionType.NEW_ANSWER);
                 linkRepository.updateCountOfCommentsById(link.getId(), question.getCommentCount());
             }
+            String description = DescriptionType.getDescription(lisOfDescriptions);
             botClient.updateLink(link.getUrl(), List.of(link.getChatId()), description);
 
         }

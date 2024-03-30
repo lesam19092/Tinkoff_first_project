@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class JpaChatService implements ChatRepository {
-
     private final JpaChatRepositoryImpl chatRepository;
 
     @Override
