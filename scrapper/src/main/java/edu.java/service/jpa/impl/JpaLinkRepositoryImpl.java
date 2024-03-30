@@ -14,7 +14,8 @@ public interface JpaLinkRepositoryImpl extends JpaRepository<Link, Long> {
     List<Link> findAll();
 
     @Modifying
-    @Query("SELECT l FROM Link l WHERE (CURRENT_TIMESTAMP() - l.lastCheckTime) > CAST(:delay * 1000 AS BIGINTEGER ) ") //TODO REFACTOR
+    @Query("SELECT l FROM Link l WHERE (CURRENT_TIMESTAMP() - l.lastCheckTime)"
+        + " > CAST(:delay * 1000 AS BIGINTEGER ) ")
     List<Link> findOldLinks(@Param("delay") int delay);
 
     Link save(Link link);

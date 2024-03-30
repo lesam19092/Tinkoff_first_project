@@ -62,17 +62,9 @@ public class Updater implements LinkUpdater {
     private void getUpdatesFromSof(Link link, StackOverFlowQuestion question) throws URISyntaxException {
         Timestamp now = Timestamp.valueOf(LocalDateTime.now());
         Timestamp lastActivity = question.getLastActivityAsTimestamp();
-
-        System.out.println(lastActivity);
-        System.out.println(link.getLastCheckTime());
         if (lastActivity.after(link.getLastCheckTime())) {
-
             List<DescriptionType> lisOfDescriptions = new ArrayList<>();
             lisOfDescriptions.add(DescriptionType.UPDATING_DATA);
-
-
-
-
             linkRepository.updateLinkLastCheckTimeById(link.getId(), now);
             if (question.getAnswerCount() > linkRepository.getLinkPropertiesById(link.getId()).getCountOfAnswer()) {
                 lisOfDescriptions.add(DescriptionType.NEW_COMMENT);
