@@ -95,5 +95,4 @@ public class LinkRepositoryImpl implements LinkRepository {
             .param(2, id)
             .update();
     }
-
 }
