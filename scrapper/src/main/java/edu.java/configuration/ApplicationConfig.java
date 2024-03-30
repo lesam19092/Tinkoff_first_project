@@ -18,8 +18,7 @@ public record ApplicationConfig(
     String gitUrl,
     @NotEmpty
     String stackUrl,
-    int linkDelay
-) {
+    int linkDelay) {
     public record Scheduler(boolean enable,
                             @NotNull Duration interval,
                             @NotNull Duration forceCheckDelay) {

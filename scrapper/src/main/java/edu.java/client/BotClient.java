@@ -8,7 +8,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 public class BotClient {
-    private final String baseUrl = "http://localhost:8070";
+    private final String baseUrl = "http://localhost:8090";
 
     private final WebClient webClient;
 
@@ -16,8 +16,8 @@ public class BotClient {
         this.webClient = webClient;
     }
 
-    public String updateLink(URI url, List<Long> tgChatIds) throws URISyntaxException {
-        LinkUpdateRequest linkUpdateRequest = new LinkUpdateRequest(1L, url, "Обновление ссылки", tgChatIds);
+    public String updateLink(URI url, List<Long> tgChatIds, String description) throws URISyntaxException {
+        LinkUpdateRequest linkUpdateRequest = new LinkUpdateRequest(1L, url, description, tgChatIds);
         return webClient
             .post()
             .uri(baseUrl + "/updates")

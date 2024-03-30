@@ -1,6 +1,7 @@
 package edu.java.repository;
 
 import edu.java.model.dto.Link;
+import edu.java.model.dto.LinkSof;
 import edu.java.service.LinkRepository;
 import java.sql.Timestamp;
 import java.util.List;
@@ -54,6 +55,11 @@ public class LinkRepositoryImpl implements LinkRepository {
         return jdbcClient.sql(sql).query(Link.class).list();
     }
 
+    public List<Link> findUnUpdatedLinks() {
+        String sql = "select * from link where EXTRACT(SECOND FROM (now() -last_check_time )) > 30";
+        return jdbcClient.sql(sql).query(Link.class).list();
+    }
+
     @Transactional
     public void updateLinkLastCheckTimeById(Long id, Timestamp lastCheckTime) {
         String sql =
@@ -63,4 +69,32 @@ public class LinkRepositoryImpl implements LinkRepository {
             .param("lastCheckTime", lastCheckTime)
             .update();
     }
+
+    public LinkSof getLinkPropertiesById(Long id) {
+        String sql = "select * from links_sof where link_id = ? ";
+        return jdbcClient.sql(sql).param(1, id).query(LinkSof.class).single();
+    }
+
+    @Transactional
+    public void updateCountOfCommentsById(Long id, Long count) {
+        String sql =
+            "update links_sof set  \"countOfComments\" = ? where link_id = ?";
+        jdbcClient.sql(sql)
+            .param(1, count)
+            .param(2, id)
+            .update();
+
+    }
+
+    @Transactional
+    public void updateCountOfAnswersById(Long id, Long count) {
+        String sql =
+            "update links_sof set \"countOfAnswers\" = ? where link_id = ?";
+        jdbcClient.sql(sql)
+            .param(1, count)
+            .param(2, id)
+            .update();
+    }
+
 }
+
