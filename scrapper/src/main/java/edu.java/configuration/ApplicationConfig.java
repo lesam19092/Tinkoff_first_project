@@ -23,7 +23,6 @@ public record ApplicationConfig(
     @NotEmpty
     String stackUrl,
     int linkDelay,
-
     @NotNull
     AccessType databaseAccessType,
     @NotNull
@@ -33,7 +32,13 @@ public record ApplicationConfig(
     @NotNull
     int retryMaxAttempts,
     @NotNull
-    int retryDelay) {
+    int retryDelay,
+    @NotNull
+    int capacity,
+    @NotNull
+    int refill,
+    @NotNull
+    int timeout) {
     public record Scheduler(boolean enable,
                             @NotNull Duration interval,
                             @NotNull Duration forceCheckDelay) {
