@@ -17,8 +17,8 @@ public class ConstantStrategy {
     @Value("${app.retry-delay}")
     private int delay;
 
-    @Bean
+  /*  @Bean
     public RetryBackoffSpec retryBackoffSpec() {
         return Retry.fixedDelay(maxAttempts, Duration.ofSeconds(delay));
-    }
+    }*/
 }

@@ -17,8 +17,8 @@ public class ExponentialStrategy {
     @Value("${app.retry-delay}")
     private int delay;
 
-    @Bean
+   /* @Bean
     public RetryBackoffSpec retryBackoffSpec() {
         return Retry.backoff(maxAttempts, Duration.ofSeconds(delay));
-    }
+    }*/
 }
