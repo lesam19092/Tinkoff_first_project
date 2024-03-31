@@ -1,5 +1,6 @@
 package edu.java.configuration;
 
+import edu.java.configuration.retryconfig.RetryStrategy;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import java.time.Duration;
@@ -21,7 +22,15 @@ public record ApplicationConfig(
     int linkDelay,
 
     @NotNull
-    AccessType databaseAccessType) {
+    AccessType databaseAccessType,
+    @NotNull
+    String retryOn,
+    @NotNull
+    RetryStrategy retryStrategy,
+    @NotNull
+    int retryMaxAttempts,
+    @NotNull
+    int retryDelay) {
     public record Scheduler(boolean enable,
                             @NotNull Duration interval,
                             @NotNull Duration forceCheckDelay) {
