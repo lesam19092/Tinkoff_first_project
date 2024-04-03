@@ -34,6 +34,7 @@ spring:
   kafka:
     consumer:
       auto-offset-reset: earliest
+    bootstrapServers: localhost:29092
 
 server:
   port: 1010
