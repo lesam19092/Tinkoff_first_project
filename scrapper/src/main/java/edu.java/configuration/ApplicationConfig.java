@@ -38,11 +38,8 @@ public record ApplicationConfig(
     @NotNull
     AccessType databaseAccessType,
     @NotNull
-    int capacity,
-    @NotNull
-    int refill,
-    @NotNull
-    int timeout) {
+    boolean useQueue
+) {
     public record Scheduler(boolean enable,
                             @NotNull Duration interval,
                             @NotNull Duration forceCheckDelay) {

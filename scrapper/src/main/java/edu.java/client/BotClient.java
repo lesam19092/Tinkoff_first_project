@@ -21,10 +21,10 @@ public class BotClient {
         this.retryBackoffSpec = retryBackoffSpec;
     }
 
-    public String updateLink(URI url, List<Long> tgChatIds, String description) {
-        LinkUpdateRequest linkUpdateRequest = new LinkUpdateRequest(1L, url, description, tgChatIds);
-
-        return webClient
+    public void updateLink(LinkUpdateRequest linkUpdateRequest) {
+      //  LinkUpdateRequest linkUpdateRequest = new LinkUpdateRequest(1L, url, description, tgChatIds);
+//TODO REMOVE
+         webClient
             .post()
             .uri(baseUrl + "/updates")
             .body(Mono.just(linkUpdateRequest), LinkUpdateRequest.class)
