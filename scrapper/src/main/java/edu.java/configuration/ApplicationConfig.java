@@ -5,8 +5,11 @@ import edu.java.configuration.retryconfig.RetryStrategy;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import java.time.Duration;
+import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.validation.annotation.Validated;
 
@@ -18,6 +21,12 @@ public record ApplicationConfig(
     @NotNull
     @Bean
     Scheduler scheduler,
+
+    @NotNull
+    Retry retry,
+
+    @NotNull
+    Bucket bucket,
     @NotEmpty
     String gitUrl,
     @NotEmpty
@@ -25,14 +34,6 @@ public record ApplicationConfig(
     int linkDelay,
     @NotNull
     AccessType databaseAccessType,
-    @NotNull
-    String retryOn,
-    @NotNull
-    RetryStrategy retryStrategy,
-    @NotNull
-    int retryMaxAttempts,
-    @NotNull
-    int retryDelay,
     @NotNull
     int capacity,
     @NotNull
@@ -42,6 +43,21 @@ public record ApplicationConfig(
     public record Scheduler(boolean enable,
                             @NotNull Duration interval,
                             @NotNull Duration forceCheckDelay) {
+
+    }
+
+    public record Retry(
+        @NotNull
+        String trigger,
+        @NotNull
+        RetryStrategy strategy,
+        @NotNull
+        int maxAttempts,
+        @NotNull
+        int delay) {
+    }
+
+    public record Bucket(@NotNull int refill, @NotNull int capacity, @NotNull int timeout) {
     }
 
 }
