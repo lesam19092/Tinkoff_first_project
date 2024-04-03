@@ -1,5 +1,10 @@
 app:
   telegram-token: ${TELEGRAM_API_KEY}
+  kafka:
+    partitions-num: 10
+    replicas-num: 1
+    topics: topic1
+
 
 spring:
   application:

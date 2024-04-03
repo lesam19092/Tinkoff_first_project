@@ -33,6 +33,9 @@ public record ApplicationConfig(
     String stackUrl,
     int linkDelay,
     @NotNull
+    @Bean
+    Kafka kafka,
+    @NotNull
     AccessType databaseAccessType,
     @NotNull
     int capacity,
@@ -58,6 +61,9 @@ public record ApplicationConfig(
     }
 
     public record Bucket(@NotNull int refill, @NotNull int capacity, @NotNull int timeout) {
+    }
+
+    public record Kafka(@NotNull String topics, @NotNull int partitionsNum, @NotNull int replicasNum) {
     }
 
 }

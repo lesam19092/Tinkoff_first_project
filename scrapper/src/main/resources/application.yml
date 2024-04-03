@@ -7,7 +7,7 @@ app:
     interval: 5s
     force-check-delay: 5s
   database-access-type: jpa
-  retry :
+  retry:
     trigger: server-client
     strategy: const
     max-attempts: 3
@@ -16,6 +16,10 @@ app:
     refill: 5
     capacity: 10
     timeout: 1
+  kafka:
+    partitions-num: 10
+    replicas-num: 1
+    topics: topic1
 
 spring:
   jpa:
