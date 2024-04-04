@@ -151,8 +151,8 @@ public class MessageService implements MessageServiceInterface {
             try {
                 telegramBot.execute(new SendMessage(
                     id,
-                    "New update from link " + linkUpdateRequest.getUrl().toString() + " message: " +
-                        linkUpdateRequest.getDescription()
+                    "New update from link " + linkUpdateRequest.getUrl().toString() + " message: "
+                        + linkUpdateRequest.getDescription()
                 ));
             } catch (Exception ex) {
                 return;

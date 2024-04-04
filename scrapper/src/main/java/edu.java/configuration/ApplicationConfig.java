@@ -5,11 +5,8 @@ import edu.java.configuration.retryconfig.RetryStrategy;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import java.time.Duration;
-import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.retry.annotation.EnableRetry;
 import org.springframework.validation.annotation.Validated;
 

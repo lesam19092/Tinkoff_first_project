@@ -1,6 +1,5 @@
 package edu.java.component;
 
-import edu.java.client.BotClient;
 import edu.java.exception.ClientException;
 import edu.java.exception.ServerException;
 import edu.java.github.GitHubClient;
@@ -54,7 +53,9 @@ public class Updater implements LinkUpdater {
             Timestamp lastPush = rep.getLastPush();
             if (lastPush.after(link.getLastCheckTime())) {
                 linkRepository.updateLinkLastCheckTimeById(link.getId(), now);
-                LinkUpdateRequest linkUpdateRequest = new LinkUpdateRequest(link.getId(),link.getUrl(), "обновление данных",List.of(link.getChatId()));
+                LinkUpdateRequest linkUpdateRequest =
+                    new LinkUpdateRequest(link.getId(), link.getUrl(), "обновление данных",
+                        List.of(link.getChatId()));
                 senderService.updateLink(linkUpdateRequest);
             }
         } catch (ServerException | ClientException | WebClientRequestException ex) {
@@ -95,7 +96,8 @@ public class Updater implements LinkUpdater {
                     linkRepository.updateCountOfCommentsById(link.getId(), question.getCommentCount());
                 }
                 String description = DescriptionType.getDescription(lisOfDescriptions);
-                LinkUpdateRequest linkUpdateRequest = new LinkUpdateRequest(link.getId(),link.getUrl(), description,List.of(link.getChatId()));
+                LinkUpdateRequest linkUpdateRequest =
+                    new LinkUpdateRequest(link.getId(), link.getUrl(), description, List.of(link.getChatId()));
                 senderService.updateLink(linkUpdateRequest);
 
             }

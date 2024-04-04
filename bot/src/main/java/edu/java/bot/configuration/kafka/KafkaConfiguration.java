@@ -4,7 +4,6 @@ import org.apache.kafka.clients.admin.NewTopic;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.config.TopicBuilder;
 
 @Configuration
@@ -20,7 +19,7 @@ public class KafkaConfiguration {
     private int replicas;
 
     @Value("${app.kafka.topic_dlq}")
-    private String topicDlqName ;
+    private String topicDlqName;
 
     @Bean
     public NewTopic topic() {
@@ -29,8 +28,9 @@ public class KafkaConfiguration {
             .replicas(replicas)
             .build();
     }
+
     @Bean
-    public NewTopic topic_dlq() {
+    public NewTopic topicDlq() {
         return TopicBuilder.name(topicDlqName)
             .partitions(partitions)
             .replicas(replicas)

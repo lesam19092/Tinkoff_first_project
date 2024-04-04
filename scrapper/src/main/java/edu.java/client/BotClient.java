@@ -3,8 +3,6 @@ package edu.java.client;
 import edu.java.exception.ClientException;
 import edu.java.exception.ServerException;
 import edu.java.model.request.LinkUpdateRequest;
-import java.net.URI;
-import java.util.List;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
@@ -22,9 +20,9 @@ public class BotClient {
     }
 
     public void updateLink(LinkUpdateRequest linkUpdateRequest) {
-      //  LinkUpdateRequest linkUpdateRequest = new LinkUpdateRequest(1L, url, description, tgChatIds);
+        //  LinkUpdateRequest linkUpdateRequest = new LinkUpdateRequest(1L, url, description, tgChatIds);
 //TODO REMOVE
-         webClient
+        webClient
             .post()
             .uri(baseUrl + "/updates")
             .body(Mono.just(linkUpdateRequest), LinkUpdateRequest.class)

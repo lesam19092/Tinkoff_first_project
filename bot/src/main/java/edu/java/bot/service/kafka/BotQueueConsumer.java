@@ -27,8 +27,7 @@ public class BotQueueConsumer {
             if (checkLinkUpdateRequest(linkUpdateRequest)) {
                 System.out.println(linkUpdateRequest.getDescription());
                 messageServiceInterface.sendNotification(linkUpdateRequest);
-            }
-            else {
+            } else {
                 System.out.println("sending message to DLQ");
                 kafkaTemplate.send("topic_dlq", linkUpdateRequest.toString());
             }
@@ -41,8 +40,8 @@ public class BotQueueConsumer {
     }
 
     private boolean checkLinkUpdateRequest(LinkUpdateRequest body) {
-        return body.getDescription() != null && !body.getTgChatIds().isEmpty() && body.getUrl() != null &&
-            body.getId() != null;
+        return body.getDescription() != null && !body.getTgChatIds().isEmpty() && body.getUrl() != null
+            && body.getId() != null;
     }
 
 }
