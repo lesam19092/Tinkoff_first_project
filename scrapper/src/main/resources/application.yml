@@ -38,7 +38,7 @@ spring:
     bootstrapServers: localhost:29092
 
 server:
-  port: 1020
+  port: 1010
 
 springdoc:
   swagger-ui:

@@ -3,6 +3,7 @@ package edu.java.bot.controllers;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.java.bot.model.request.LinkUpdateRequest;
 import edu.java.bot.service.MessageService;
+import edu.java.bot.service.MessageServiceInterface;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -20,7 +21,7 @@ public class UpdatesApiController implements UpdatesApi {
 
     private final HttpServletRequest request;
 
-    private final MessageService messageService;
+    private final MessageServiceInterface messageService;
 
     @Autowired
     public UpdatesApiController(ObjectMapper objectMapper, HttpServletRequest request, MessageService messageService) {
@@ -33,7 +34,7 @@ public class UpdatesApiController implements UpdatesApi {
         @Parameter(in = ParameterIn.DEFAULT, description = "", required = true, schema = @Schema()) @Valid
         @RequestBody LinkUpdateRequest body
     ) {
-        messageService.sendNotification(body.getTgChatIds(), body.getUrl(), body.getDescription());
+        messageService.sendNotification(body);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 }

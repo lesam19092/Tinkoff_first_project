@@ -10,17 +10,14 @@ import org.springframework.kafka.config.TopicBuilder;
 @Configuration
 public class KafkaConfiguration {
 
-
     @Value("${app.kafka.topics}")
     private String topicName;
 
     @Value("${app.kafka.partitions-num}")
     private int partitions;
 
-
     @Value("${app.kafka.replicas-num}")
     private int replicas;
-
 
     @Bean
     public NewTopic topic() {
@@ -29,11 +26,5 @@ public class KafkaConfiguration {
             .replicas(replicas)
             .build();
     }
-
-    @KafkaListener(id = "myId", topics = "topic1")
-    public void listen(String in) {
-        System.out.println(in);
-    }
-    //TODO ПРИДУМАТЬ ЧТО-НИБУДЬ С ЭТИМ
 
 }

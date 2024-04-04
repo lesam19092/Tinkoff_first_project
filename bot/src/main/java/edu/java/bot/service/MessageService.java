@@ -7,6 +7,7 @@ import edu.java.bot.client.ScrapperClient;
 import edu.java.bot.model.SessionState;
 import edu.java.bot.model.exception.ApiException;
 import edu.java.bot.model.request.AddLinkRequest;
+import edu.java.bot.model.request.LinkUpdateRequest;
 import edu.java.bot.processor.CommandHandler;
 import edu.java.bot.repository.UserService;
 import edu.java.bot.url_processor.UrlProcessor;
@@ -144,21 +145,32 @@ public class MessageService implements MessageServiceInterface {
         userRepository.saveUser(user);
     }
 
-    public void sendNotification(List<Long> tgIds, URI url, String description) {
+    public void sendNotification(LinkUpdateRequest linkUpdateRequest) {
 
-        for (Long id : tgIds) {
+        for (Long id :  linkUpdateRequest.getTgChatIds()) {
             try {
                 User user = userRepository.findUserById(id).get();
                 user.setState(SessionState.WAITING_FOR_NOTIFICATION);
                 userRepository.saveUser(user);
                 telegramBot.execute(new SendMessage(
                     id,
-                    "New update from link " + url.toString() + " message: " + description
+                    "New update from link " + linkUpdateRequest.getUrl().toString() + " message: " + linkUpdateRequest.getDescription()
                 ));
             } catch (Exception ex) {
                 return;
             }
 
+        }
+    }
+    public void sendNotification(String linkUpdateRequest) {
+        try {
+            telegramBot.execute(new SendMessage(
+                1l,
+                "New update from link " + linkUpdateRequest
+            ));
+        } catch (Exception ex) {
+//                logger.warning("User is not registered");
+            return;
         }
     }
 

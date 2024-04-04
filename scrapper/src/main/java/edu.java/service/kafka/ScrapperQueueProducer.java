@@ -20,7 +20,7 @@ public class ScrapperQueueProducer implements SenderService {
         this.topic = topic;
         this.template = template;
     }
-    //TODO ДОБАВИТЬ LINKUPDATEREQ
+    //TODO исправить
 
     @Override
     public void updateLink(LinkUpdateRequest linkUpdateRequest) {

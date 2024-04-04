@@ -12,8 +12,9 @@ spring:
   jackson:
     time-zone: UTC
   kafka:
-    consumer:
+    producer:
       auto-offset-reset: earliest
+    bootstrapServers: localhost:29092
 
 server:
   port: 8090
