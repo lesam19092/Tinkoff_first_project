@@ -19,6 +19,9 @@ public class KafkaConfiguration {
     @Value("${app.kafka.replicas-num}")
     private int replicas;
 
+    @Value("${app.kafka.topic_dlq}")
+    private String topicDlqName ;
+
     @Bean
     public NewTopic topic() {
         return TopicBuilder.name(topicName)
@@ -26,5 +29,11 @@ public class KafkaConfiguration {
             .replicas(replicas)
             .build();
     }
-
+    @Bean
+    public NewTopic topic_dlq() {
+        return TopicBuilder.name(topicDlqName)
+            .partitions(partitions)
+            .replicas(replicas)
+            .build();
+    }
 }

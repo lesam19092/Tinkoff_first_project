@@ -11,14 +11,11 @@ import org.springframework.kafka.core.KafkaTemplate;
 @Configuration
 public class KafkaConfiguration {
 
-
-
     @Value("${app.kafka.topics}")
     private String topicName;
 
     @Value("${app.kafka.partitions-num}")
     private int partitions;
-
 
     @Value("${app.kafka.replicas-num}")
     private int replicas;
@@ -29,13 +26,6 @@ public class KafkaConfiguration {
             .partitions(partitions)
             .replicas(replicas)
             .build();
-    }
-
-    @Bean
-    public ApplicationRunner runner(KafkaTemplate<String, String> template) {
-        return args -> {
-            template.send("topic1", "test");//TODO ПРИДУМАТЬ ЧТО-НИБУДЬ С ЭТИМ
-        };
     }
 
 }

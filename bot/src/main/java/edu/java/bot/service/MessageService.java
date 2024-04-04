@@ -147,30 +147,17 @@ public class MessageService implements MessageServiceInterface {
 
     public void sendNotification(LinkUpdateRequest linkUpdateRequest) {
 
-        for (Long id :  linkUpdateRequest.getTgChatIds()) {
+        for (Long id : linkUpdateRequest.getTgChatIds()) {
             try {
-                User user = userRepository.findUserById(id).get();
-                user.setState(SessionState.WAITING_FOR_NOTIFICATION);
-                userRepository.saveUser(user);
                 telegramBot.execute(new SendMessage(
                     id,
-                    "New update from link " + linkUpdateRequest.getUrl().toString() + " message: " + linkUpdateRequest.getDescription()
+                    "New update from link " + linkUpdateRequest.getUrl().toString() + " message: " +
+                        linkUpdateRequest.getDescription()
                 ));
             } catch (Exception ex) {
                 return;
             }
 
-        }
-    }
-    public void sendNotification(String linkUpdateRequest) {
-        try {
-            telegramBot.execute(new SendMessage(
-                1l,
-                "New update from link " + linkUpdateRequest
-            ));
-        } catch (Exception ex) {
-//                logger.warning("User is not registered");
-            return;
         }
     }
 

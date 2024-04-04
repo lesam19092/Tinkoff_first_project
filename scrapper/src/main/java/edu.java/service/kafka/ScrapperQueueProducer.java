@@ -25,7 +25,7 @@ public class ScrapperQueueProducer implements SenderService {
     @Override
     public void updateLink(LinkUpdateRequest linkUpdateRequest) {
         try {
-            template.send(topic.name(), "scrapper queue producer");
+       //     template.send(topic.name(), "scrapper queue producer");
         } catch (Exception ex) {
             log.error("Error occurred during sending to Kafka", ex);
         }

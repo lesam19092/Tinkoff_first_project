@@ -35,6 +35,8 @@ public class UpdatesApiController implements UpdatesApi {
         @RequestBody LinkUpdateRequest body
     ) {
         messageService.sendNotification(body);
+
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
+
 }
