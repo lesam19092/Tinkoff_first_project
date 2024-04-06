@@ -26,22 +26,27 @@ public record ApplicationConfig(
     @NotNull
     AccessType databaseAccessType,
     @NotNull
-    String retryOn,
+    Retry retry,
     @NotNull
-    RetryStrategy retryStrategy,
-    @NotNull
-    int retryMaxAttempts,
-    @NotNull
-    int retryDelay,
-    @NotNull
-    int capacity,
-    @NotNull
-    int refill,
-    @NotNull
-    int timeout) {
+    Bucket bucket
+) {
     public record Scheduler(boolean enable,
                             @NotNull Duration interval,
                             @NotNull Duration forceCheckDelay) {
+    }
+
+    public record Retry(
+        @NotNull
+        String trigger,
+        @NotNull
+        RetryStrategy strategy,
+        @NotNull
+        int maxAttempts,
+        @NotNull
+        int delay) {
+    }
+
+    public record Bucket(@NotNull int refill, @NotNull int capacity, @NotNull int timeout) {
     }
 
 }
