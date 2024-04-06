@@ -2,13 +2,15 @@ package edu.java.bot.service.kafka;
 
 import edu.java.bot.model.request.LinkUpdateRequest;
 import edu.java.bot.service.MessageServiceInterface;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
+@Slf4j
 public class BotQueueConsumer {
-    private final KafkaTemplate<String, String> kafkaTemplate; //TODO change to Link...
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
     private final MessageServiceInterface messageServiceInterface;
 
@@ -23,19 +25,12 @@ public class BotQueueConsumer {
     @KafkaListener(id = "myId", topics = "topic1")
     public void listen(LinkUpdateRequest linkUpdateRequest) {
 
-        try {
-            if (checkLinkUpdateRequest(linkUpdateRequest)) {
-                System.out.println(linkUpdateRequest.getDescription());
-                messageServiceInterface.sendNotification(linkUpdateRequest);
-            } else {
-                System.out.println("sending message to DLQ");
-                kafkaTemplate.send("topic_dlq", linkUpdateRequest.toString());
-            }
-        } catch (Exception e) {
-            System.out.println("sending message to DLQ");
+        if (checkLinkUpdateRequest(linkUpdateRequest)) {
+            messageServiceInterface.sendNotification(linkUpdateRequest);
+        } else {
+            log.info("sending message to DLQ");
             kafkaTemplate.send("topic_dlq", linkUpdateRequest.toString());
         }
-        //refactor TODO
 
     }
 

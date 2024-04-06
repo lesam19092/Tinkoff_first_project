@@ -20,8 +20,6 @@ public class BotClient {
     }
 
     public void updateLink(LinkUpdateRequest linkUpdateRequest) {
-        //  LinkUpdateRequest linkUpdateRequest = new LinkUpdateRequest(1L, url, description, tgChatIds);
-//TODO REMOVE
         webClient
             .post()
             .uri(baseUrl + "/updates")

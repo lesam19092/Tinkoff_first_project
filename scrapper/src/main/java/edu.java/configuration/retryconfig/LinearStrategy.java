@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConditionalOnProperty(prefix = "app.retry", name = "strategy", havingValue = "linear")
 public class LinearStrategy {
-    //TODO implement linear
     @Value("${app.retry.max-attempts}")
     private int maxAttempts;
 

@@ -1,5 +1,5 @@
 app:
-  use-queue : true
+  use-queue: true
   linkDelay: 30
   gitUrl: "https://api.github.com"
   stackUrl: "https://api.stackexchange.com/2.3"
@@ -33,8 +33,11 @@ spring:
   autoconfigure:
     exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
   kafka:
-    consumer:
-      auto-offset-reset: earliest
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+    properties:
+      spring.json.value.default.type: edu.java.model.request.LinkUpdateRequest
     bootstrapServers: localhost:29092
 
 server:
