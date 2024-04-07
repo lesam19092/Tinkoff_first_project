@@ -1,11 +1,11 @@
 package edu.java.component;
 
+import dto.request.LinkUpdateRequest;
 import edu.java.exception.ClientException;
 import edu.java.exception.ServerException;
 import edu.java.github.GitHubClient;
 import edu.java.github.GitHubRepository;
 import edu.java.model.dto.Link;
-import dto.request.LinkUpdateRequest;
 import edu.java.repository.LinkRepository;
 import edu.java.service.sender.SenderService;
 import edu.java.stackoverflow.StackOverFlowClient;

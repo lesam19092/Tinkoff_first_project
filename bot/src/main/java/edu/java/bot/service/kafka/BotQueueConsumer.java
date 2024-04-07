@@ -1,6 +1,6 @@
 package edu.java.bot.service.kafka;
 
-import edu.java.bot.model.request.LinkUpdateRequest;
+import dto.request.LinkUpdateRequest;
 import edu.java.bot.service.MessageServiceInterface;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;

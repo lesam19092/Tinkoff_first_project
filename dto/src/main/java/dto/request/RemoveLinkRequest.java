@@ -3,10 +3,14 @@ package dto.request;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.net.URI;
 import java.util.Objects;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * RemoveLinkRequest
  */
+@Getter
+@Setter
 public class RemoveLinkRequest {
     @JsonProperty("link")
     private URI link = null;

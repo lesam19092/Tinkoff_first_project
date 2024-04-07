@@ -3,10 +3,15 @@ package dto.response;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.net.URI;
 import java.util.Objects;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * LinkResponse
  */
+
+@Getter
+@Setter
 public class LinkResponse {
     @JsonProperty("id")
     private Long id = null;

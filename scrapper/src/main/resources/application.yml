@@ -34,12 +34,11 @@ spring:
     exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
   kafka:
     producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer  # Для строковых ключей
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
     properties:
-      spring.json.value.default.type: edu.java.model.request.LinkUpdateRequest
+      spring.json.value.default.type: dto.request.LinkUpdateRequest
     bootstrapServers: localhost:29092
-
 server:
   port: 1010
 

@@ -1,7 +1,7 @@
 package edu.java.bot.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.java.bot.model.request.LinkUpdateRequest;
+import dto.request.LinkUpdateRequest;
 import edu.java.bot.service.MessageService;
 import edu.java.bot.service.MessageServiceInterface;
 import io.swagger.v3.oas.annotations.Parameter;

@@ -14,14 +14,14 @@ spring:
     time-zone: UTC
   kafka:
     consumer:
-        auto-offset-reset: earliest
-        key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
-        value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      auto-offset-reset: earliest
+      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
     properties:
-       spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
-       spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
-       spring.json.trusted.packages: edu.*
-       spring.json.value.default.type: edu.java.bot.model.request.LinkUpdateRequest
+      spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
+      spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+      spring.json.trusted.packages: '*'
+      spring.json.value.default.type: dto.request.LinkUpdateRequest
     bootstrapServers: localhost:29092
 
 server:

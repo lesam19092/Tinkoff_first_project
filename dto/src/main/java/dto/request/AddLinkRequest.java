@@ -2,10 +2,14 @@ package dto.request;
 
 import java.net.URI;
 import java.util.Objects;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * AddLinkRequest
  */
+@Getter
+@Setter
 public class AddLinkRequest {
     private URI link = null;
 
