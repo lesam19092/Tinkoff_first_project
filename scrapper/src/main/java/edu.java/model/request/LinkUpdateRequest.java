@@ -7,12 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
 
 @Setter
 @Getter
 @Validated
+@NoArgsConstructor
 public class LinkUpdateRequest {
     @JsonProperty("id")
     private Long id;

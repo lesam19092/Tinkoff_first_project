@@ -42,9 +42,7 @@ public class Updater implements LinkUpdater {
 
     @Override
     public void updateLinkForGithub(Link link) throws URISyntaxException {
-
         try {
-
             Timestamp now = Timestamp.valueOf(LocalDateTime.now());
             List<String> fragments = List.of(link.getUrl().toString().split("/"));
             GitHubRepository rep = gitHubClient
@@ -55,7 +53,8 @@ public class Updater implements LinkUpdater {
                 linkRepository.updateLinkLastCheckTimeById(link.getId(), now);
                 LinkUpdateRequest linkUpdateRequest =
                     new LinkUpdateRequest(link.getId(), link.getUrl(), "обновление данных",
-                        List.of(link.getChatId()));
+                        List.of(link.getChatId())
+                    );
                 senderService.updateLink(linkUpdateRequest);
             }
         } catch (ServerException | ClientException | WebClientRequestException ex) {

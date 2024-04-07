@@ -1,11 +1,9 @@
 package edu.java.component;
 
 import edu.java.model.dto.Link;
-import edu.java.model.request.LinkUpdateRequest;
 import edu.java.repository.LinkRepository;
 import edu.java.service.sender.SenderService;
 import java.net.URISyntaxException;
-import java.util.List;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,9 +24,6 @@ public class LinkUpdateScheduler {
     @Autowired
     private LinkUpdater linkUpdater;
 
-    @Autowired
-    private SenderService senderService;
-
     public LinkUpdateScheduler(LinkRepository linkRepository) {
         this.linkRepository = linkRepository;
     }
@@ -43,13 +38,6 @@ public class LinkUpdateScheduler {
 
     private void updateOldLinks(int linkDelay) throws URISyntaxException {
         for (Link link : linkRepository.getOldLinks(linkDelay)) {
-            LinkUpdateRequest linkUpdateRequest = new LinkUpdateRequest(1L, link.getUrl(), "Обновление данных",
-                List.of(link.getChatId())
-            );
-            senderService.updateLink(linkUpdateRequest);
-
-            senderService.updateLink(linkUpdateRequest);
-
             if (link.getUrl().getHost().equals("github.com")) {
                 linkUpdater.updateLinkForGithub(link);
             } else if (link.getUrl().getHost().equals("stackoverflow.com")) {
