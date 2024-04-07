@@ -1,6 +1,7 @@
 package edu.java.service.kafka;
 
-import edu.java.model.request.LinkUpdateRequest;
+
+import dto.request.LinkUpdateRequest;
 import edu.java.service.sender.SenderService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.admin.NewTopic;
@@ -24,7 +25,6 @@ public class ScrapperQueueProducer implements SenderService {
     @Override
     public void updateLink(LinkUpdateRequest linkUpdateRequest) {
         try {
-            System.out.println(linkUpdateRequest.toString());
             template.send(topic.name(), linkUpdateRequest);
         } catch (Exception ex) {
             log.error("Error occurred during sending to Kafka", ex);

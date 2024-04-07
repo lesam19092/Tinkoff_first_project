@@ -2,7 +2,6 @@ package edu.java.component;
 
 import edu.java.model.dto.Link;
 import edu.java.repository.LinkRepository;
-import edu.java.service.sender.SenderService;
 import java.net.URISyntaxException;
 import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;

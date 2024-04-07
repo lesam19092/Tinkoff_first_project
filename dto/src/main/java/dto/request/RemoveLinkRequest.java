@@ -1,29 +1,26 @@
-package edu.java.model.request;
+package dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.v3.oas.annotations.media.Schema;
 import java.net.URI;
 import java.util.Objects;
-import org.springframework.validation.annotation.Validated;
 
 /**
- * AddLinkRequest
+ * RemoveLinkRequest
  */
-@Validated
-public class AddLinkRequest   {
+public class RemoveLinkRequest {
     @JsonProperty("link")
     private URI link = null;
 
-    public AddLinkRequest link(URI link) {
+    public RemoveLinkRequest link(URI link) {
         this.link = link;
         return this;
     }
 
     /**
      * Get link
+     *
      * @return link
      **/
-    @Schema(description = "")
 
     public URI getLink() {
         return link;
@@ -33,7 +30,6 @@ public class AddLinkRequest   {
         this.link = link;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -42,8 +38,8 @@ public class AddLinkRequest   {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        AddLinkRequest addLinkRequest = (AddLinkRequest) o;
-        return Objects.equals(this.link, addLinkRequest.link);
+        RemoveLinkRequest removeLinkRequest = (RemoveLinkRequest) o;
+        return Objects.equals(this.link, removeLinkRequest.link);
     }
 
     @Override
@@ -54,7 +50,7 @@ public class AddLinkRequest   {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("class AddLinkRequest {\n");
+        sb.append("class RemoveLinkRequest {\n");
 
         sb.append("    link: ").append(toIndentedString(link)).append("\n");
         sb.append("}");

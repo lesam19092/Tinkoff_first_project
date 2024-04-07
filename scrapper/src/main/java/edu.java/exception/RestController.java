@@ -1,8 +1,8 @@
 package edu.java.exception;
 
-import edu.java.model.response.ApiErrorResponse;
 import java.util.ArrayList;
 import java.util.List;
+import dto.response.ApiErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -13,6 +13,7 @@ public class RestController {
     @ExceptionHandler(IllegalStateException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiErrorResponse handle(IllegalStateException ex) {
+
         return new ApiErrorResponse(
             ex.getMessage(),
             HttpStatus.BAD_REQUEST.toString(),

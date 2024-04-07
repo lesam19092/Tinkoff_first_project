@@ -1,20 +1,11 @@
-package edu.java.model.request;
+package dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import org.springframework.validation.annotation.Validated;
 
-@Setter
-@Getter
-@Validated
-@NoArgsConstructor
 public class LinkUpdateRequest {
     @JsonProperty("id")
     private Long id;
@@ -26,7 +17,6 @@ public class LinkUpdateRequest {
     private String description;
 
     @JsonProperty("tgChatIds")
-    @Valid
     private List<Long> tgChatIds;
 
     public LinkUpdateRequest(Long id, URI url, String description, List<Long> tgChatIds) {
