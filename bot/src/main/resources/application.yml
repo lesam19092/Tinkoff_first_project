@@ -36,7 +36,7 @@ logging:
 
 management:
   server:
-    port: 8081 # Порт для management endpoints
+    port: 8082 # Порт для management endpoints
   endpoints:
     web:
       exposure:
