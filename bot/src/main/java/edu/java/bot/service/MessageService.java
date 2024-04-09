@@ -17,6 +17,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -34,18 +36,22 @@ public class MessageService implements MessageServiceInterface {
     private final UrlProcessor urlProcessor;
     private final TelegramBot telegramBot;
 
+    private final MeterRegistry meterRegistry;
+
     public MessageService(
 
         TelegramBot telegramBot,
         CommandHandler commandHandler,
         UserService userRepository,
-        UrlProcessor urlProcessor
+        UrlProcessor urlProcessor,
+        MeterRegistry meterRegistry
     ) {
 
         this.telegramBot = telegramBot;
         this.commandHandler = commandHandler;
         this.userRepository = userRepository;
         this.urlProcessor = urlProcessor;
+        this.meterRegistry = meterRegistry;
     }
 
     public String prepareResponseMessage(Update update) {
@@ -154,11 +160,17 @@ public class MessageService implements MessageServiceInterface {
                     "New update from link " + linkUpdateRequest.getUrl().toString() + " message: "
                         + linkUpdateRequest.getDescription()
                 ));
+                increaseMessageMetric();
             } catch (Exception ex) {
                 return;
             }
 
         }
+    }
+
+    private void increaseMessageMetric() {
+        Counter counter = Counter.builder("messages.proceeded").tag("application", "bot").register(meterRegistry);
+        counter.increment();
     }
 
 }
