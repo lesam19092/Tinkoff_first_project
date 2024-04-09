@@ -12,13 +12,13 @@ import edu.java.bot.processor.CommandHandler;
 import edu.java.bot.repository.UserService;
 import edu.java.bot.url_processor.UrlProcessor;
 import edu.java.bot.users.User;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import io.micrometer.core.instrument.Counter;
-import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
