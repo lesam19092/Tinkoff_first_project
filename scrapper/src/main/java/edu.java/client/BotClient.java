@@ -1,31 +1,43 @@
 package edu.java.client;
 
-import edu.java.model.request.LinkUpdateRequest;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
+import dto.request.LinkUpdateRequest;
+import edu.java.exception.ClientException;
+import edu.java.exception.ServerException;
+import edu.java.service.sender.SenderService;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
+import reactor.util.retry.RetryBackoffSpec;
 
-public class BotClient {
+public class BotClient implements SenderService {
     private final String baseUrl = "http://localhost:8090";
 
-    private final WebClient webClient;
+    private final WebClient webClient = WebClient.builder().build();
 
-    public BotClient(WebClient webClient) {
-        this.webClient = webClient;
+    private final RetryBackoffSpec retryBackoffSpec;
+
+    public BotClient(RetryBackoffSpec retryBackoffSpec) {
+        this.retryBackoffSpec = retryBackoffSpec;
     }
 
-    public String updateLink(URI url, List<Long> tgChatIds, String description) throws URISyntaxException {
-        LinkUpdateRequest linkUpdateRequest = new LinkUpdateRequest(1L, url, description, tgChatIds);
-        return webClient
+    @Override
+    public void updateLink(LinkUpdateRequest linkUpdateRequest) {
+        webClient
             .post()
             .uri(baseUrl + "/updates")
             .body(Mono.just(linkUpdateRequest), LinkUpdateRequest.class)
             .header("Accept", "application/json")
             .retrieve()
+            .onStatus(
+                HttpStatusCode::is5xxServerError,
+                response -> Mono.error(new ServerException("Server error"))
+            )
+            .onStatus(
+                HttpStatusCode::is4xxClientError,
+                response -> Mono.error(new ClientException("Client error"))
+            )
             .bodyToMono(String.class)
+            .retryWhen(retryBackoffSpec)
             .block();
     }
-
 }
