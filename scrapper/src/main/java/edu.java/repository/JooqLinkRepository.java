@@ -2,7 +2,7 @@ package edu.java.repository;
 
 import edu.java.jooq.tables.records.LinkRecord;
 import edu.java.jooq.tables.records.LinksSofRecord;
-import edu.java.model.Link;
+import edu.java.model.dto.Link;
 import java.net.URI;
 import java.sql.Timestamp;
 import java.time.OffsetDateTime;

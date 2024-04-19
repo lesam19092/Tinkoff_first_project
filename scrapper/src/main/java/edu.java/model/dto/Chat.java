@@ -1,7 +1,5 @@
-package edu.java.model;
+package edu.java.model.dto;
 
-import java.net.URI;
-import java.sql.Timestamp;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,10 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Link {
+public class Chat {
     private long id;
-    private URI url;
     private long chatId;
-    private Timestamp lastCheckTime;
-    private Timestamp createdAt;
 }

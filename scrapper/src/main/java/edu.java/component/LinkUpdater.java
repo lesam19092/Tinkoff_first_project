@@ -1,6 +1,6 @@
 package edu.java.component;
 
-import edu.java.model.Link;
+import edu.java.model.dto.Link;
 import java.net.URISyntaxException;
 
 public interface LinkUpdater {

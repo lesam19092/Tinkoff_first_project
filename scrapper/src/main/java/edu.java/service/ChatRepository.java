@@ -1,6 +1,6 @@
 package edu.java.service;
 
-import edu.java.model.Chat;
+import edu.java.model.dto.Chat;
 import java.util.List;
 
 public interface ChatRepository {
