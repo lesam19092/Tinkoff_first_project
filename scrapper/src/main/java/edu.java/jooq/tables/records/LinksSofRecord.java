@@ -61,34 +61,34 @@ public class LinksSofRecord extends UpdatableRecordImpl<LinksSofRecord> implemen
     }
 
     /**
-     * Setter for <code>LINKS_SOF.COUNTOFANSWERS</code>.
+     * Setter for <code>LINKS_SOF.COUNT_OF_ANSWERS</code>.
      */
-    public void setCountofanswers(@NotNull Long value) {
+    public void setCountOfAnswers(@NotNull Long value) {
         set(2, value);
     }
 
     /**
-     * Getter for <code>LINKS_SOF.COUNTOFANSWERS</code>.
+     * Getter for <code>LINKS_SOF.COUNT_OF_ANSWERS</code>.
      */
     @jakarta.validation.constraints.NotNull
     @NotNull
-    public Long getCountofanswers() {
+    public Long getCountOfAnswers() {
         return (Long) get(2);
     }
 
     /**
-     * Setter for <code>LINKS_SOF.COUNTOFCOMMENTS</code>.
+     * Setter for <code>LINKS_SOF.COUNT_OF_COMMENTS</code>.
      */
-    public void setCountofcomments(@NotNull Long value) {
+    public void setCountOfComments(@NotNull Long value) {
         set(3, value);
     }
 
     /**
-     * Getter for <code>LINKS_SOF.COUNTOFCOMMENTS</code>.
+     * Getter for <code>LINKS_SOF.COUNT_OF_COMMENTS</code>.
      */
     @jakarta.validation.constraints.NotNull
     @NotNull
-    public Long getCountofcomments() {
+    public Long getCountOfComments() {
         return (Long) get(3);
     }
 
@@ -133,13 +133,13 @@ public class LinksSofRecord extends UpdatableRecordImpl<LinksSofRecord> implemen
     @Override
     @NotNull
     public Field<Long> field3() {
-        return LinksSof.LINKS_SOF.COUNTOFANSWERS;
+        return LinksSof.LINKS_SOF.COUNT_OF_ANSWERS;
     }
 
     @Override
     @NotNull
     public Field<Long> field4() {
-        return LinksSof.LINKS_SOF.COUNTOFCOMMENTS;
+        return LinksSof.LINKS_SOF.COUNT_OF_COMMENTS;
     }
 
     @Override
@@ -157,13 +157,13 @@ public class LinksSofRecord extends UpdatableRecordImpl<LinksSofRecord> implemen
     @Override
     @NotNull
     public Long component3() {
-        return getCountofanswers();
+        return getCountOfAnswers();
     }
 
     @Override
     @NotNull
     public Long component4() {
-        return getCountofcomments();
+        return getCountOfComments();
     }
 
     @Override
@@ -181,13 +181,13 @@ public class LinksSofRecord extends UpdatableRecordImpl<LinksSofRecord> implemen
     @Override
     @NotNull
     public Long value3() {
-        return getCountofanswers();
+        return getCountOfAnswers();
     }
 
     @Override
     @NotNull
     public Long value4() {
-        return getCountofcomments();
+        return getCountOfComments();
     }
 
     @Override
@@ -207,14 +207,14 @@ public class LinksSofRecord extends UpdatableRecordImpl<LinksSofRecord> implemen
     @Override
     @NotNull
     public LinksSofRecord value3(@NotNull Long value) {
-        setCountofanswers(value);
+        setCountOfAnswers(value);
         return this;
     }
 
     @Override
     @NotNull
     public LinksSofRecord value4(@NotNull Long value) {
-        setCountofcomments(value);
+        setCountOfComments(value);
         return this;
     }
 
@@ -247,19 +247,19 @@ public class LinksSofRecord extends UpdatableRecordImpl<LinksSofRecord> implemen
     /**
      * Create a detached, initialised LinksSofRecord
      */
-    @ConstructorProperties({"id", "linkId", "countofanswers", "countofcomments"})
+    @ConstructorProperties({"id", "linkId", "countOfAnswers", "countOfComments"})
     public LinksSofRecord(
         @NotNull Long id,
         @NotNull Long linkId,
-        @NotNull Long countofanswers,
-        @NotNull Long countofcomments
+        @NotNull Long countOfAnswers,
+        @NotNull Long countOfComments
     ) {
         super(LinksSof.LINKS_SOF);
 
         setId(id);
         setLinkId(linkId);
-        setCountofanswers(countofanswers);
-        setCountofcomments(countofcomments);
+        setCountOfAnswers(countOfAnswers);
+        setCountOfComments(countOfComments);
     }
 
     /**
@@ -271,8 +271,8 @@ public class LinksSofRecord extends UpdatableRecordImpl<LinksSofRecord> implemen
         if (value != null) {
             setId(value.getId());
             setLinkId(value.getLinkId());
-            setCountofanswers(value.getCountofanswers());
-            setCountofcomments(value.getCountofcomments());
+            setCountOfAnswers(value.getCountOfAnswers());
+            setCountOfComments(value.getCountOfComments());
         }
     }
 }

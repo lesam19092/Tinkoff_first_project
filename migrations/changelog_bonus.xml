@@ -18,11 +18,11 @@
                 <constraints nullable="false"/>
             </column>
 
-            <column name="countOfAnswers" type="bigint">
+            <column name="count_of_answers" type="bigint">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="countOfComments" type="bigint">
+            <column name="count_of_comments" type="bigint">
                 <constraints nullable="false"/>
             </column>
 

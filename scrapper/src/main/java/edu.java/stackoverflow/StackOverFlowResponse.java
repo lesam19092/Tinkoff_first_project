@@ -10,4 +10,5 @@ import lombok.Setter;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class StackOverFlowResponse {
     private List<StackOverFlowQuestion> items;
+
 }
