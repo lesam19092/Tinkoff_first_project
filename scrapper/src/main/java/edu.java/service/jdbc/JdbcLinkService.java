@@ -1,7 +1,7 @@
 package edu.java.service.jdbc;
 
-import edu.java.model.dto.Link;
-import edu.java.model.dto.LinkSof;
+import edu.java.model.Link;
+import edu.java.model.LinkSof;
 import edu.java.service.LinkRepository;
 import java.sql.Timestamp;
 import java.util.List;

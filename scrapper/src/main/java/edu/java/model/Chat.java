@@ -1,4 +1,4 @@
-package edu.java.model.dto;
+package edu.java.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,9 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LinkSof {
+public class Chat {
     private long id;
-    private long linkId;
-    private long countOfAnswer;
-    private long countOfComments;
+    private long chatId;
 }

@@ -1,6 +1,6 @@
 package edu.java.repository;
 
-import edu.java.model.dto.Chat;
+import edu.java.model.Chat;
 import java.util.List;
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Repository;
