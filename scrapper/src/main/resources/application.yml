@@ -7,6 +7,15 @@ app:
     interval: 5s
     force-check-delay: 5s
   database-access-type: jpa
+  retry:
+    trigger: server-client
+    strategy: const
+    max-attempts: 3
+    delay: 5
+  bucket:
+    refill: 5
+    capacity: 10
+    timeout: 1
 
 spring:
   jpa:

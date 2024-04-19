@@ -7,6 +7,7 @@ import edu.java.model.request.RemoveLinkRequest;
 import edu.java.model.response.LinkResponse;
 import edu.java.model.response.ListLinksResponse;
 import edu.java.repository.LinkRepository;
+import io.github.bucket4j.Bucket;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -33,6 +34,8 @@ public class LinksApiController implements LinksApi {
     private final String errorString = "Couldn't serialize response for content type application/json";
 
     private final ObjectMapper objectMapper;
+    @Autowired
+    private Bucket bucket;
 
     @Autowired
     public LinksApiController(LinkRepository linkRepository, ObjectMapper objectMapper) {
@@ -46,64 +49,77 @@ public class LinksApiController implements LinksApi {
         @RequestBody
         RemoveLinkRequest body
     ) {
-     //   jdbcLinkService.removeLink(tgChatId);
-        String accept = acceptString;
-        if (accept != null && accept.contains(applicationJsonString)) {
-            return new ResponseEntity<LinkResponse>(new LinkResponse(), HttpStatus.OK);
+        try {
+            if (bucket.tryConsume(1)) {
+
+                linkRepository.remove(tgChatId);
+                return new ResponseEntity<LinkResponse>(objectMapper.readValue(
+                    "{\n  \"id\" : 1,\n  \"url\" : \"http://example.com/aeiou\"\n}",
+                    LinkResponse.class
+                ), HttpStatus.OK);
+            } else {
+                return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
+            }
+
+        } catch (IOException e) {
+            LOGGER.error(errorString, e);
+            return new ResponseEntity<LinkResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
-        return new ResponseEntity<LinkResponse>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<ListLinksResponse> linksGet(
         @RequestHeader(value = "Tg-Chat-Id", required = true) Long tgChatId
     ) {
-
-        for (Link link : linkRepository.findAll()) {
-            LOGGER.info(link.getUrl().toString());
-        }
-
-        String accept = acceptString;
-
-        if (accept != null && accept.contains(applicationJsonString)) {
-            try {
+        try {
+            if (bucket.tryConsume(1)) {
+                for (Link link : linkRepository.findAll()) {
+                    LOGGER.info(link.getUrl().toString());
+                }
                 return new ResponseEntity<ListLinksResponse>(objectMapper.readValue(
                     "{\n  \"size\" : 6,\n  \"links\" : [ {\n    \"id\" : 0,\n    \"url\" : \"http://example.com/aeiou\"\n  }, {\n    \"id\" : 0,\n    \"url\" : \"http://example.com/aeiou\"\n  } ]\n}",
                     ListLinksResponse.class
                 ), HttpStatus.OK);
-            } catch (IOException e) {
-                LOGGER.error(errorString, e);
-                return new ResponseEntity<ListLinksResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
+            } else {
+                return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
             }
+        } catch (IOException e) {
+            LOGGER.error(errorString, e);
+            return new ResponseEntity<ListLinksResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<ListLinksResponse>(HttpStatus.NOT_IMPLEMENTED);
     }
 
     public ResponseEntity<LinkResponse> linksPost(
         @Parameter(in = ParameterIn.HEADER, description = "", required = true, schema = @Schema())
         @RequestHeader(value = "Tg-Chat-Id", required = true) Long tgChatId,
-        @Parameter(in = ParameterIn.DEFAULT, description = "", required = true, schema = @Schema()) @Valid @RequestBody
+        @Parameter(in = ParameterIn.DEFAULT,
+                   description = "",
+                   required = true,
+                   schema = @Schema()) @Valid @RequestBody
         AddLinkRequest body
     ) {
-
-        int time = Integer.parseInt(System.getenv("time"));
-        Link link = new Link();
-        link.setChatId(tgChatId);
-        link.setUrl(URI.create("https://github.com/lesam19092/laba2"));
-        link.setCreatedAt(new Timestamp(time));
-        link.setLastCheckTime(new Timestamp(time));
-
-        linkRepository.add(link);
-
         try {
-            return new ResponseEntity<LinkResponse>(objectMapper.readValue(
-                "{\n  \"id\" : 0,\n  \"url\" : \"http://example.com/aeiou\"\n}",
-                LinkResponse.class
-            ), HttpStatus.OK);
+            if (bucket.tryConsume(1)) {
+
+                int time = Integer.parseInt(System.getenv("time"));
+                Link link = new Link();
+                link.setChatId(tgChatId);
+                link.setUrl(URI.create("https://github.com/lesam19092/laba2"));
+                link.setCreatedAt(new Timestamp(time));
+                link.setLastCheckTime(new Timestamp(time));
+
+                return new ResponseEntity<LinkResponse>(objectMapper.readValue(
+                    "{\n  \"id\" : 0,\n  \"url\" : \"http://example.com/aeiou\"\n}",
+                    LinkResponse.class
+                ), HttpStatus.OK);
+            } else {
+                return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
+            }
         } catch (IOException e) {
             LOGGER.error(errorString, e);
             return new ResponseEntity<LinkResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }
+
+
