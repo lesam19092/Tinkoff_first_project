@@ -1,4 +1,4 @@
-package edu.java.service;
+package edu.java.repository;
 
 import edu.java.model.dto.Link;
 import edu.java.model.dto.LinkSof;
