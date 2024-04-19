@@ -1,17 +1,16 @@
-package edu.java.bot.model.response;
+package dto.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import org.springframework.validation.annotation.Validated;
+import lombok.Getter;
+import lombok.Setter;
 
-@Validated
-
+@Getter
+@Setter
 public class ListLinksResponse {
     @JsonProperty("links")
-    @Valid
     private List<LinkResponse> links = null;
 
     @JsonProperty("size")
@@ -30,7 +29,6 @@ public class ListLinksResponse {
         return this;
     }
 
-    @Valid
     public List<LinkResponse> getLinks() {
         return links;
     }
@@ -53,7 +51,7 @@ public class ListLinksResponse {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(java.lang.Object o) {
         if (this == o) {
             return true;
         }
@@ -81,7 +79,7 @@ public class ListLinksResponse {
         return sb.toString();
     }
 
-    private String toIndentedString(Object o) {
+    private String toIndentedString(java.lang.Object o) {
         if (o == null) {
             return "null";
         }

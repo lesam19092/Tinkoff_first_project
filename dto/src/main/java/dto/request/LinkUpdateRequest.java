@@ -1,30 +1,29 @@
-package edu.java.bot.model.request;
+package dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.validation.annotation.Validated;
 
-@Setter @Getter @Validated
-
+@Getter
+@Setter
+@NoArgsConstructor
 public class LinkUpdateRequest {
     @JsonProperty("id")
-    private Long id = null;
+    private Long id;
 
     @JsonProperty("url")
-    private URI url = null;
+    private URI url;
 
     @JsonProperty("description")
-    private String description = null;
+    private String description;
 
     @JsonProperty("tgChatIds")
-    @Valid
-    private List<Long> tgChatIds = null;
+    private List<Long> tgChatIds;
 
     public LinkUpdateRequest(Long id, URI url, String description, List<Long> tgChatIds) {
         this.id = id;
@@ -62,7 +61,7 @@ public class LinkUpdateRequest {
     }
 
     @Override
-    public boolean equals(java.lang.Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
@@ -94,7 +93,7 @@ public class LinkUpdateRequest {
         return sb.toString();
     }
 
-    private String toIndentedString(java.lang.Object o) {
+    private String toIndentedString(Object o) {
         if (o == null) {
             return "null";
         }

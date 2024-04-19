@@ -1,11 +1,11 @@
 package edu.java.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dto.request.AddLinkRequest;
+import dto.request.RemoveLinkRequest;
+import dto.response.LinkResponse;
+import dto.response.ListLinksResponse;
 import edu.java.model.dto.Link;
-import edu.java.model.request.AddLinkRequest;
-import edu.java.model.request.RemoveLinkRequest;
-import edu.java.model.response.LinkResponse;
-import edu.java.model.response.ListLinksResponse;
 import edu.java.repository.LinkRepository;
 import io.github.bucket4j.Bucket;
 import io.swagger.v3.oas.annotations.Parameter;

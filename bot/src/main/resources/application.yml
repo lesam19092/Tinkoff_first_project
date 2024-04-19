@@ -1,11 +1,28 @@
 app:
   telegram-token: ${TELEGRAM_API_KEY}
+  kafka:
+    partitions-num: 10
+    replicas-num: 1
+    topics: topic1
+    topic_dlq: topic_dlq
+
 
 spring:
   application:
     name: bot
   jackson:
     time-zone: UTC
+  kafka:
+    consumer:
+      auto-offset-reset: earliest
+      key-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+    properties:
+      spring.deserializer.key.delegate.class: org.apache.kafka.common.serialization.StringDeserializer
+      spring.deserializer.value.delegate.class: org.springframework.kafka.support.serializer.JsonDeserializer
+      spring.json.trusted.packages: '*'
+      spring.json.value.default.type: dto.request.LinkUpdateRequest
+    bootstrapServers: localhost:29092
 
 server:
   port: 8090
@@ -16,3 +33,17 @@ springdoc:
 
 logging:
   config: classpath:log4j2-plain.xml
+
+management:
+  server:
+    port: 8082 # Порт для management endpoints
+  endpoints:
+    web:
+      exposure:
+        include: "info, health, prometheus" # Включение info, health и prometheus endpoints
+      path-mapping:
+        prometheus: metrics
+      base-path: /
+  metrics:
+    tags:
+      application: ${spring.application.name}

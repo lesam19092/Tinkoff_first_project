@@ -32,7 +32,7 @@ public class LinkUpdateScheduler {
     @Scheduled(fixedDelayString = "#{scheduler.interval}")
     public void update() throws URISyntaxException {
         logger.info("I'm updating!");
-         updateOldLinks(linkDelay);
+        updateOldLinks(linkDelay);
     }
 
     private void updateOldLinks(int linkDelay) throws URISyntaxException {
@@ -42,6 +42,7 @@ public class LinkUpdateScheduler {
             } else if (link.getUrl().getHost().equals("stackoverflow.com")) {
                 linkUpdater.updateLinkForStackOverFlow(link);
             }
+
         }
     }
 }

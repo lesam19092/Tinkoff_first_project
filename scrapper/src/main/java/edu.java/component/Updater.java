@@ -1,12 +1,13 @@
 package edu.java.component;
 
-import edu.java.client.BotClient;
+import dto.request.LinkUpdateRequest;
 import edu.java.exception.ClientException;
 import edu.java.exception.ServerException;
 import edu.java.github.GitHubClient;
 import edu.java.github.GitHubRepository;
 import edu.java.model.dto.Link;
 import edu.java.repository.LinkRepository;
+import edu.java.service.sender.SenderService;
 import edu.java.stackoverflow.StackOverFlowClient;
 import edu.java.stackoverflow.StackOverFlowQuestion;
 import java.net.URISyntaxException;
@@ -25,25 +26,23 @@ public class Updater implements LinkUpdater {
     private final LinkRepository linkRepository;
     private final GitHubClient gitHubClient;
     private final StackOverFlowClient stackOverFlowClient;
-    private final BotClient botClient;
+    private final SenderService senderService;
 
     public Updater(
         LinkRepository linkRepository,
         GitHubClient gitHubClient,
         StackOverFlowClient stackOverFlowClient,
-        BotClient botClient
+        SenderService senderService
     ) {
         this.linkRepository = linkRepository;
         this.gitHubClient = gitHubClient;
         this.stackOverFlowClient = stackOverFlowClient;
-        this.botClient = botClient;
+        this.senderService = senderService;
     }
 
     @Override
     public void updateLinkForGithub(Link link) throws URISyntaxException {
-
         try {
-
             Timestamp now = Timestamp.valueOf(LocalDateTime.now());
             List<String> fragments = List.of(link.getUrl().toString().split("/"));
             GitHubRepository rep = gitHubClient
@@ -52,7 +51,11 @@ public class Updater implements LinkUpdater {
             Timestamp lastPush = rep.getLastPush();
             if (lastPush.after(link.getLastCheckTime())) {
                 linkRepository.updateLinkLastCheckTimeById(link.getId(), now);
-                botClient.updateLink(link.getUrl(), List.of(link.getChatId()), "обновление данных");
+                LinkUpdateRequest linkUpdateRequest =
+                    new LinkUpdateRequest(link.getId(), link.getUrl(), "обновление данных",
+                        List.of(link.getChatId())
+                    );
+                senderService.updateLink(linkUpdateRequest);
             }
         } catch (ServerException | ClientException | WebClientRequestException ex) {
             logger.error(ex.getMessage());
@@ -61,6 +64,7 @@ public class Updater implements LinkUpdater {
 
     @Override
     public void updateLinkForStackOverFlow(Link link) throws URISyntaxException {
+
         List<String> fragments = List.of(link.getUrl().toString().split("/"));
         StackOverFlowQuestion
             question =
@@ -91,7 +95,9 @@ public class Updater implements LinkUpdater {
                     linkRepository.updateCountOfCommentsById(link.getId(), question.getCommentCount());
                 }
                 String description = DescriptionType.getDescription(lisOfDescriptions);
-                botClient.updateLink(link.getUrl(), List.of(link.getChatId()), description);
+                LinkUpdateRequest linkUpdateRequest =
+                    new LinkUpdateRequest(link.getId(), link.getUrl(), description, List.of(link.getChatId()));
+                senderService.updateLink(linkUpdateRequest);
 
             }
         } catch (ClientException | ServerException e) {

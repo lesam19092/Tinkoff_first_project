@@ -1,16 +1,15 @@
 package edu.java.client;
 
+import dto.request.LinkUpdateRequest;
 import edu.java.exception.ClientException;
 import edu.java.exception.ServerException;
-import edu.java.model.request.LinkUpdateRequest;
-import java.net.URI;
-import java.util.List;
+import edu.java.service.sender.SenderService;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import reactor.util.retry.RetryBackoffSpec;
 
-public class BotClient {
+public class BotClient implements SenderService {
     private final String baseUrl = "http://localhost:8090";
 
     private final WebClient webClient = WebClient.builder().build();
@@ -21,10 +20,9 @@ public class BotClient {
         this.retryBackoffSpec = retryBackoffSpec;
     }
 
-    public String updateLink(URI url, List<Long> tgChatIds, String description) {
-        LinkUpdateRequest linkUpdateRequest = new LinkUpdateRequest(1L, url, description, tgChatIds);
-
-        return webClient
+    @Override
+    public void updateLink(LinkUpdateRequest linkUpdateRequest) {
+        webClient
             .post()
             .uri(baseUrl + "/updates")
             .body(Mono.just(linkUpdateRequest), LinkUpdateRequest.class)
@@ -42,5 +40,4 @@ public class BotClient {
             .retryWhen(retryBackoffSpec)
             .block();
     }
-
 }
