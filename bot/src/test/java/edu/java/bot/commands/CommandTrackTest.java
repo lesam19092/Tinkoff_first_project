@@ -56,7 +56,6 @@ class CommandTrackTest {
 
         assertEquals(trackMessage, commandTrack.handle(update));
 
-        //TODO дописать verify на кол-во вызовов
     }
 
     @Test

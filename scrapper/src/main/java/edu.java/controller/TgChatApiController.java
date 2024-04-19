@@ -2,6 +2,7 @@ package edu.java.controller;
 
 import edu.java.model.dto.Chat;
 import edu.java.repository.ChatRepository;
+import io.github.bucket4j.Bucket;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -18,6 +19,8 @@ public class TgChatApiController implements TgChatApi {
 
     private final ChatRepository chatRepository;
 
+    @Autowired
+    private Bucket bucket;
     private static final Logger LOGGER = LoggerFactory.getLogger(TgChatApiController.class);
 
     @Autowired
@@ -32,21 +35,26 @@ public class TgChatApiController implements TgChatApi {
                    schema = @Schema())
         @PathVariable("id") Long id
     ) {
-        chatRepository.remove(id);
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        if (bucket.tryConsume(1)) {
+            chatRepository.remove(id);
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        } else {
+            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
+        }
     }
 
     public ResponseEntity<Void> tgChatIdPost(
         @Parameter(in = ParameterIn.PATH, description = "", required = true, schema = @Schema()) @PathVariable("id")
         Long id
     ) {
-
-        Chat chat = new Chat();
-        chat.setChatId(id);
-
-        chatRepository.add(chat);
-
-        return new ResponseEntity<Void>(HttpStatus.OK);
+        if (bucket.tryConsume(1)) {
+            Chat chat = new Chat();
+            chat.setChatId(id);
+            chatRepository.add(chat);
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        } else {
+            return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
+        }
     }
 
 }

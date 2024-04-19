@@ -56,7 +56,6 @@ class CommandUntrackTest {
 
         assertEquals(untrackMessage, commandUntrack.handle(update));
 
-        //TODO дописать verify на кол-во вызовов
     }
 
     @Test

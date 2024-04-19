@@ -118,7 +118,7 @@ public class MessageService implements MessageServiceInterface {
             new ScrapperClient(WebClient.builder().build()).addLinkById(
                 user.getId(),
                 new AddLinkRequest().link(uri)
-            ); //TODO extract ScrapperClient
+            );
             trackSites.add(uri);
             updateTrackSitesAndCommit(user, trackSites);
             return true;
